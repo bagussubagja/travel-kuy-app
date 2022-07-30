@@ -88,7 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Timer(const Duration(seconds: 3), () => print('object'));
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, AppRoutes.homeScreen, (route) => false);
                     },
                     style: ElevatedButton.styleFrom(primary: greenDarkerColor),
                     child: const Text('Login'),

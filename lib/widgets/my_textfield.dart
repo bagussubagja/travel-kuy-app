@@ -50,6 +50,8 @@ class MyTextField extends StatelessWidget {
                   readOnly: widget == null ? false : true,
                   controller: controller,
                   decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1, color: greyColor)),
                     focusedBorder: OutlineInputBorder(
                         borderSide:
                             BorderSide(width: 1, color: greenDarkerColor)),
