@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
@@ -81,9 +79,7 @@ class RegisterScreen extends StatelessWidget {
                   height: 45,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Timer(const Duration(seconds: 3), () => print('object'));
-                    },
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(primary: greenDarkerColor),
                     child: const Text('Register'),
                   ),

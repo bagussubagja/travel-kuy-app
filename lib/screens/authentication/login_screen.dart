@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
@@ -89,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pushNamedAndRemoveUntil(
-                          context, AppRoutes.homeScreen, (route) => false);
+                          context, AppRoutes.bodyScreen, (route) => false);
                     },
                     style: ElevatedButton.styleFrom(primary: greenDarkerColor),
                     child: const Text('Login'),
