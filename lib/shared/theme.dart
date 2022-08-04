@@ -9,6 +9,6 @@ Color greyColor = const Color(0xffAAAAAA);
 TextStyle titleText =
     TextStyle(fontSize: 22, fontWeight: FontWeight.w500, color: whiteColor);
 TextStyle subTitleText =
-    TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: greyColor);
+    TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: greyColor);
 TextStyle regularText =
-    TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: whiteColor);
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: whiteColor);

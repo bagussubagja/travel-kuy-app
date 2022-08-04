@@ -23,7 +23,7 @@ class BodyScreen extends StatelessWidget {
         FloatingNavBarItem(
           iconData: Iconsax.home5,
           title: 'Home',
-          page: const HomeScreen(),
+          page:  HomeScreen(),
         ),
         FloatingNavBarItem(
           iconData: Iconsax.heart5,

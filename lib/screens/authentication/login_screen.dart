@@ -70,7 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextButton(
                         onPressed: () {
                           Navigator.pushNamed(
-                              context, AppRoutes.registerScreen);
+                            context,
+                            AppRoutes.registerScreen,
+                          );
                         },
                         child: Text(
                           'Register Now!',

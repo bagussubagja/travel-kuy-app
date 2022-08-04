@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:travel_kuy_app/screens/home/body_screen.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/category_card.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
-import 'package:travel_kuy_app/widgets/my_textfield.dart';
+import 'package:travel_kuy_app/widgets/popular_card.dart';
+import 'package:travel_kuy_app/widgets/recommended_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
             child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 120),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -32,12 +32,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           'Hi, ',
-                          style: subTitleText.copyWith(color: whiteColor),
+                          style: regularText.copyWith(
+                              color: whiteColor, fontSize: 18),
                         ),
                         Text(
                           'Bagus Subagja 👋',
-                          style: subTitleText.copyWith(
-                              fontWeight: FontWeight.w500, color: whiteColor),
+                          style: regularText.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: whiteColor,
+                              fontSize: 18),
                         ),
                       ],
                     ),
@@ -66,7 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 MarginHeight(height: 15),
                 CategoryCard(),
-                MarginHeight(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -82,6 +84,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         )),
                   ],
                 ),
+                MarginHeight(height: 10),
+                PopularCard(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Just for you ',
+                      style: regularText,
+                    ),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'See All',
+                          style: regularText.copyWith(color: greenDarkerColor),
+                        )),
+                  ],
+                ),
+                RecommendedCard()
               ],
             ),
           ),
