@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/category_card.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
+import 'package:travel_kuy_app/widgets/most_viewed_card.dart';
+import 'package:travel_kuy_app/widgets/newly_added_card.dart';
 import 'package:travel_kuy_app/widgets/popular_card.dart';
 import 'package:travel_kuy_app/widgets/recommended_card.dart';
 
@@ -101,7 +103,39 @@ class _HomeScreenState extends State<HomeScreen> {
                         )),
                   ],
                 ),
-                RecommendedCard()
+                RecommendedCard(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Most Viewed',
+                      style: regularText,
+                    ),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'See All',
+                          style: regularText.copyWith(color: greenDarkerColor),
+                        )),
+                  ],
+                ),
+                MostViewCard(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Newly Added ',
+                      style: regularText,
+                    ),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'See All',
+                          style: regularText.copyWith(color: greenDarkerColor),
+                        )),
+                  ],
+                ),
+                NewlyAddedCard()
               ],
             ),
           ),
