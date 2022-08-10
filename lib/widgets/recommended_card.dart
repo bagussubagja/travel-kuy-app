@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 
@@ -42,7 +41,7 @@ class RecommendedCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Icon(
-                    Iconsax.location5,
+                    Icons.location_on_rounded,
                     color: greyColor,
                     size: 15,
                   ),

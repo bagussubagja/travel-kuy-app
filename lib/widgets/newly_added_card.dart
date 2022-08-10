@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
@@ -13,7 +12,7 @@ class NewlyAddedCard extends StatelessWidget {
       child: ListView.separated(
         itemCount: 10,
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
         separatorBuilder: (context, index) => MarginHeight(height: 10),
         itemBuilder: (context, index) => Container(
@@ -27,7 +26,7 @@ class NewlyAddedCard extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
+                SizedBox(
                   height: 100,
                   width: 140,
                   child: ClipRRect(
@@ -38,7 +37,7 @@ class NewlyAddedCard extends StatelessWidget {
                   ),
                 ),
                 MarginWidth(width: 10),
-                Container(
+                SizedBox(
                   height: 100,
                   width: 150,
                   child: Column(
@@ -56,7 +55,7 @@ class NewlyAddedCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Icon(
-                            Iconsax.location5,
+                            Icons.location_on_rounded,
                             color: greyColor,
                             size: 10,
                           ),

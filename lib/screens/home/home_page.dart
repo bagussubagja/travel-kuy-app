@@ -22,8 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SizedBox(
         child: SafeArea(
             child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 10, 15, 120),
+            padding: defaultPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 MarginHeight(height: 15),
                 Text(
                   'Explore and Find your Best Journey!',
-                  style: titleText,
+                  style: titleText.copyWith(fontSize: 22),
                 ),
                 MarginHeight(height: 15),
                 Text(

@@ -1,7 +1,6 @@
 import 'package:floating_navbar/floating_navbar.dart';
 import 'package:floating_navbar/floating_navbar_item.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:travel_kuy_app/screens/home/favorites_page.dart';
 import 'package:travel_kuy_app/screens/home/home_page.dart';
 import 'package:travel_kuy_app/screens/home/search_page.dart';
@@ -21,22 +20,22 @@ class BodyScreen extends StatelessWidget {
       unselectedIconColor: Colors.white.withOpacity(0.5),
       items: [
         FloatingNavBarItem(
-          iconData: Iconsax.home5,
+          iconData: Icons.home,
           title: 'Home',
-          page:  HomeScreen(),
+          page: HomeScreen(),
         ),
         FloatingNavBarItem(
-          iconData: Iconsax.heart5,
+          iconData: Icons.favorite,
           title: 'Favorite',
           page: const FavoritesPage(),
         ),
         FloatingNavBarItem(
-          iconData: Iconsax.calendar5,
+          iconData: Icons.calendar_month_rounded,
           title: 'Search',
           page: const SearchPage(),
         ),
         FloatingNavBarItem(
-          iconData: Iconsax.setting5,
+          iconData: Icons.settings,
           title: 'Setting',
           page: const SettingPage(),
         ),

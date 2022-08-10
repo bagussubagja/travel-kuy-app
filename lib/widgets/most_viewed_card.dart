@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
@@ -34,14 +33,14 @@ class MostViewCard extends StatelessWidget {
               ),
               MarginHeight(height: 8),
               Text(
-                'Pantai Pangandaran',
+                'Pantai Pangandaran ',
                 style: regularText.copyWith(fontSize: 14),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Icon(
-                    Iconsax.location5,
+                    Icons.location_on_rounded,
                     color: greyColor,
                     size: 15,
                   ),
