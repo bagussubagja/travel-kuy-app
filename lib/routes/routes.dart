@@ -1,6 +1,6 @@
 import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
-import 'package:travel_kuy_app/screens/details/detail_page.dart';
+import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/screens/home/body_screen.dart';
 import 'package:travel_kuy_app/screens/onboarding/onboarding.dart';
 
@@ -16,6 +16,6 @@ class AppRoutes {
     loginScreen: (context) => const LoginScreen(),
     registerScreen: (context) => RegisterScreen(),
     bodyScreen: (context) => const BodyScreen(),
-    detailScreen: (context) => const DetailPage(),
+    detailScreen: (context) => const DetailScreen()
   };
 }
