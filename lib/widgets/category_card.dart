@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
-import 'package:travel_kuy_app/screens/home/favorites_page.dart';
+import 'package:travel_kuy_app/screens/home/favorite/favorites_page.dart';
 import 'package:travel_kuy_app/screens/home/home_page.dart';
-import 'package:travel_kuy_app/screens/home/search_page.dart';
+import 'package:travel_kuy_app/screens/home/schedule_page.dart';
 import 'package:travel_kuy_app/screens/home/setting_page.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
@@ -38,7 +38,7 @@ class _CategoryCardState extends State<CategoryCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 75,
+      height: 70,
       child: ListView.separated(
         separatorBuilder: (context, index) => MarginWidth(width: 12),
         scrollDirection: Axis.horizontal,

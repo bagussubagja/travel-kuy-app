@@ -40,6 +40,8 @@ dependencies:
   readmore: ^2.2.0
   indonesia: ^2.0.0
   switch_tab: ^0.1.3
+  flutter_svg: ^1.1.3
+  flutter_calendar_carousel: ^2.4.0
 
 dev_dependencies:
   flutter_test:
