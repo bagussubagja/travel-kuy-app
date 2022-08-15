@@ -4,14 +4,22 @@ import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 
 class MostViewCard extends StatelessWidget {
-  const MostViewCard({Key? key}) : super(key: key);
+  MostViewCard({Key? key}) : super(key: key);
+
+  List<String> imgUrl = [
+    'assets/images/lake.png',
+    'assets/images/waterfall.jpg',
+    'assets/images/beach.jpg',
+    'assets/images/lake.png',
+    'assets/images/waterfall.jpg',
+  ];
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 200,
       child: ListView.separated(
-        itemCount: 7,
+        itemCount: imgUrl.length,
         scrollDirection: Axis.horizontal,
         separatorBuilder: (context, index) => MarginWidth(width: 10),
         itemBuilder: (context, index) => Container(
@@ -26,9 +34,13 @@ class MostViewCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  'assets/images/beach.jpg',
-                  fit: BoxFit.cover,
+                child: Container(
+                  height: 110,
+                  width: double.infinity,
+                  child: Image.asset(
+                    imgUrl[index],
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
               MarginHeight(height: 8),

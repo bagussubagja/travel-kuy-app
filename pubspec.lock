@@ -83,13 +83,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_calendar_carousel:
+  flutter_calendar_widget:
     dependency: "direct main"
     description:
-      name: flutter_calendar_carousel
+      name: flutter_calendar_widget
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.0"
+    version: "0.0.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -131,7 +131,7 @@ packages:
     source: hosted
     version: "2.0.0"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"

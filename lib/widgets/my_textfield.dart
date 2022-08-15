@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 
 class MyTextField extends StatelessWidget {
-  String titleText = "";
+  String? titleText;
   String? hintText;
   TextEditingController? controller;
   Widget? widget;
@@ -13,7 +13,7 @@ class MyTextField extends StatelessWidget {
   bool? obsecureText;
   MyTextField(
       {Key? key,
-      required this.titleText,
+        this.titleText,
       this.hintText,
       this.controller,
       this.widget,
@@ -27,10 +27,8 @@ class MyTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        titleText.isEmpty
-            ? const SizedBox.shrink()
-            : Text(
-                titleText,
+         Text(
+                titleText ?? "",
                 style: regularText,
               ),
         const SizedBox(

@@ -29,10 +29,14 @@ class NewlyAddedCard extends StatelessWidget {
                 SizedBox(
                   height: 100,
                   width: 140,
-                  child: ClipRRect(
+                  child:  ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      'assets/images/lake.png',
+                    child: Container(
+                      width: double.infinity,
+                      child: Image.asset(
+                        'assets/images/park.png',
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                 ),
