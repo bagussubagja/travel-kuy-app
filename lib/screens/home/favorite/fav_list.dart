@@ -3,9 +3,14 @@ import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 
-class FavList extends StatelessWidget {
+class FavList extends StatefulWidget {
   FavList({Key? key}) : super(key: key);
 
+  @override
+  State<FavList> createState() => _FavListState();
+}
+
+class _FavListState extends State<FavList> {
   List<String> imgUrl = [
     'assets/images/beach.jpg',
     'assets/images/island.jpg',
@@ -18,6 +23,14 @@ class FavList extends StatelessWidget {
     'assets/images/lake.png',
     'assets/images/waterfall.jpg',
   ];
+
+  bool isFavorite = false;
+
+  void _myFavorite() {
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,23 +55,54 @@ class FavList extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  height: 100,
-                  width: double.infinity,
-                  child: Image.asset(
-                    imgUrl[index],
-                    fit: BoxFit.fill,
+              Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: SizedBox(
+                      height: 100,
+                      width: double.infinity,
+                      child: Image.asset(
+                        imgUrl[index],
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
-                ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: blackBackgroundColor.withOpacity(0.3)),
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: IconButton(
+                            onPressed: () {
+                              _myFavorite();
+                            },
+                            icon: isFavorite
+                                ? const Icon(
+                                    Icons.favorite_border_rounded,
+                                    color: Colors.pink,
+                                  )
+                                : const Icon(
+                                    Icons.favorite,
+                                    color: Colors.pink,
+                                  )),
+                      ),
+                    ),
+                  )
+                ],
               ),
               MarginHeight(height: 8),
               Text(
-                'Pantai Pangandaran sdfsdfsdf',
+                'Pantai Pangandaran',
                 style: regularText.copyWith(fontSize: 14),
               ),
-
             ],
           ),
         ),
