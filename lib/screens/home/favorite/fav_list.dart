@@ -71,13 +71,13 @@ class _FavListState extends State<FavList> {
                   Align(
                     alignment: Alignment.topRight,
                     child: Container(
-                      height: 40,
-                      width: 40,
+                      height: 38,
+                      width: 38,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 5),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: blackBackgroundColor.withOpacity(0.3)),
+                          color: isFavorite ? blackBackgroundColor.withOpacity(0.3) : Colors.pink.withOpacity(0.3)),
                       child: GestureDetector(
                         onTap: () {},
                         child: IconButton(

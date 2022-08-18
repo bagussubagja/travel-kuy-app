@@ -23,12 +23,12 @@ class ReviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: defaultPadding,
+      padding: detailPagePadding,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text('Review', style: titleText),
         MarginHeight(height: 10),
         SizedBox(
-          height: 200,
+          height: MediaQuery.of(context).size.height / 2.5,
           child: Scrollbar(
             controller: _scrollController,
             thumbVisibility: true,

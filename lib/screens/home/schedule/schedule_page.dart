@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:travel_kuy_app/screens/home/schedule/schedule_list.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
+import 'package:travel_kuy_app/widgets/content_not_found.dart';
 
-import '../../widgets/margin_widget_height.dart';
+import '../../../widgets/margin_widget_height.dart';
 
 class SchedulePage extends StatefulWidget {
   SchedulePage({Key? key}) : super(key: key);
@@ -27,7 +29,9 @@ class _SchedulePageState extends State<SchedulePage> {
                 style: titleText,
               ),
              MarginHeight(height: 5),
-              Text("Lorem Ipsum Dolor Sit Amet 🗓️", style: subTitleText,)
+              Text("Lorem Ipsum Dolor Sit Amet 🗓️", style: subTitleText,),
+              MarginHeight(height: 20),
+              ScheduleList()
             ],
           ),
         ),

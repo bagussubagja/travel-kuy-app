@@ -5,7 +5,7 @@ import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
 import 'package:travel_kuy_app/screens/home/favorite/favorites_page.dart';
 import 'package:travel_kuy_app/screens/home/home_page.dart';
-import 'package:travel_kuy_app/screens/home/schedule_page.dart';
+import 'package:travel_kuy_app/screens/home/schedule/schedule_page.dart';
 import 'package:travel_kuy_app/screens/home/setting_page.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';

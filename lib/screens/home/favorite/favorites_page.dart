@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/screens/home/favorite/fav_list.dart';
-import 'package:travel_kuy_app/screens/home/favorite/fav_not_found.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/my_textfield.dart';

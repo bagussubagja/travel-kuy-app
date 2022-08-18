@@ -15,7 +15,7 @@ class AppRoutes {
     onboardingScreen: (context) => const OnboardingScreen(),
     loginScreen: (context) => const LoginScreen(),
     registerScreen: (context) => RegisterScreen(),
-    bodyScreen: (context) => const BodyScreen(),
+    bodyScreen: (context) =>  BodyScreen(),
     detailScreen: (context) => const DetailScreen()
   };
 }

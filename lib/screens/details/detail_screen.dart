@@ -20,6 +20,7 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   int indexPage = 0;
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +59,22 @@ class _DetailScreenState extends State<DetailScreen> {
                             ),
                           ),
                           CustomNavButton(
-                            bgColor: Colors.black.withOpacity(0.5),
+                            bgColor: isFavorite
+                                ? Colors.black.withOpacity(0.5)
+                                : Colors.pink.withOpacity(0.5),
                             child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.favorite_border_rounded,
-                                color: whiteColor,
-                              ),
-                            ),
+                                onPressed: () {
+                                  setState(() => isFavorite = !isFavorite);
+                                },
+                                icon: isFavorite
+                                    ? Icon(
+                                        Icons.favorite_border_rounded,
+                                        color: whiteColor,
+                                      )
+                                    : const Icon(
+                                        Icons.favorite,
+                                        color: Colors.pink,
+                                      )),
                           )
                         ],
                       ),
@@ -154,12 +163,12 @@ class _DetailScreenState extends State<DetailScreen> {
               right: 0,
               child: Container(
                 height: 60,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10),
                   ),
-                  color: blackBackgroundColor,
+                  color: Colors.black87,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,7 +182,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             style: regularText,
                           ),
                           Text(
-                            '/ Night',
+                            '/person',
                             style: regularText,
                           ),
                         ],
@@ -184,7 +193,29 @@ class _DetailScreenState extends State<DetailScreen> {
                         child: SizedBox(
                       height: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                  height: 400,
+                                  decoration: BoxDecoration(
+                                      color: blackBackgroundColor,
+                                      borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20))),
+                                  child: Center(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Close'),
+                                    ),
+                                  ));
+                            },
+                          );
+                        },
                         style:
                             ElevatedButton.styleFrom(primary: greenDarkerColor),
                         child: Row(
