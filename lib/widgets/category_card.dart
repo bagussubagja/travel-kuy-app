@@ -77,7 +77,7 @@ class _CategoryCardState extends State<CategoryCard> {
                       borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
                         imgCategory[index],
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),

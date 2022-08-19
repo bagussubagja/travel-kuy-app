@@ -34,7 +34,7 @@ class SettingPage extends StatelessWidget {
                     backgroundColor: greenDarkerColor,
                     radius: 165,
                     child: CircleAvatar(
-                      backgroundColor: whiteColor,
+                      backgroundColor: greyColor,
                       radius: 145,
                       child: Image.asset(
                         'assets/images/avatar.png',
