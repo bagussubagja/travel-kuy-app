@@ -1,14 +1,18 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
+import 'package:travel_kuy_app/screens/category/category_page.dart';
 import 'package:travel_kuy_app/screens/home/favorite/favorites_page.dart';
 import 'package:travel_kuy_app/screens/home/home_page.dart';
 import 'package:travel_kuy_app/screens/home/schedule/schedule_page.dart';
 import 'package:travel_kuy_app/screens/home/setting_page.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
+
+import '../screens/category/category_class.dart';
 
 class CategoryCard extends StatefulWidget {
   const CategoryCard({Key? key}) : super(key: key);
@@ -44,7 +48,16 @@ class _CategoryCardState extends State<CategoryCard> {
         scrollDirection: Axis.horizontal,
         itemCount: imgCategory.length,
         itemBuilder: (context, index) => GestureDetector(
-          onTap: () => print(index),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CategoryPage(
+                cc: CategoryClass(
+                  index: index,
+                ),
+              ),
+            ),
+          ),
           child: Container(
             height: 60,
             width: 160,

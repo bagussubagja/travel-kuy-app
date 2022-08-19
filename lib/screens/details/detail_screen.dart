@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:switch_tab/switch_tab.dart';
+import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/details/booking_process.dart';
 import 'package:travel_kuy_app/screens/details/overview_page.dart';
 import 'package:travel_kuy_app/screens/details/review_page.dart';
@@ -356,7 +357,6 @@ class _DetailScreenState extends State<DetailScreen> {
                                             ),
                                             MarginHeight(height: 20),
                                             Text(
-
                                               'Total Price : ${totalPrice == 0 ? rupiah(price) : rupiah(totalPrice)}',
                                               style: regularText,
                                             ),
@@ -368,11 +368,12 @@ class _DetailScreenState extends State<DetailScreen> {
                                                 style: ElevatedButton.styleFrom(
                                                     primary: greenDarkerColor),
                                                 onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              BookingProcess()));
+                                                  Navigator
+                                                      .pushNamedAndRemoveUntil(
+                                                          context,
+                                                          AppRoutes
+                                                              .bookingProcess,
+                                                          (route) => false);
                                                 },
                                                 child: Text(
                                                   'Confirm',
