@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:indonesia/indonesia.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
@@ -51,26 +52,26 @@ class NewlyAddedCard extends StatelessWidget {
                         'Danau Toba',
                         style: regularText,
                       ),
-                      Text(
-                        'Lorem Ipsum Dolor Sit Amet sdaf',
-                        style: subTitleText.copyWith(fontSize: 13),
-                      ),
+                      MarginHeight(height: 3),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.location_on_rounded,
                             color: greyColor,
-                            size: 10,
+                            size: 15,
                           ),
                           MarginWidth(width: 5),
                           Text(
                             'Jawa Barat',
                             style: subTitleText.copyWith(
-                                color: greyColor, fontSize: 12),
+                                color: greyColor),
                           ),
                         ],
                       ),
+                      MarginHeight(height: 3),
+                      Text('${rupiah(1450000)}/person', style: subTitleText,)
                     ],
                   ),
                 )

@@ -1,15 +1,18 @@
 import 'dart:ui';
-
+import 'package:count_stepper/count_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:switch_tab/switch_tab.dart';
+import 'package:travel_kuy_app/screens/details/booking_process.dart';
 import 'package:travel_kuy_app/screens/details/overview_page.dart';
 import 'package:travel_kuy_app/screens/details/review_page.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/custom_nav_button.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
+
+import '../../widgets/my_textfield.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({Key? key}) : super(key: key);
@@ -21,6 +24,16 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   int indexPage = 0;
   bool isFavorite = false;
+  int person = 0;
+  int price = 1500000;
+  int totalPrice = 0;
+  DateTime _selectedDate = DateTime(2022, 08, 17);
+
+  @override
+  void initState() {
+    totalPrice = totalPrice + price;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +120,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                         size: 20,
                                       ),
                                       MarginWidth(width: 5),
-                                      Text('Jawa Timur', style: subTitleText),
+                                      Text('Banyuwangi, Jawa Timur',
+                                          style: subTitleText),
                                     ],
                                   ),
                                   MarginHeight(height: 5),
@@ -171,7 +185,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   color: Colors.black87,
                 ),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 20, top: 5),
@@ -195,24 +209,182 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           showModalBottomSheet(
+                            isDismissible: false,
+                            enableDrag: false,
                             backgroundColor: Colors.transparent,
                             context: context,
                             builder: (BuildContext context) {
-                              return Container(
-                                  height: 400,
-                                  decoration: BoxDecoration(
-                                      color: blackBackgroundColor,
-                                      borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20))),
-                                  child: Center(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('Close'),
-                                    ),
-                                  ));
+                              return StatefulBuilder(
+                                builder: (BuildContext context,
+                                    StateSetter setState) {
+                                  return Container(
+                                      height:
+                                          MediaQuery.of(context).size.height,
+                                      decoration: BoxDecoration(
+                                        color: blackBackgroundColor,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          topRight: Radius.circular(30),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: defaultPadding,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            MarginHeight(height: 15),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 65,
+                                                      width: 65,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        child: Image.asset(
+                                                          'assets/images/beach.jpg',
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    MarginWidth(width: 15),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Gunung Rinjani',
+                                                          style: regularText,
+                                                        ),
+                                                        Text(
+                                                          '${rupiah(1500000)}/person',
+                                                          style: subTitleText,
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                                OutlinedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    style: OutlinedButton
+                                                        .styleFrom(
+                                                            side: BorderSide(
+                                                                color:
+                                                                    greyColor,
+                                                                width: 1)),
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style: subTitleText,
+                                                    ))
+                                              ],
+                                            ),
+                                            MarginHeight(height: 15),
+                                            Text(
+                                              'You will book a vacation to Mount Rinjani. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
+                                              style: regularText.copyWith(
+                                                  color: greyColor),
+                                            ),
+                                            // MarginHeight(height: 10),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Flexible(
+                                                  flex: 1,
+                                                  child: MyTextField(
+                                                    readOnly: true,
+                                                    prefixIcon: Icon(
+                                                      Icons
+                                                          .calendar_month_rounded,
+                                                      color: greyColor,
+                                                    ),
+                                                    onTap: () async {
+                                                      DateTime? pickedDate =
+                                                          await showDatePicker(
+                                                              context: context,
+                                                              initialDate:
+                                                                  _selectedDate,
+                                                              firstDate:
+                                                                  DateTime(
+                                                                      2022),
+                                                              lastDate:
+                                                                  DateTime(
+                                                                      2100));
+                                                      // if user cancel the date picker
+                                                      if (pickedDate == null)
+                                                        return;
+                                                      // if user select new date
+                                                      setState(() =>
+                                                          _selectedDate =
+                                                              pickedDate);
+                                                    },
+                                                    hintText: _selectedDate
+                                                        .toString()
+                                                        .substring(0, 10),
+                                                  ),
+                                                ),
+                                                MarginWidth(width: 15),
+                                                CountStepper(
+                                                  iconColor: greenLightColor,
+                                                  textStyle: regularText,
+                                                  iconIncrementColor:
+                                                      greenLightColor,
+                                                  defaultValue: 1,
+                                                  max: 100,
+                                                  min: 1,
+                                                  iconDecrementColor:
+                                                      greenLightColor,
+                                                  splashRadius: 50,
+                                                  onPressed: (value) {
+                                                    setState(() => totalPrice =
+                                                        price * value);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                            MarginHeight(height: 20),
+                                            Text(
+
+                                              'Total Price : ${totalPrice == 0 ? rupiah(price) : rupiah(totalPrice)}',
+                                              style: regularText,
+                                            ),
+                                            MarginHeight(height: 20),
+                                            SizedBox(
+                                              height: 50,
+                                              width: double.infinity,
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    primary: greenDarkerColor),
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              BookingProcess()));
+                                                },
+                                                child: Text(
+                                                  'Confirm',
+                                                  style: regularText,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ));
+                                },
+                              );
                             },
                           );
                         },
@@ -227,7 +399,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             ),
                             MarginWidth(width: 10),
                             Icon(
-                              Icons.arrow_forward,
+                              Icons.arrow_forward_rounded,
                               color: whiteColor,
                             ),
                           ],

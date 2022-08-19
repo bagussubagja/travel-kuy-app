@@ -11,6 +11,7 @@ class MyTextField extends StatelessWidget {
   Widget? prefixIcon;
   Function()? onTap;
   bool? obsecureText;
+  bool? readOnly;
   MyTextField(
       {Key? key,
         this.titleText,
@@ -19,7 +20,9 @@ class MyTextField extends StatelessWidget {
       this.widget,
       this.onTap,
       this.prefixIcon,
-      this.obsecureText})
+      this.obsecureText,
+      this.readOnly
+      })
       : super(key: key);
 
   @override
@@ -45,7 +48,7 @@ class MyTextField extends StatelessWidget {
                   cursorColor: greenDarkerColor,
                   obscureText: obsecureText ?? false,
                   onTap: onTap,
-                  readOnly: widget == null ? false : true,
+                  readOnly: readOnly ?? false,
                   controller: controller,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
