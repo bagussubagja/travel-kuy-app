@@ -13,8 +13,6 @@ class CategoryPage extends StatelessWidget {
   CategoryClass? cc;
   CategoryPage({Key? key, this.cc}) : super(key: key);
 
-  List<String> titlePage = ["Beach", "Mountain", "Island"];
-
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -31,10 +29,20 @@ class CategoryPage extends StatelessWidget {
                   flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
                     background: cc?.index == 0
-                        ? Image.asset('assets/images/beach.jpg',
-                            fit: BoxFit.fill)
-                        : Image.asset('assets/images/mountain.jpg',
-                            fit: BoxFit.fill),
+                        ? Image.asset('assets/images/beach.jpg', fit: BoxFit.fill,)
+                        : cc?.index == 1
+                            ? Image.asset('assets/images/island.jpg', fit: BoxFit.fill,)
+                            : cc?.index == 2
+                                ? Image.asset('assets/images/lake.png', fit: BoxFit.fill,)
+                                : cc?.index == 3
+                                    ? Image.asset('assets/images/mountain.jpg', fit: BoxFit.fill,)
+                                    : cc?.index == 4
+                                        ? Image.asset('assets/images/park.png', fit: BoxFit.fill,)
+                                        : cc?.index == 5
+                                            ? Image.asset(
+                                                'assets/images/waterfall.jpg', fit: BoxFit.fill,)
+                                            : Image.asset(
+                                                'assets/images/beach.jpg', fit: BoxFit.fill,),
                   ),
                   backgroundColor: blackBackgroundColor,
                   expandedHeight: 250,
@@ -64,7 +72,20 @@ class CategoryPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         MarginHeight(height: 15),
-                        Text(cc?.index == 0 ? "Beach" : "Mountain", style: titleText,),
+                        Text(
+                          cc?.index == 0
+                              ? "Beach"
+                              : cc?.index == 1
+                                  ? "Island"
+                                  : cc?.index == 2
+                                      ? "Lake"
+                                      : cc?.index == 3
+                                          ? "Mountain"
+                                          : cc?.index == 4
+                                              ? "Park"
+                                              : "Waterfall",
+                          style: titleText,
+                        ),
                         MarginHeight(height: 5),
                         Text(
                           '"There is a feeling of satisfaction every time you walk on wet sand, feel the ocean breeze on your face."',
@@ -96,7 +117,17 @@ class CategoryPage extends StatelessWidget {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(12),
                                       child: Image.asset(
-                                        'assets/images/mountain.jpg',
+                                        cc?.index == 0
+                                            ? "assets/images/beach.jpg"
+                                            : cc?.index == 1
+                                                ? "assets/images/island.jpg"
+                                                : cc?.index == 2
+                                                    ? "assets/images/lake.png"
+                                                    : cc?.index == 3
+                                                        ? "assets/images/mountain.jpg"
+                                                        : cc?.index == 4
+                                                            ? "assets/images/park.png"
+                                                            : "assets/images/waterfall.jpg",
                                         fit: BoxFit.fill,
                                       ),
                                     ),
