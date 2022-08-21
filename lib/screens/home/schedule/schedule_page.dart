@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_kuy_app/screens/home/schedule/schedule_list.dart';
+import 'package:travel_kuy_app/screens/home/schedule/schedule_tile_list.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/content_not_found.dart';
 
@@ -31,7 +31,7 @@ class _SchedulePageState extends State<SchedulePage> {
              MarginHeight(height: 5),
               Text("Lorem Ipsum Dolor Sit Amet 🗓️", style: subTitleText,),
               MarginHeight(height: 20),
-              ScheduleList()
+              ScheduleTileList()
             ],
           ),
         ),

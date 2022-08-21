@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.green, fontFamily: 'Poppins'),
       initialRoute: AppRoutes.bodyScreen,
       routes: AppRoutes.routes,
-
     );
   }
 }
