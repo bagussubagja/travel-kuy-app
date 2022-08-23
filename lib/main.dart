@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Travel Kuy App',
       theme: ThemeData(primarySwatch: Colors.green, fontFamily: 'Poppins'),
-      initialRoute: AppRoutes.bodyScreen,
+      initialRoute: AppRoutes.registerScreen,
       routes: AppRoutes.routes,
     );
   }

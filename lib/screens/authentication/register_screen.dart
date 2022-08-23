@@ -81,62 +81,62 @@ class RegisterScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(primary: greenDarkerColor),
-                    child: const Text('Register'),
+                    child: Text('Register', style: regularText,),
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      child: Divider(
-                        color: greyColor,
-                        height: 2,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      'or Sign up With',
-                      style: regularText,
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Flexible(
-                      child: Divider(
-                        color: greyColor,
-                        height: 2,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: SizedBox(
-                    width: 200,
-                    child: OutlinedButton(
-                        onPressed: () {},
-                        style: OutlinedButton.styleFrom(
-                          primary: greenDarkerColor,
-                          side: BorderSide(width: 1.0, color: greenDarkerColor),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Image.asset(
-                              'assets/images/google-logo.png',
-                              height: 20,
-                            ),
-                            const Text('Sign up with Google')
-                          ],
-                        )),
-                  ),
-                )
+                // const SizedBox(
+                //   height: 15,
+                // ),
+                // Row(
+                //   children: [
+                //     Flexible(
+                //       child: Divider(
+                //         color: greyColor,
+                //         height: 2,
+                //       ),
+                //     ),
+                //     const SizedBox(
+                //       width: 20,
+                //     ),
+                //     Text(
+                //       'or Sign up With',
+                //       style: regularText,
+                //     ),
+                //     const SizedBox(
+                //       width: 20,
+                //     ),
+                //     Flexible(
+                //       child: Divider(
+                //         color: greyColor,
+                //         height: 2,
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // Center(
+                //   child: SizedBox(
+                //     width: 200,
+                //     child: OutlinedButton(
+                //         onPressed: () {},
+                //         style: OutlinedButton.styleFrom(
+                //           primary: greenDarkerColor,
+                //           side: BorderSide(width: 1.0, color: greenDarkerColor),
+                //         ),
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //           children: [
+                //             Image.asset(
+                //               'assets/images/google-logo.png',
+                //               height: 20,
+                //             ),
+                //             const Text('Sign up with Google')
+                //           ],
+                //         )),
+                //   ),
+                // )
               ],
             ),
           ),
