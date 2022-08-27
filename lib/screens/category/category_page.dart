@@ -1,11 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
-import 'package:travel_kuy_app/widgets/category_card.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
-
-import '../../widgets/custom_nav_button.dart';
 import '../../widgets/margin_widget_width.dart';
 import 'category_class.dart';
 

@@ -5,7 +5,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:switch_tab/switch_tab.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
-import 'package:travel_kuy_app/screens/details/booking_process.dart';
 import 'package:travel_kuy_app/screens/details/overview_page.dart';
 import 'package:travel_kuy_app/screens/details/review_page.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
@@ -101,7 +100,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           child: BackdropFilter(
                             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                             child: Container(
-                              height: 120,
+                              height: 125,
                               width: double.infinity,
                               padding: const EdgeInsets.all(15),
                               decoration: BoxDecoration(
@@ -324,8 +323,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                   DateTime(
                                                                       2100));
                                                       // if user cancel the date picker
-                                                      if (pickedDate == null)
-                                                        return;
+                                                      if (pickedDate == null) {
+                                                        return null;
+                                                      }
                                                       // if user select new date
                                                       setState(() =>
                                                           _selectedDate =

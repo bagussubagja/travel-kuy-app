@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class CategoryClass {
   int? index;
   CategoryClass({this.index});

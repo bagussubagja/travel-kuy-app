@@ -44,7 +44,7 @@ class NewlyAddedCard extends StatelessWidget {
                 MarginWidth(width: 10),
                 SizedBox(
                   height: 100,
-                  width: 150,
+                  width: 175,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -71,7 +71,7 @@ class NewlyAddedCard extends StatelessWidget {
                         ],
                       ),
                       MarginHeight(height: 3),
-                      Text('${rupiah(1450000)}/person', style: subTitleText,)
+                      Text('${rupiah(1450000)}/person', style: subTitleText.copyWith(fontSize: 14),)
                     ],
                   ),
                 )

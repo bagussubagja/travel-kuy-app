@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 
+import '../../core/auth_notifier.dart';
 import '../../shared/theme.dart';
 import '../../widgets/my_textfield.dart';
 
@@ -13,6 +15,8 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationNotifier authenticationNotifier =
+    Provider.of<AuthenticationNotifier>(context, listen: false);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -79,64 +83,21 @@ class RegisterScreen extends StatelessWidget {
                   height: 45,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      String email = emailController.text;
+                      String password = passwordController.text;
+                      if (email.isNotEmpty && password.isNotEmpty) {
+                        await authenticationNotifier.signUp(
+                            email: email, password: password, context: context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                           const SnackBar(content: Text('Fill the TextField!')));
+                      }
+                    },
                     style: ElevatedButton.styleFrom(primary: greenDarkerColor),
                     child: Text('Register', style: regularText,),
                   ),
                 ),
-                // const SizedBox(
-                //   height: 15,
-                // ),
-                // Row(
-                //   children: [
-                //     Flexible(
-                //       child: Divider(
-                //         color: greyColor,
-                //         height: 2,
-                //       ),
-                //     ),
-                //     const SizedBox(
-                //       width: 20,
-                //     ),
-                //     Text(
-                //       'or Sign up With',
-                //       style: regularText,
-                //     ),
-                //     const SizedBox(
-                //       width: 20,
-                //     ),
-                //     Flexible(
-                //       child: Divider(
-                //         color: greyColor,
-                //         height: 2,
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                // Center(
-                //   child: SizedBox(
-                //     width: 200,
-                //     child: OutlinedButton(
-                //         onPressed: () {},
-                //         style: OutlinedButton.styleFrom(
-                //           primary: greenDarkerColor,
-                //           side: BorderSide(width: 1.0, color: greenDarkerColor),
-                //         ),
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //           children: [
-                //             Image.asset(
-                //               'assets/images/google-logo.png',
-                //               height: 20,
-                //             ),
-                //             const Text('Sign up with Google')
-                //           ],
-                //         )),
-                //   ),
-                // )
               ],
             ),
           ),

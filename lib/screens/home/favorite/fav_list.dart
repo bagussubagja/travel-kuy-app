@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
-import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 
 class FavList extends StatefulWidget {
   FavList({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../routes/routes.dart';
-import '../../shared/theme.dart';
-import '../../widgets/margin_widget_height.dart';
+import '../../../routes/routes.dart';
+import '../../../shared/theme.dart';
+import '../../../widgets/margin_widget_height.dart';
 
 class BookingFailed extends StatelessWidget {
   const BookingFailed({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class BookingFailed extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 MarginHeight(height: 15),
-                Container(
+                SizedBox(
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(

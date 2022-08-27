@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/screens/home/schedule/schedule_tile_list.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
-import 'package:travel_kuy_app/widgets/content_not_found.dart';
 
 import '../../../widgets/margin_widget_height.dart';
 
