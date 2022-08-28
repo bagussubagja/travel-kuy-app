@@ -3,7 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 
-import '../../core/auth_notifier.dart';
+import '../../core/auth_notifier/auth_notifier.dart';
 import '../../shared/theme.dart';
 import '../../widgets/my_textfield.dart';
 

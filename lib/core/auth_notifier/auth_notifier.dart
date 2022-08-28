@@ -1,7 +1,7 @@
 import 'package:cache_manager/core/write_cache_service.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
-import '../services/auth_service.dart';
+import '../../services/auth_service.dart';
 
 class AuthenticationNotifier extends ChangeNotifier {
   final AuthenticationService _authenticationService = AuthenticationService();

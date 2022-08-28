@@ -5,7 +5,7 @@ import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/my_textfield.dart';
 
-import '../../core/auth_notifier.dart';
+import '../../core/auth_notifier/auth_notifier.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

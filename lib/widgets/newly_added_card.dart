@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:indonesia/indonesia.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_kuy_app/core/place_notifier/newlyadded_notifier.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 
-class NewlyAddedCard extends StatelessWidget {
+class NewlyAddedCard extends StatefulWidget {
   const NewlyAddedCard({Key? key}) : super(key: key);
 
   @override
+  State<NewlyAddedCard> createState() => _NewlyAddedCardState();
+}
+
+class _NewlyAddedCardState extends State<NewlyAddedCard> {
+  @override
+  void initState() {
+    super.initState();
+    final newlyAddedModel =
+        Provider.of<NewlyAddedClass>(context, listen: false);
+    newlyAddedModel.getNewlyAddedPlace();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final newlyAddedModel = Provider.of<NewlyAddedClass>(context);
     return SizedBox(
       child: ListView.separated(
         itemCount: 10,
@@ -17,7 +33,7 @@ class NewlyAddedCard extends StatelessWidget {
         scrollDirection: Axis.vertical,
         separatorBuilder: (context, index) => MarginHeight(height: 10),
         itemBuilder: (context, index) => Container(
-          height: 100,
+          height: 110,
           width: double.infinity,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -30,15 +46,16 @@ class NewlyAddedCard extends StatelessWidget {
                 SizedBox(
                   height: 100,
                   width: 140,
-                  child:  ClipRRect(
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                      width: double.infinity,
-                      child: Image.asset(
-                        'assets/images/park.png',
-                        fit: BoxFit.fill,
-                      ),
-                    ),
+                    child: newlyAddedModel.newly?[index].gallery == null
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Image.network(
+                            newlyAddedModel.newly![index].gallery[0],
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 MarginWidth(width: 10),
@@ -49,8 +66,8 @@ class NewlyAddedCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Danau Toba',
-                        style: regularText,
+                        newlyAddedModel.newly?[index].name ?? 'Loading...',
+                        style: regularText.copyWith(fontSize: 14),
                       ),
                       MarginHeight(height: 3),
                       Row(
@@ -60,18 +77,22 @@ class NewlyAddedCard extends StatelessWidget {
                           Icon(
                             Icons.location_on_rounded,
                             color: greyColor,
-                            size: 15,
+                            size: 12,
                           ),
                           MarginWidth(width: 5),
                           Text(
-                            'Jawa Barat',
+                            newlyAddedModel.newly?[index].province ??
+                                'Loading...',
                             style: subTitleText.copyWith(
-                                color: greyColor),
+                                color: greyColor, fontSize: 13),
                           ),
                         ],
                       ),
                       MarginHeight(height: 3),
-                      Text('${rupiah(1450000)}/person', style: subTitleText.copyWith(fontSize: 14),)
+                      Text(
+                        '${rupiah(newlyAddedModel.newly?[index].price ?? 0)}/person',
+                        style: subTitleText.copyWith(fontSize: 13),
+                      )
                     ],
                   ),
                 )

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_kuy_app/providers/auth_provider.dart';
+import 'package:travel_kuy_app/providers/providers_list.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 
 void main() {
@@ -13,10 +13,9 @@ class TravelKuy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: AppProviders.providers, child: const TravelKuyApp());
+        providers: ProvidersList.providers, child: const TravelKuyApp());
   }
 }
-
 
 class TravelKuyApp extends StatelessWidget {
   const TravelKuyApp({Key? key}) : super(key: key);

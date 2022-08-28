@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final placeModel = placeModelFromJson(jsonString);
+//     final dataModel = dataModelFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -22,9 +22,10 @@ class PlaceModel {
     required this.review,
     required this.rating,
     required this.category,
-    required this.photo,
-    required this.openingHour,
+    required this.gallery,
+    required this.operationalHour,
     required this.status,
+    required this.reviewerName,
   });
 
   int id;
@@ -37,9 +38,10 @@ class PlaceModel {
   List<String> review;
   String rating;
   String category;
-  List<String> photo;
-  String openingHour;
+  List<String> gallery;
+  String operationalHour;
   String status;
+  List<String> reviewerName;
 
   factory PlaceModel.fromJson(Map<String, dynamic> json) => PlaceModel(
         id: json["id"],
@@ -52,9 +54,10 @@ class PlaceModel {
         review: List<String>.from(json["review"].map((x) => x)),
         rating: json["rating"],
         category: json["category"],
-        photo: List<String>.from(json["photo"].map((x) => x)),
-        openingHour: json["opening_hour"],
+        gallery: List<String>.from(json["gallery"].map((x) => x)),
+        operationalHour: json["operationalHour"],
         status: json["status"],
+        reviewerName: List<String>.from(json["reviewerName"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -68,8 +71,9 @@ class PlaceModel {
         "review": List<dynamic>.from(review.map((x) => x)),
         "rating": rating,
         "category": category,
-        "photo": List<dynamic>.from(photo.map((x) => x)),
-        "opening_hour": openingHour,
+        "gallery": List<dynamic>.from(gallery.map((x) => x)),
+        "operationalHour": operationalHour,
         "status": status,
+        "reviewerName": List<dynamic>.from(reviewerName.map((x) => x)),
       };
 }

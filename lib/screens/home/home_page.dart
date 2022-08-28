@@ -4,8 +4,8 @@ import 'package:travel_kuy_app/widgets/category_card.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/most_viewed_card.dart';
 import 'package:travel_kuy_app/widgets/newly_added_card.dart';
-import 'package:travel_kuy_app/widgets/popular_card.dart';
-import 'package:travel_kuy_app/widgets/recommended_card.dart';
+import 'package:travel_kuy_app/widgets/recommended_place_card.dart';
+import 'package:travel_kuy_app/widgets/popular_place_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Popular Destination',
+                      'Recommendation for you',
                       style: regularText,
                     ),
                     TextButton(
@@ -88,12 +88,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 MarginHeight(height: 10),
-                PopularCard(),
+                RecommendedPlaceCard(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Just for you ',
+                      'Popular Destination',
                       style: regularText,
                     ),
                     TextButton(
@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         )),
                   ],
                 ),
-                RecommendedCard(),
+                PopularPlaceCard(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
