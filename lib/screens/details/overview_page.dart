@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
+import 'package:travel_kuy_app/models/place_model.dart';
 import 'package:travel_kuy_app/screens/details/widgets/gallery_photo.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 
 class OverviewPage extends StatelessWidget {
-  const OverviewPage({Key? key}) : super(key: key);
+  OverviewPage({Key? key, this.placeModel}) : super(key: key);
+  PlaceModel? placeModel;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class OverviewPage extends StatelessWidget {
           ),
           MarginHeight(height: 5),
           ReadMoreText(
-            'Bali Safari, the African Safari Adventure in Bali, is home to over a thousand amazing animals - Bali Safari Park is your destination for an adventurous, fun, educational experience more than just a safari. Our park is representing more than 120 species, including rare & endangered species - the Komodo Dragon, Orangutan, and the Bali Starling bird. Bali Safari Park is at the frontline of wildlife conservation in Indonesia. We are actively involved in ensuring the future survival and well-being of many Indonesian animal species.',
+            placeModel!.description,
             trimLines: 3,
             style: regularText.copyWith(color: greyColor),
             colorClickableText: greenDarkerColor,
@@ -35,7 +37,7 @@ class OverviewPage extends StatelessWidget {
             style: titleText,
           ),
           MarginHeight(height: 10),
-          GalleryPhoto(),
+          GalleryPhoto(placeModel: placeModel),
           MarginHeight(height: 10),
           Text(
             'Address',
@@ -51,7 +53,7 @@ class OverviewPage extends StatelessWidget {
               MarginWidth(width: 5),
               Flexible(
                 child: Text(
-                  'Jl. Prof. Dr. Ida Bagus Mantra No.km 19, Serongga, Kec. Gianyar, Kabupaten Gianyar, Bali',
+                  placeModel!.address,
                   style: regularText.copyWith(color: greyColor),
                 ),
               ),

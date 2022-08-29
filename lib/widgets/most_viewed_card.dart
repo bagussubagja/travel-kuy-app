@@ -8,7 +8,7 @@ import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 
 class MostViewCard extends StatefulWidget {
-  MostViewCard({Key? key}) : super(key: key);
+  const MostViewCard({Key? key}) : super(key: key);
 
   @override
   State<MostViewCard> createState() => _MostViewCardState();
@@ -79,10 +79,12 @@ class _MostViewCardState extends State<MostViewCard> {
                     size: 15,
                   ),
                   MarginWidth(width: 5),
-                  Text(
-                    mostViewed.mostViewed?[index].province ?? 'Loading',
-                    style:
-                        subTitleText.copyWith(color: greyColor, fontSize: 13),
+                  Expanded(
+                    child: Text(
+                      mostViewed.mostViewed?[index].province ?? 'Loading',
+                      style:
+                          subTitleText.copyWith(color: greyColor, fontSize: 13),
+                    ),
                   ),
                 ],
               ),

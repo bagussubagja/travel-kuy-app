@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:switch_tab/switch_tab.dart';
+import 'package:travel_kuy_app/models/place_model.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/details/overview_page.dart';
 import 'package:travel_kuy_app/screens/details/review_page.dart';
@@ -15,7 +16,8 @@ import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 import '../../widgets/my_textfield.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+  PlaceModel? placeModel;
+  DetailScreen({Key? key, this.placeModel}) : super(key: key);
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -54,10 +56,14 @@ class _DetailScreenState extends State<DetailScreen> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10)),
-                        child: Image.asset(
-                          'assets/images/beach.jpg',
-                          fit: BoxFit.cover,
-                        ),
+                        child: widget.placeModel?.gallery == null
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : Image.network(
+                                widget.placeModel!.gallery[0],
+                                fit: BoxFit.cover,
+                              ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,7 +116,8 @@ class _DetailScreenState extends State<DetailScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Gunung Rinjani', style: titleText),
+                                  Text(widget.placeModel?.name ?? 'Loading...',
+                                      style: titleText),
                                   MarginHeight(height: 5),
                                   Row(
                                     children: [
@@ -120,7 +127,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                         size: 20,
                                       ),
                                       MarginWidth(width: 5),
-                                      Text('Banyuwangi, Jawa Timur',
+                                      Text(
+                                          '${widget.placeModel?.district}, ${widget.placeModel?.province}',
                                           style: subTitleText),
                                     ],
                                   ),
@@ -128,7 +136,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                   Row(
                                     children: [
                                       RatingBarIndicator(
-                                        rating: 4.6,
+                                        rating: double.parse(
+                                            widget.placeModel!.rating),
                                         itemBuilder: (context, index) =>
                                             const Icon(
                                           Icons.star,
@@ -139,7 +148,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                         direction: Axis.horizontal,
                                       ),
                                       MarginWidth(width: 5),
-                                      Text('4.6', style: subTitleText),
+                                      Text(widget.placeModel?.rating ?? '4.0',
+                                          style: subTitleText),
                                     ],
                                   ),
                                 ],
@@ -167,7 +177,11 @@ class _DetailScreenState extends State<DetailScreen> {
                       },
                     ),
                   ),
-                  indexPage == 0 ? const OverviewPage() : ReviewPage(),
+                  indexPage == 0
+                      ? OverviewPage(
+                          placeModel: widget.placeModel,
+                        )
+                      : ReviewPage(placeModel: widget.placeModel),
                 ],
               ),
             ),
@@ -192,7 +206,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Column(
                         children: [
                           Text(
-                            rupiah(1500000),
+                            rupiah(widget.placeModel!.price),
                             style: regularText,
                           ),
                           Text(
@@ -248,8 +262,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        child: Image.asset(
-                                                          'assets/images/beach.jpg',
+                                                        child: Image.network(
+                                                          widget.placeModel!
+                                                              .gallery[0],
                                                           fit: BoxFit.fill,
                                                         ),
                                                       ),
@@ -261,11 +276,13 @@ class _DetailScreenState extends State<DetailScreen> {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          'Gunung Rinjani',
+                                                          widget.placeModel
+                                                                  ?.name ??
+                                                              'Loading...',
                                                           style: regularText,
                                                         ),
                                                         Text(
-                                                          '${rupiah(1500000)}/person',
+                                                          '${rupiah(widget.placeModel?.price ?? 0)}/person',
                                                           style: subTitleText,
                                                         )
                                                       ],
@@ -290,7 +307,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                             ),
                                             MarginHeight(height: 15),
                                             Text(
-                                              'You will book a vacation to Mount Rinjani. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
+                                              'You will book a vacation to ${widget.placeModel!.name}. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
                                               style: regularText.copyWith(
                                                   color: greyColor),
                                             ),

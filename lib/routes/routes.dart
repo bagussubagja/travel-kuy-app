@@ -22,7 +22,7 @@ class AppRoutes {
     loginScreen: (context) => const LoginScreen(),
     registerScreen: (context) => RegisterScreen(),
     bodyScreen: (context) =>  BodyScreen(),
-    detailScreen: (context) => const DetailScreen(),
+    detailScreen: (context) => DetailScreen(),
     bookingProcess : (context) => const BookingProcess(),
     categoryPage : (context) => CategoryPage(),
     stateUI : (context) => const StateUI(),
