@@ -1,6 +1,5 @@
 import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
-import 'package:travel_kuy_app/screens/category/category_page.dart';
 import 'package:travel_kuy_app/screens/details/widgets/booking_process.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/screens/home/body_screen.dart';
@@ -24,7 +23,6 @@ class AppRoutes {
     bodyScreen: (context) =>  BodyScreen(),
     detailScreen: (context) => DetailScreen(),
     bookingProcess : (context) => const BookingProcess(),
-    categoryPage : (context) => CategoryPage(),
     stateUI : (context) => const StateUI(),
   };
 }

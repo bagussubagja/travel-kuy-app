@@ -106,7 +106,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           child: BackdropFilter(
                             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                             child: Container(
-                              height: 125,
+                              height: 135,
                               width: double.infinity,
                               padding: const EdgeInsets.all(15),
                               decoration: BoxDecoration(
@@ -117,7 +117,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(widget.placeModel?.name ?? 'Loading...',
-                                      style: titleText),
+                                      style: titleText.copyWith(fontSize: 18)),
                                   MarginHeight(height: 5),
                                   Row(
                                     children: [
@@ -127,9 +127,12 @@ class _DetailScreenState extends State<DetailScreen> {
                                         size: 20,
                                       ),
                                       MarginWidth(width: 5),
-                                      Text(
-                                          '${widget.placeModel?.district}, ${widget.placeModel?.province}',
-                                          style: subTitleText),
+                                      Expanded(
+                                        child: Text(
+                                            '${widget.placeModel?.district}, ${widget.placeModel?.province}',
+                                            style: subTitleText.copyWith(
+                                                fontSize: 13.5)),
+                                      ),
                                     ],
                                   ),
                                   MarginHeight(height: 5),
@@ -144,12 +147,13 @@ class _DetailScreenState extends State<DetailScreen> {
                                           color: Colors.amber,
                                         ),
                                         itemCount: 5,
-                                        itemSize: 20.0,
+                                        itemSize: 17.5,
                                         direction: Axis.horizontal,
                                       ),
                                       MarginWidth(width: 5),
                                       Text(widget.placeModel?.rating ?? '4.0',
-                                          style: subTitleText),
+                                          style: subTitleText.copyWith(
+                                              fontSize: 13.5)),
                                     ],
                                   ),
                                 ],
@@ -160,7 +164,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                     ],
                   ),
-                  MarginHeight(height: 75),
+                  MarginHeight(height: 90),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: SwitchTab(

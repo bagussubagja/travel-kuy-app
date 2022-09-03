@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
-import 'package:travel_kuy_app/widgets/category_card.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/most_viewed_card.dart';
 import 'package:travel_kuy_app/widgets/newly_added_card.dart';
 import 'package:travel_kuy_app/widgets/recommended_place_card.dart';
 import 'package:travel_kuy_app/widgets/popular_place_card.dart';
+
+import '../categories/category_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

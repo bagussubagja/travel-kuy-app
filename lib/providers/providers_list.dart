@@ -1,5 +1,6 @@
 import 'package:provider/single_child_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_kuy_app/core/place_notifier/all_place_notifier.dart';
 import 'package:travel_kuy_app/core/place_notifier/category_notifier.dart';
 import 'package:travel_kuy_app/core/place_notifier/mostviewed_notifier.dart';
 import 'package:travel_kuy_app/core/place_notifier/newlyadded_notifier.dart';
@@ -42,6 +43,9 @@ class ProvidersList {
     ),
     ChangeNotifierProvider(
       create: (_) => WaterfallClass(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => AllClass(),
     ),
   ];
 }
