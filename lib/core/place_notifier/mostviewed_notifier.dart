@@ -4,11 +4,11 @@ import 'package:travel_kuy_app/services/tourism_place_service/mostviewed_service
 import 'package:travel_kuy_app/services/tourism_place_service/recommended_service.dart';
 
 class MostViewedClass extends ChangeNotifier {
- List<PlaceModel>? mostViewed;
+ List<PlaceModel>? mostView;
   bool loading = false;
   getMostViewedPlace() async {
     loading = true;
-    mostViewed = (await getMostViewedPlacesData())!;
+    mostView = (await getMostViewedPlacesData())!;
     loading = false;
     notifyListeners();
   }

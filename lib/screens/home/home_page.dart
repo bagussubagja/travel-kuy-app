@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:travel_kuy_app/screens/categories/by_status/mostview_place_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_status/newlyadded_place_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_status/popular_place_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_status/recommended_place_page.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/most_viewed_card.dart';
@@ -72,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: regularText,
                 ),
                 MarginHeight(height: 15),
-                CategoryCard(),
+                const CategoryCard(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -81,7 +85,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: regularText,
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return RecommendedPlacePage();
+                          }));
+                        },
                         child: Text(
                           'See All',
                           style: regularText.copyWith(color: greenDarkerColor),
@@ -89,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 MarginHeight(height: 10),
-                RecommendedPlaceCard(),
+                const RecommendedPlaceCard(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -98,7 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: regularText,
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PopularPlacePage();
+                          }));
+                        },
                         child: Text(
                           'See All',
                           style: regularText.copyWith(color: greenDarkerColor),
@@ -114,7 +128,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: regularText,
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return MostViewPlacePage();
+                          }));
+                        },
                         child: Text(
                           'See All',
                           style: regularText.copyWith(color: greenDarkerColor),
@@ -130,14 +149,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: regularText,
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return NewlyAddedPlacePage();
+                          }));
+                        },
                         child: Text(
                           'See All',
                           style: regularText.copyWith(color: greenDarkerColor),
                         )),
                   ],
                 ),
-                NewlyAddedCard()
+                const NewlyAddedCard()
               ],
             ),
           ),

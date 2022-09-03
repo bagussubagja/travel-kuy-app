@@ -5,7 +5,7 @@ import 'package:travel_kuy_app/services/tourism_place_service/popular_service.da
 class PopularClass extends ChangeNotifier {
  List<PlaceModel>? popular;
   bool loading = false;
-  getRecommendedPlace() async {
+  getPopularPlace() async {
     loading = true;
     popular = (await getPopularPlacesData())!;
     loading = false;
