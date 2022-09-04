@@ -33,8 +33,8 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   void initState() {
-    totalPrice = totalPrice + price;
     super.initState();
+    totalPrice = totalPrice + widget.placeModel!.price;
   }
 
   @override
@@ -124,14 +124,14 @@ class _DetailScreenState extends State<DetailScreen> {
                                       Icon(
                                         Icons.location_on_rounded,
                                         color: greyColor,
-                                        size: 20,
+                                        size: 17,
                                       ),
                                       MarginWidth(width: 5),
                                       Expanded(
                                         child: Text(
                                             '${widget.placeModel?.district}, ${widget.placeModel?.province}',
                                             style: subTitleText.copyWith(
-                                                fontSize: 13.5)),
+                                                fontSize: 14)),
                                       ),
                                     ],
                                   ),
@@ -153,7 +153,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                       MarginWidth(width: 5),
                                       Text(widget.placeModel?.rating ?? '4.0',
                                           style: subTitleText.copyWith(
-                                              fontSize: 13.5)),
+                                              fontSize: 14)),
                                     ],
                                   ),
                                 ],
@@ -227,8 +227,6 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           showModalBottomSheet(
-                            isDismissible: false,
-                            enableDrag: false,
                             backgroundColor: Colors.transparent,
                             context: context,
                             builder: (BuildContext context) {
@@ -251,7 +249,19 @@ class _DetailScreenState extends State<DetailScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            MarginHeight(height: 15),
+                                            MarginHeight(height: 10),
+                                            Center(
+                                              child: Container(
+                                                height: 5,
+                                                width: 50,
+                                                decoration: BoxDecoration(
+                                                  color: greyColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                            ),
+                                            MarginHeight(height: 10),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -293,27 +303,14 @@ class _DetailScreenState extends State<DetailScreen> {
                                                     )
                                                   ],
                                                 ),
-                                                OutlinedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    style: OutlinedButton
-                                                        .styleFrom(
-                                                            side: BorderSide(
-                                                                color:
-                                                                    greyColor,
-                                                                width: 1)),
-                                                    child: Text(
-                                                      'Cancel',
-                                                      style: subTitleText,
-                                                    ))
                                               ],
                                             ),
                                             MarginHeight(height: 15),
                                             Text(
                                               'You will book a vacation to ${widget.placeModel!.name}. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
                                               style: regularText.copyWith(
-                                                  color: greyColor),
+                                                  color: greyColor,
+                                                  fontSize: 16),
                                             ),
                                             // MarginHeight(height: 10),
                                             Row(
@@ -358,6 +355,18 @@ class _DetailScreenState extends State<DetailScreen> {
                                                   ),
                                                 ),
                                                 MarginWidth(width: 15),
+                                              ],
+                                            ),
+                                            MarginHeight(height: 15),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Total Price : ${totalPrice == 0 ? rupiah(widget.placeModel!.price) : rupiah(totalPrice)}',
+                                                  style: regularText,
+                                                ),
                                                 CountStepper(
                                                   iconColor: greenLightColor,
                                                   textStyle: regularText,
@@ -371,17 +380,14 @@ class _DetailScreenState extends State<DetailScreen> {
                                                   splashRadius: 50,
                                                   onPressed: (value) {
                                                     setState(() => totalPrice =
-                                                        price * value);
+                                                        widget.placeModel!
+                                                                .price *
+                                                            value);
                                                   },
                                                 ),
                                               ],
                                             ),
-                                            MarginHeight(height: 20),
-                                            Text(
-                                              'Total Price : ${totalPrice == 0 ? rupiah(price) : rupiah(totalPrice)}',
-                                              style: regularText,
-                                            ),
-                                            MarginHeight(height: 20),
+                                            MarginHeight(height: 15),
                                             SizedBox(
                                               height: 50,
                                               width: double.infinity,
