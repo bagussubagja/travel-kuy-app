@@ -9,9 +9,9 @@ Color greyColor = const Color(0xffAAAAAA);
 TextStyle titleText =
     TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: whiteColor);
 TextStyle subTitleText =
-    TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: greyColor);
+    TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: greyColor);
 TextStyle regularText =
-    TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: whiteColor);
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: whiteColor);
 
 EdgeInsets defaultPadding = const EdgeInsets.fromLTRB(15, 10, 15, 20);
 EdgeInsets detailPagePadding = const EdgeInsets.fromLTRB(10, 15, 10, 100);
