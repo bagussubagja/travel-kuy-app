@@ -3,7 +3,9 @@ import 'package:count_stepper/count_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:indonesia/indonesia.dart';
+import 'package:provider/provider.dart';
 import 'package:switch_tab/switch_tab.dart';
+import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
 import 'package:travel_kuy_app/models/place_model.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/details/overview_page.dart';
@@ -39,6 +41,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final fav = Provider.of<FavoriteNotifier>(context);
     return Scaffold(
       backgroundColor: blackBackgroundColor,
       body: SafeArea(
@@ -57,7 +60,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10)),
                         child: widget.placeModel?.gallery == null
-                            ? Center(
+                            ? const Center(
                                 child: CircularProgressIndicator(),
                               )
                             : Image.network(
@@ -79,20 +82,21 @@ class _DetailScreenState extends State<DetailScreen> {
                           ),
                           CustomNavButton(
                             bgColor: isFavorite
-                                ? Colors.black.withOpacity(0.5)
-                                : Colors.pink.withOpacity(0.5),
+                                ? Colors.pink.withOpacity(0.5)
+                                : Colors.black.withOpacity(0.5),
                             child: IconButton(
                                 onPressed: () {
-                                  setState(() => isFavorite = !isFavorite);
+                                  // setState(() => isFavorite = !isFavorite);
+                                  fav.toggleFavorite(widget.placeModel!);
                                 },
-                                icon: isFavorite
-                                    ? Icon(
-                                        Icons.favorite_border_rounded,
-                                        color: whiteColor,
-                                      )
-                                    : const Icon(
+                                icon: fav.isExist(widget.placeModel!)
+                                    ? const Icon(
                                         Icons.favorite,
                                         color: Colors.pink,
+                                      )
+                                    : Icon(
+                                        Icons.favorite_border_rounded,
+                                        color: whiteColor,
                                       )),
                           )
                         ],
