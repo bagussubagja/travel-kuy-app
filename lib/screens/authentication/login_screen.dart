@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/my_textfield.dart';
+
+import '../../core/auth_notifier/auth_notifier.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -18,6 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationNotifier authenticationNotifier =
+    Provider.of<AuthenticationNotifier>(context, listen: false);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -60,12 +65,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  alignment: WrapAlignment.center,
                   children: [
                     Text(
                       "Don't have an account yet?",
-                      style: regularText,
+                      style: regularText.copyWith(fontSize: 16),
                     ),
                     TextButton(
                         onPressed: () {
@@ -76,8 +82,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           'Register Now!',
-                          style: regularText.copyWith(color: greenDarkerColor),
-                        ))
+                          style: regularText.copyWith(color: greenDarkerColor, fontSize: 16),
+                        )),
+
                   ],
                 ),
                 const SizedBox(
@@ -87,67 +94,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 45,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, AppRoutes.bodyScreen, (route) => false);
+                    onPressed: () async {
+                      String email = emailController.text;
+                      String password = passwordController.text;
+                      if (email.isNotEmpty && password.isNotEmpty) {
+                        await authenticationNotifier.login(
+                            email: email, password: password, context: context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Fill the TextField!')));
+                      }
                     },
                     style: ElevatedButton.styleFrom(primary: greenDarkerColor),
                     child: Text('Login', style: regularText,),
                   ),
                 ),
-                // const SizedBox(
-                //   height: 15,
-                // ),
-                // Row(
-                //   children: [
-                //     Flexible(
-                //       child: Divider(
-                //         color: greyColor,
-                //         height: 2,
-                //       ),
-                //     ),
-                //     const SizedBox(
-                //       width: 20,
-                //     ),
-                //     Text(
-                //       'or Sign in With',
-                //       style: regularText,
-                //     ),
-                //     const SizedBox(
-                //       width: 20,
-                //     ),
-                //     Flexible(
-                //       child: Divider(
-                //         color: greyColor,
-                //         height: 2,
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                // Center(
-                //   child: SizedBox(
-                //     width: 200,
-                //     child: OutlinedButton(
-                //         onPressed: () {},
-                //         style: OutlinedButton.styleFrom(
-                //           primary: greenDarkerColor,
-                //           side: BorderSide(width: 1.0, color: greenDarkerColor),
-                //         ),
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //           children: [
-                //             Image.asset(
-                //               'assets/images/google-logo.png',
-                //               height: 20,
-                //             ),
-                //             const Text('Sign in with Google')
-                //           ],
-                //         )),
-                //   ),
-                // )
               ],
             ),
           ),

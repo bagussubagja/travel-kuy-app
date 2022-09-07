@@ -10,16 +10,16 @@ class FavoritesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         backgroundColor: blackBackgroundColor,
         body: SafeArea(
             child: SingleChildScrollView(
-              child: Padding(
-          padding: defaultPadding,
-          child: Column(
+          child: Padding(
+            padding: defaultPadding,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -27,7 +27,8 @@ class FavoritesPage extends StatelessWidget {
                   style: titleText,
                 ),
                 MarginHeight(height: 5),
-                Text('Here are your favorite destinations ❤️', style: subTitleText),
+                Text('Here are your favorite destinations ❤️',
+                    style: subTitleText),
                 MarginHeight(height: 10),
                 MyTextField(
                   hintText: 'Search for a destination',
@@ -40,9 +41,9 @@ class FavoritesPage extends StatelessWidget {
                 MarginHeight(height: 20),
                 FavList()
               ],
+            ),
           ),
-        ),
-            )),
+        )),
       ),
     );
   }

@@ -1,10 +1,14 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
+import '../../models/place_model.dart';
 import '../../shared/theme.dart';
 import '../../widgets/margin_widget_height.dart';
 
 class ReviewPage extends StatelessWidget {
-  ReviewPage({Key? key}) : super(key: key);
+  PlaceModel? placeModel;
+  ReviewPage({Key? key, this.placeModel}) : super(key: key);
 
   List<String> reviewerName = [
     "Alif Ilman Nafian",
@@ -37,16 +41,16 @@ class ReviewPage extends StatelessWidget {
               controller: _scrollController,
               itemBuilder: (context, index) => ListTile(
                 title: Text(
-                  reviewerName[index],
+                  placeModel!.reviewerName[index],
                   style: regularText,
                 ),
                 subtitle: Text(
-                  reviewerTestimony[index],
+                  placeModel!.review[index],
                   style: subTitleText,
                 ),
                 leading: Image.asset('assets/images/avatar.png'),
               ),
-              itemCount: reviewerName.length,
+              itemCount: placeModel?.review.length ?? 3,
             ),
           ),
         ),

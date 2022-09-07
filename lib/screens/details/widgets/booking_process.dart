@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:travel_kuy_app/screens/details/booking_success.dart';
+import 'package:travel_kuy_app/screens/details/widgets/booking_success.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 
 class BookingProcess extends StatefulWidget {
@@ -36,7 +36,6 @@ class _BookingProcessState extends State<BookingProcess> {
             future: getLoadingDone(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                bool data = snapshot.data!;
                 return Center(
                     child: Container(
                         height: 100,

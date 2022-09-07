@@ -45,6 +45,11 @@ dependencies:
   salomon_bottom_bar: ^3.3.1
   date_time_picker: ^2.1.0
   count_stepper: ^0.0.4
+  supabase: ^0.3.6
+  provider: ^6.0.3
+  cache_manager: ^1.0.0+4
+  cached_network_image: ^3.2.1
+  animated_image_list: ^1.0.0
 
 dev_dependencies:
   flutter_test:

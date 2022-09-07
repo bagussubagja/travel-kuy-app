@@ -1,8 +1,11 @@
+import 'package:cache_manager/core/delete_cache_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_kuy_app/core/auth_notifier/auth_notifier.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
-import 'package:travel_kuy_app/screens/details/booking_success.dart';
+import 'package:travel_kuy_app/screens/details/widgets/booking_success.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
@@ -37,6 +40,13 @@ class SettingPage extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    final AuthenticationNotifier authenticationNotifier =
+    Provider.of<AuthenticationNotifier>(context, listen: false);
+    Future<void> signOutAction() async{
+      DeleteCache.deleteKey(
+          "cache", Navigator.of(context).pushNamed(AppRoutes.loginScreen));
+      await authenticationNotifier.signOut(context);
+    }
     return Scaffold(
       backgroundColor: blackBackgroundColor,
       body: SafeArea(
@@ -84,9 +94,8 @@ class SettingPage extends StatelessWidget {
                         MarginHeight(height: 10),
                     itemCount: _menuSettingName.length,
                     itemBuilder: (context, index) => InkWell(
-                      onTap: () => index == 3
-                          ? Navigator.pushNamedAndRemoveUntil(
-                              context, AppRoutes.loginScreen, (route) => false)
+                      onTap: () async => index == 3
+                          ? signOutAction()
                           : Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:travel_kuy_app/screens/categories/by_status/mostview_place_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_status/newlyadded_place_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_status/popular_place_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_status/recommended_place_page.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
-import 'package:travel_kuy_app/widgets/category_card.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/most_viewed_card.dart';
 import 'package:travel_kuy_app/widgets/newly_added_card.dart';
-import 'package:travel_kuy_app/widgets/popular_card.dart';
-import 'package:travel_kuy_app/widgets/recommended_card.dart';
+import 'package:travel_kuy_app/widgets/recommended_place_card.dart';
+import 'package:travel_kuy_app/widgets/popular_place_card.dart';
+
+import '../categories/category_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -71,7 +76,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: regularText,
                 ),
                 MarginHeight(height: 15),
-                CategoryCard(),
+                const CategoryCard(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Recommendation for you',
+                      style: regularText,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return RecommendedPlacePage();
+                          }));
+                        },
+                        child: Text(
+                          'See All',
+                          style: regularText.copyWith(color: greenDarkerColor),
+                        )),
+                  ],
+                ),
+                MarginHeight(height: 10),
+                const RecommendedPlaceCard(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -80,31 +107,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: regularText,
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return PopularPlacePage();
+                          }));
+                        },
                         child: Text(
                           'See All',
                           style: regularText.copyWith(color: greenDarkerColor),
                         )),
                   ],
                 ),
-                MarginHeight(height: 10),
-                PopularCard(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Just for you ',
-                      style: regularText,
-                    ),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'See All',
-                          style: regularText.copyWith(color: greenDarkerColor),
-                        )),
-                  ],
-                ),
-                RecommendedCard(),
+                PopularPlaceCard(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -113,7 +128,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: regularText,
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return MostViewPlacePage();
+                          }));
+                        },
                         child: Text(
                           'See All',
                           style: regularText.copyWith(color: greenDarkerColor),
@@ -129,14 +149,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: regularText,
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return NewlyAddedPlacePage();
+                          }));
+                        },
                         child: Text(
                           'See All',
                           style: regularText.copyWith(color: greenDarkerColor),
                         )),
                   ],
                 ),
-                NewlyAddedCard()
+                const NewlyAddedCard()
               ],
             ),
           ),

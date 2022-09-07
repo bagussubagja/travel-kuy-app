@@ -3,9 +3,11 @@ import 'package:count_stepper/count_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:indonesia/indonesia.dart';
+import 'package:provider/provider.dart';
 import 'package:switch_tab/switch_tab.dart';
+import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
+import 'package:travel_kuy_app/models/place_model.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
-import 'package:travel_kuy_app/screens/details/booking_process.dart';
 import 'package:travel_kuy_app/screens/details/overview_page.dart';
 import 'package:travel_kuy_app/screens/details/review_page.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
@@ -16,7 +18,8 @@ import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 import '../../widgets/my_textfield.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+  PlaceModel? placeModel;
+  DetailScreen({Key? key, this.placeModel}) : super(key: key);
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -32,12 +35,13 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   void initState() {
-    totalPrice = totalPrice + price;
     super.initState();
+    totalPrice = totalPrice + widget.placeModel!.price;
   }
 
   @override
   Widget build(BuildContext context) {
+    final fav = Provider.of<FavoriteNotifier>(context);
     return Scaffold(
       backgroundColor: blackBackgroundColor,
       body: SafeArea(
@@ -55,10 +59,14 @@ class _DetailScreenState extends State<DetailScreen> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10)),
-                        child: Image.asset(
-                          'assets/images/beach.jpg',
-                          fit: BoxFit.cover,
-                        ),
+                        child: widget.placeModel?.gallery == null
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : Image.network(
+                                widget.placeModel!.gallery[0],
+                                fit: BoxFit.cover,
+                              ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,20 +82,21 @@ class _DetailScreenState extends State<DetailScreen> {
                           ),
                           CustomNavButton(
                             bgColor: isFavorite
-                                ? Colors.black.withOpacity(0.5)
-                                : Colors.pink.withOpacity(0.5),
+                                ? Colors.pink.withOpacity(0.5)
+                                : Colors.black.withOpacity(0.5),
                             child: IconButton(
                                 onPressed: () {
-                                  setState(() => isFavorite = !isFavorite);
+                                  // setState(() => isFavorite = !isFavorite);
+                                  fav.toggleFavorite(widget.placeModel!);
                                 },
-                                icon: isFavorite
-                                    ? Icon(
-                                        Icons.favorite_border_rounded,
-                                        color: whiteColor,
-                                      )
-                                    : const Icon(
+                                icon: fav.isExist(widget.placeModel!)
+                                    ? const Icon(
                                         Icons.favorite,
                                         color: Colors.pink,
+                                      )
+                                    : Icon(
+                                        Icons.favorite_border_rounded,
+                                        color: whiteColor,
                                       )),
                           )
                         ],
@@ -101,7 +110,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           child: BackdropFilter(
                             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                             child: Container(
-                              height: 120,
+                              height: 135,
                               width: double.infinity,
                               padding: const EdgeInsets.all(15),
                               decoration: BoxDecoration(
@@ -111,36 +120,44 @@ class _DetailScreenState extends State<DetailScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Gunung Rinjani', style: titleText),
+                                  Text(widget.placeModel?.name ?? 'Loading...',
+                                      style: titleText.copyWith(fontSize: 18)),
                                   MarginHeight(height: 5),
                                   Row(
                                     children: [
                                       Icon(
                                         Icons.location_on_rounded,
                                         color: greyColor,
-                                        size: 20,
+                                        size: 17,
                                       ),
                                       MarginWidth(width: 5),
-                                      Text('Banyuwangi, Jawa Timur',
-                                          style: subTitleText),
+                                      Expanded(
+                                        child: Text(
+                                            '${widget.placeModel?.district}, ${widget.placeModel?.province}',
+                                            style: subTitleText.copyWith(
+                                                fontSize: 14)),
+                                      ),
                                     ],
                                   ),
                                   MarginHeight(height: 5),
                                   Row(
                                     children: [
                                       RatingBarIndicator(
-                                        rating: 4.6,
+                                        rating: double.parse(
+                                            widget.placeModel!.rating),
                                         itemBuilder: (context, index) =>
                                             const Icon(
                                           Icons.star,
                                           color: Colors.amber,
                                         ),
                                         itemCount: 5,
-                                        itemSize: 20.0,
+                                        itemSize: 17.5,
                                         direction: Axis.horizontal,
                                       ),
                                       MarginWidth(width: 5),
-                                      Text('4.6', style: subTitleText),
+                                      Text(widget.placeModel?.rating ?? '4.0',
+                                          style: subTitleText.copyWith(
+                                              fontSize: 14)),
                                     ],
                                   ),
                                 ],
@@ -151,7 +168,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                     ],
                   ),
-                  MarginHeight(height: 75),
+                  MarginHeight(height: 90),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: SwitchTab(
@@ -168,7 +185,11 @@ class _DetailScreenState extends State<DetailScreen> {
                       },
                     ),
                   ),
-                  indexPage == 0 ? const OverviewPage() : ReviewPage(),
+                  indexPage == 0
+                      ? OverviewPage(
+                          placeModel: widget.placeModel,
+                        )
+                      : ReviewPage(placeModel: widget.placeModel),
                 ],
               ),
             ),
@@ -193,7 +214,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Column(
                         children: [
                           Text(
-                            rupiah(1500000),
+                            rupiah(widget.placeModel!.price),
                             style: regularText,
                           ),
                           Text(
@@ -210,8 +231,6 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           showModalBottomSheet(
-                            isDismissible: false,
-                            enableDrag: false,
                             backgroundColor: Colors.transparent,
                             context: context,
                             builder: (BuildContext context) {
@@ -234,7 +253,19 @@ class _DetailScreenState extends State<DetailScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            MarginHeight(height: 15),
+                                            MarginHeight(height: 10),
+                                            Center(
+                                              child: Container(
+                                                height: 5,
+                                                width: 50,
+                                                decoration: BoxDecoration(
+                                                  color: greyColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                            ),
+                                            MarginHeight(height: 10),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -249,8 +280,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        child: Image.asset(
-                                                          'assets/images/beach.jpg',
+                                                        child: Image.network(
+                                                          widget.placeModel!
+                                                              .gallery[0],
                                                           fit: BoxFit.fill,
                                                         ),
                                                       ),
@@ -262,38 +294,27 @@ class _DetailScreenState extends State<DetailScreen> {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          'Gunung Rinjani',
+                                                          widget.placeModel
+                                                                  ?.name ??
+                                                              'Loading...',
                                                           style: regularText,
                                                         ),
                                                         Text(
-                                                          '${rupiah(1500000)}/person',
+                                                          '${rupiah(widget.placeModel?.price ?? 0)}/person',
                                                           style: subTitleText,
                                                         )
                                                       ],
                                                     )
                                                   ],
                                                 ),
-                                                OutlinedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    style: OutlinedButton
-                                                        .styleFrom(
-                                                            side: BorderSide(
-                                                                color:
-                                                                    greyColor,
-                                                                width: 1)),
-                                                    child: Text(
-                                                      'Cancel',
-                                                      style: subTitleText,
-                                                    ))
                                               ],
                                             ),
                                             MarginHeight(height: 15),
                                             Text(
-                                              'You will book a vacation to Mount Rinjani. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
+                                              'You will book a vacation to ${widget.placeModel!.name}. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
                                               style: regularText.copyWith(
-                                                  color: greyColor),
+                                                  color: greyColor,
+                                                  fontSize: 16),
                                             ),
                                             // MarginHeight(height: 10),
                                             Row(
@@ -324,8 +345,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                                                   DateTime(
                                                                       2100));
                                                       // if user cancel the date picker
-                                                      if (pickedDate == null)
-                                                        return;
+                                                      if (pickedDate == null) {
+                                                        return null;
+                                                      }
                                                       // if user select new date
                                                       setState(() =>
                                                           _selectedDate =
@@ -337,6 +359,18 @@ class _DetailScreenState extends State<DetailScreen> {
                                                   ),
                                                 ),
                                                 MarginWidth(width: 15),
+                                              ],
+                                            ),
+                                            MarginHeight(height: 15),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Total Price : ${totalPrice == 0 ? rupiah(widget.placeModel!.price) : rupiah(totalPrice)}',
+                                                  style: regularText,
+                                                ),
                                                 CountStepper(
                                                   iconColor: greenLightColor,
                                                   textStyle: regularText,
@@ -350,17 +384,14 @@ class _DetailScreenState extends State<DetailScreen> {
                                                   splashRadius: 50,
                                                   onPressed: (value) {
                                                     setState(() => totalPrice =
-                                                        price * value);
+                                                        widget.placeModel!
+                                                                .price *
+                                                            value);
                                                   },
                                                 ),
                                               ],
                                             ),
-                                            MarginHeight(height: 20),
-                                            Text(
-                                              'Total Price : ${totalPrice == 0 ? rupiah(price) : rupiah(totalPrice)}',
-                                              style: regularText,
-                                            ),
-                                            MarginHeight(height: 20),
+                                            MarginHeight(height: 15),
                                             SizedBox(
                                               height: 50,
                                               width: double.infinity,

@@ -1,18 +1,14 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:travel_kuy_app/routes/routes.dart';
-import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
-import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
-import 'package:travel_kuy_app/screens/category/category_page.dart';
-import 'package:travel_kuy_app/screens/home/favorite/favorites_page.dart';
-import 'package:travel_kuy_app/screens/home/home_page.dart';
-import 'package:travel_kuy_app/screens/home/schedule/schedule_page.dart';
-import 'package:travel_kuy_app/screens/home/setting_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_place/island_catagory_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_place/beach_catagory_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_place/lake_category_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_place/mountain_category_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_place/park_category_page.dart';
+import 'package:travel_kuy_app/screens/categories/by_place/waterfall_category_page.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
-
-import '../screens/category/category_class.dart';
 
 class CategoryCard extends StatefulWidget {
   const CategoryCard({Key? key}) : super(key: key);
@@ -39,6 +35,7 @@ class _CategoryCardState extends State<CategoryCard> {
     'Park',
     'Waterfall',
   ];
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -48,16 +45,33 @@ class _CategoryCardState extends State<CategoryCard> {
         scrollDirection: Axis.horizontal,
         itemCount: imgCategory.length,
         itemBuilder: (context, index) => GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CategoryPage(
-                cc: CategoryClass(
-                  index: index,
-                ),
-              ),
-            ),
-          ),
+          onTap: () {
+            if (index == 0) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const BeachCategoryPage();
+              }));
+            } else if (index == 1) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const IslandCategoryPage();
+              }));
+            } else if (index == 2) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const LakeCategoryPage();
+              }));
+            } else if (index == 3) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const MountainCategoryPage();
+              }));
+            } else if (index == 4) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const ParkCategoryPage();
+              }));
+            } else {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const WaterfallCatagoryPage();
+              }));
+            }
+          },
           child: Container(
             height: 60,
             width: 160,
