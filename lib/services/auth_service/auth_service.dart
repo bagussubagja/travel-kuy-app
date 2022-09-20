@@ -1,8 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:travel_kuy_app/models/user_model.dart';
 import '../../credentials/supabase_credentials.dart';
 import '../../shared/theme.dart';
 
@@ -35,6 +39,8 @@ class AuthenticationService {
     return null;
   }
 
+
+
   Future<String?> login(
       {required String email,
       required String password,
@@ -65,3 +71,15 @@ class AuthenticationService {
     return null;
   }
 }
+
+  Future<http.Response?> register(UserModel data) async {
+    http.Response? respone;
+    try {
+      respone = await http.post(Uri.parse('http://10.0.2.2:3000/api/v1/users/'),
+          headers: {HttpHeaders.contentTypeHeader: "application/json"},
+          body: jsonEncode(data.toJson()));
+    } catch (e) {
+      print(e);
+    }
+    return respone;
+  }

@@ -47,5 +47,8 @@ class ProvidersList {
     ChangeNotifierProvider(
       create: (_) => FavoriteNotifier(),
     ),
+    ChangeNotifierProvider(
+      create: (_) => RegisterDataClass(),
+    ),
   ];
 }

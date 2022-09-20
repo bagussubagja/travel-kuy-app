@@ -1,4 +1,9 @@
+import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_kuy_app/core/auth_notifier/auth_notifier.dart';
+import 'package:travel_kuy_app/models/user_model.dart';
+import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/my_textfield.dart';
@@ -19,6 +24,8 @@ class _BiodataUserState extends State<BiodataUser> {
   bool _isObscure = false;
   List<String> _gender = ["Male", "Female"];
   String? _selectedGender = "Male";
+  String? _idUser;
+
   @override
   void initState() {
     super.initState();
@@ -28,6 +35,30 @@ class _BiodataUserState extends State<BiodataUser> {
 
   @override
   Widget build(BuildContext context) {
+    ReadCache.getString(key: "cache").then((idUser) {
+      // Future<void> _registration() async {
+      //   String name = _nameController.text.trim();
+      //   String email = widget.email!;
+      //   String password = widget.password!;
+      //   String gender = _selectedGender ?? "Male";
+      //   UserModel userModel = UserModel(
+      //       idUser: idUser,
+      //       email: email,
+      //       password: password,
+      //       name: name,
+      //       gender: gender);
+      //   var provider = Provider.of<RegisterDataClass>(context, listen: false);
+      //   await provider.postData(userModel);
+      //   if (provider.isBack) {
+      //     Navigator.pushNamedAndRemoveUntil(
+      //         context, AppRoutes.bodyScreen, (route) => false);
+      //   }
+      // }
+      setState(() {
+        _idUser = idUser;
+      });
+    });
+
     return Scaffold(
       backgroundColor: blackBackgroundColor,
       body: Padding(
@@ -47,6 +78,7 @@ class _BiodataUserState extends State<BiodataUser> {
               MyTextField(
                 titleText: 'Email',
                 readOnly: true,
+                hintText: widget.email,
               ),
               MarginHeight(height: 15),
               MyTextField(
@@ -97,7 +129,27 @@ class _BiodataUserState extends State<BiodataUser> {
                 height: 50,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    try {
+                      String name = _nameController.text.trim();
+                      // String email = widget.email!;
+                      // String password = widget.password!;
+                      UserModel userModel = UserModel(
+                          idUser: _idUser ?? "1",
+                          email: widget.email ?? "subagja@gmail.com",
+                          password: widget.password ?? "123456",
+                          name: name,
+                          gender: _selectedGender ?? "Male");
+                      var provider = Provider.of<RegisterDataClass>(context,
+                          listen: false);
+                      await provider.postData(userModel);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, AppRoutes.bodyScreen, (route) => false);
+                    } catch (e) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(e.toString())));
+                    }
+                  },
                   style: ElevatedButton.styleFrom(primary: greenDarkerColor),
                   child: Text(
                     'Done',
