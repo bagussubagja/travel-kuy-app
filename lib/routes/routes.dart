@@ -1,3 +1,4 @@
+import 'package:travel_kuy_app/screens/authentication/biodata_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
 import 'package:travel_kuy_app/screens/details/widgets/booking_process.dart';
@@ -15,14 +16,16 @@ class AppRoutes {
   static const String detailScreen = '/detail';
   static const String bookingProcess = '/bprocess';
   static const String categoryPage = '/category';
+  static const String biodataPage = '/biodata';
 
   static final routes = {
     onboardingScreen: (context) => const OnboardingScreen(),
     loginScreen: (context) => const LoginScreen(),
     registerScreen: (context) => RegisterScreen(),
-    bodyScreen: (context) =>  BodyScreen(),
+    bodyScreen: (context) => BodyScreen(),
     detailScreen: (context) => DetailScreen(),
-    bookingProcess : (context) => const BookingProcess(),
-    stateUI : (context) => const StateUI(),
+    bookingProcess: (context) => const BookingProcess(),
+    stateUI: (context) => const StateUI(),
+    biodataPage: (context) => BiodataUser()
   };
 }

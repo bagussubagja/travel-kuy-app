@@ -8,21 +8,24 @@ class MyTextField extends StatelessWidget {
   String? hintText;
   TextEditingController? controller;
   Widget? widget;
+  Widget? suffixIcon;
   Widget? prefixIcon;
   Function()? onTap;
-  bool? obsecureText;
+  bool? obscureText;
   bool? readOnly;
+  bool? isObscure;
   MyTextField(
       {Key? key,
-        this.titleText,
+      this.titleText,
       this.hintText,
       this.controller,
       this.widget,
       this.onTap,
       this.prefixIcon,
-      this.obsecureText,
-      this.readOnly
-      })
+      this.suffixIcon,
+      this.obscureText,
+      this.readOnly,
+      this.isObscure})
       : super(key: key);
 
   @override
@@ -30,10 +33,10 @@ class MyTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         Text(
-                titleText ?? "",
-                style: regularText,
-              ),
+        Text(
+          titleText ?? "",
+          style: regularText,
+        ),
         const SizedBox(
           height: 5,
         ),
@@ -44,13 +47,16 @@ class MyTextField extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
-                  style: regularText,
+                  style: readOnly == true
+                      ? regularText.copyWith(color: greyColor)
+                      : regularText,
                   cursorColor: greenDarkerColor,
-                  obscureText: obsecureText ?? false,
+                  obscureText: obscureText ?? false,
                   onTap: onTap,
                   readOnly: readOnly ?? false,
                   controller: controller,
                   decoration: InputDecoration(
+                    suffixIcon: suffixIcon,
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(width: 1, color: greyColor)),
                     focusedBorder: OutlineInputBorder(

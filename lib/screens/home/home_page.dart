@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_kuy_app/screens/authentication/biodata_screen.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/mostview_place_page.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/newlyadded_place_page.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/popular_place_page.dart';
@@ -52,14 +53,25 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    CircleAvatar(
-                      backgroundColor: greenDarkerColor,
-                      radius: 25,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return BiodataUser(
+                            email: "akundummy@gmail.com",
+                            password: "123456",
+                          );
+                        }));
+                      },
                       child: CircleAvatar(
-                        backgroundColor: whiteColor,
-                        radius: 20,
-                        child: Image.asset(
-                          'assets/images/avatar.png',
+                        backgroundColor: greenDarkerColor,
+                        radius: 25,
+                        child: CircleAvatar(
+                          backgroundColor: whiteColor,
+                          radius: 20,
+                          child: Image.asset(
+                            'assets/images/avatar.png',
+                          ),
                         ),
                       ),
                     )

@@ -18,11 +18,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
     final AuthenticationNotifier authenticationNotifier =
-    Provider.of<AuthenticationNotifier>(context, listen: false);
+        Provider.of<AuthenticationNotifier>(context, listen: false);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -60,7 +61,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   titleText: 'Password',
                   hintText: 'Enter your password....',
                   controller: passwordController,
-                  obsecureText: true,
+                  obscureText: _isObscure,
+                  isObscure: _isObscure,
+                  suffixIcon: IconButton(
+                      icon: Icon(
+                        _isObscure ? Icons.visibility : Icons.visibility_off,
+                        color: greyColor,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      }),
                 ),
                 const SizedBox(
                   height: 10,
@@ -82,9 +94,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           'Register Now!',
-                          style: regularText.copyWith(color: greenDarkerColor, fontSize: 16),
+                          style: regularText.copyWith(
+                              color: greenDarkerColor, fontSize: 16),
                         )),
-
                   ],
                 ),
                 const SizedBox(
@@ -102,11 +114,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             email: email, password: password, context: context);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Fill the TextField!')));
+                            const SnackBar(
+                                content: Text('Fill the TextField!')));
                       }
                     },
                     style: ElevatedButton.styleFrom(primary: greenDarkerColor),
-                    child: Text('Login', style: regularText,),
+                    child: Text(
+                      'Login',
+                      style: regularText,
+                    ),
                   ),
                 ),
               ],
