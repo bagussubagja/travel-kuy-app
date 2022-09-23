@@ -85,6 +85,8 @@ class _BiodataUserState extends State<BiodataUser> {
                 titleText: 'Password',
                 readOnly: true,
                 obscureText: _isObscure,
+                  isObscure: _isObscure,
+                hintText: widget.password,
                 suffixIcon: IconButton(
                     icon: Icon(
                       _isObscure ? Icons.visibility : Icons.visibility_off,
@@ -135,11 +137,11 @@ class _BiodataUserState extends State<BiodataUser> {
                       // String email = widget.email!;
                       // String password = widget.password!;
                       UserModel userModel = UserModel(
-                          idUser: _idUser ?? "1",
-                          email: widget.email ?? "subagja@gmail.com",
-                          password: widget.password ?? "123456",
+                          idUser: _idUser ?? "",
+                          email: widget.email ?? "",
+                          password: widget.password ?? "",
                           name: name,
-                          gender: _selectedGender ?? "Male");
+                          gender: _selectedGender ?? "");
                       var provider = Provider.of<RegisterDataClass>(context,
                           listen: false);
                       await provider.postData(userModel);

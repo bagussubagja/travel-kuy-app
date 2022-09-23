@@ -6,6 +6,7 @@ import 'package:travel_kuy_app/core/place_notifier/mostviewed_notifier.dart';
 import 'package:travel_kuy_app/core/place_notifier/newlyadded_notifier.dart';
 import 'package:travel_kuy_app/core/place_notifier/popular_notifier.dart';
 import 'package:travel_kuy_app/core/place_notifier/recommended_notifier.dart';
+import 'package:travel_kuy_app/core/user_notifier/user_notifier.dart';
 
 import '../core/auth_notifier/auth_notifier.dart';
 
@@ -49,6 +50,9 @@ class ProvidersList {
     ),
     ChangeNotifierProvider(
       create: (_) => RegisterDataClass(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => UserClass(),
     ),
   ];
 }
