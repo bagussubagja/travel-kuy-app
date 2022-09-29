@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:travel_kuy_app/models/favorite_model.dart';
 
 import '../../models/place_model.dart';
 import '../../shared/theme.dart';
@@ -8,7 +9,8 @@ import '../../widgets/margin_widget_height.dart';
 
 class ReviewPage extends StatelessWidget {
   PlaceModel? placeModel;
-  ReviewPage({Key? key, this.placeModel}) : super(key: key);
+  FavoriteModel? favModel;
+  ReviewPage({Key? key, this.placeModel, this.favModel}) : super(key: key);
 
   List<String> reviewerName = [
     "Alif Ilman Nafian",
@@ -41,16 +43,17 @@ class ReviewPage extends StatelessWidget {
               controller: _scrollController,
               itemBuilder: (context, index) => ListTile(
                 title: Text(
-                  placeModel!.reviewerName[index],
+                  placeModel?.reviewerName[index] ??
+                      favModel!.reviewerName![index],
                   style: regularText,
                 ),
                 subtitle: Text(
-                  placeModel!.review[index],
+                  placeModel?.review[index] ?? favModel!.review![index],
                   style: subTitleText,
                 ),
                 leading: Image.asset('assets/images/avatar.png'),
               ),
-              itemCount: placeModel?.review.length ?? 3,
+              itemCount: placeModel?.review.length ?? favModel?.review!.length,
             ),
           ),
         ),

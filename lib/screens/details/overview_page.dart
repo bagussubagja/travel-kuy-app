@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
+import 'package:travel_kuy_app/models/favorite_model.dart';
 import 'package:travel_kuy_app/models/place_model.dart';
 import 'package:travel_kuy_app/screens/details/widgets/gallery_photo.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
@@ -7,8 +8,9 @@ import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 
 class OverviewPage extends StatelessWidget {
-  OverviewPage({Key? key, this.placeModel}) : super(key: key);
+  OverviewPage({Key? key, this.placeModel, this.favModel}) : super(key: key);
   PlaceModel? placeModel;
+  FavoriteModel? favModel;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,9 @@ class OverviewPage extends StatelessWidget {
           ),
           MarginHeight(height: 5),
           ReadMoreText(
-            placeModel!.description,
+            placeModel?.description == null
+                ? favModel!.description!
+                : placeModel!.description,
             trimLines: 3,
             style: regularText.copyWith(color: greyColor),
             colorClickableText: greenDarkerColor,
@@ -37,7 +41,7 @@ class OverviewPage extends StatelessWidget {
             style: titleText,
           ),
           MarginHeight(height: 10),
-          GalleryPhoto(placeModel: placeModel),
+          GalleryPhoto(placeModel: placeModel, favModel: favModel),
           MarginHeight(height: 10),
           Text(
             'Address',
@@ -53,7 +57,7 @@ class OverviewPage extends StatelessWidget {
               MarginWidth(width: 5),
               Flexible(
                 child: Text(
-                  placeModel!.address,
+                  placeModel?.address ?? favModel!.address!,
                   style: regularText.copyWith(color: greyColor),
                 ),
               ),

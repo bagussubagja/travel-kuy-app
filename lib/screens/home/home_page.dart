@@ -1,4 +1,9 @@
+import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_kuy_app/core/user_notifier/user_notifier.dart';
+import 'package:travel_kuy_app/models/user_model.dart';
+import 'package:travel_kuy_app/screens/authentication/biodata_screen.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/mostview_place_page.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/newlyadded_place_page.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/popular_place_page.dart';
@@ -13,7 +18,7 @@ import 'package:travel_kuy_app/widgets/popular_place_card.dart';
 import '../categories/category_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -21,7 +26,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+    final user = Provider.of<UserClass>(context, listen: false);
+    ReadCache.getString(key: "cache").then((value) {
+      user.getUserData(idUser: value);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserClass>(context);
     return Scaffold(
       backgroundColor: blackBackgroundColor,
       body: SizedBox(
@@ -44,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: whiteColor, fontSize: 18),
                         ),
                         Text(
-                          'Bagus Subagja 👋',
+                          '${user.user?[0].name ?? '...'} 👋',
                           style: regularText.copyWith(
                               fontWeight: FontWeight.w500,
                               color: whiteColor,

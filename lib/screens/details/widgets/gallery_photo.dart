@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:travel_kuy_app/models/favorite_model.dart';
 import 'package:travel_kuy_app/models/place_model.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 
 class GalleryPhoto extends StatelessWidget {
-  GalleryPhoto({Key? key, this.placeModel}) : super(key: key);
+  GalleryPhoto({Key? key, this.placeModel, this.favModel}) : super(key: key);
   PlaceModel? placeModel;
+  FavoriteModel? favModel;
   List<String> imgUrl = [
     'assets/images/beach.jpg',
     'assets/images/island.jpg',
@@ -30,7 +32,7 @@ class GalleryPhoto extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
                 // image: AssetImage(imgUrl[index]),
-                image: NetworkImage(placeModel!.gallery[index]),
+                image: NetworkImage(placeModel?.gallery[index] ?? favModel!.gallery![index]),
                 fit: BoxFit.cover,
               ),
             ),

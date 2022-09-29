@@ -1,3 +1,4 @@
+import 'package:cache_manager/cache_manager.dart';
 import 'package:cache_manager/core/delete_cache_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,15 +12,23 @@ import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 
-class SettingPage extends StatelessWidget {
+import '../../core/user_notifier/user_notifier.dart';
+
+class SettingPage extends StatefulWidget {
   SettingPage({Key? key}) : super(key: key);
 
+  @override
+  State<SettingPage> createState() => _SettingPageState();
+}
+
+class _SettingPageState extends State<SettingPage> {
   final List<String> _menuSettingName = [
     "Account",
     "Help Center",
     "About Me",
     "Log Out"
   ];
+
   final List<Widget> _iconList = const [
     Icon(
       Icons.person,
@@ -32,21 +41,33 @@ class SettingPage extends StatelessWidget {
       color: Colors.grey,
     )
   ];
+
   final List _widgetList = [
     LoginScreen(),
     RegisterScreen(),
     DetailScreen(),
     BookingSuccess()
   ];
+
+  void initState() {
+    super.initState();
+    final user = Provider.of<UserClass>(context, listen: false);
+    ReadCache.getString(key: "cache").then((value) {
+      user.getUserData(idUser: value);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserClass>(context);
     final AuthenticationNotifier authenticationNotifier =
-    Provider.of<AuthenticationNotifier>(context, listen: false);
-    Future<void> signOutAction() async{
+        Provider.of<AuthenticationNotifier>(context, listen: false);
+    Future<void> signOutAction() async {
       DeleteCache.deleteKey(
           "cache", Navigator.of(context).pushNamed(AppRoutes.loginScreen));
       await authenticationNotifier.signOut(context);
     }
+
     return Scaffold(
       backgroundColor: blackBackgroundColor,
       body: SafeArea(
@@ -79,7 +100,7 @@ class SettingPage extends StatelessWidget {
                 MarginHeight(height: 10),
                 Center(
                   child: Text(
-                    'Hi there, Bagus Subagja!',
+                    'Hi there, ${user.user![0].name}!',
                     style: regularText.copyWith(color: greyColor),
                   ),
                 ),

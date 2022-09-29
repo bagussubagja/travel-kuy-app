@@ -1,11 +1,14 @@
 import 'dart:ui';
+import 'package:cache_manager/cache_manager.dart';
 import 'package:count_stepper/count_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:provider/provider.dart';
 import 'package:switch_tab/switch_tab.dart';
+import 'package:travel_kuy_app/core/fav_notifier/fav_notifier.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
+import 'package:travel_kuy_app/models/favorite_model.dart';
 import 'package:travel_kuy_app/models/place_model.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/details/overview_page.dart';
@@ -19,7 +22,9 @@ import '../../widgets/my_textfield.dart';
 
 class DetailScreen extends StatefulWidget {
   PlaceModel? placeModel;
-  DetailScreen({Key? key, this.placeModel}) : super(key: key);
+  FavoriteModel? favModel;
+  String? idUser;
+  DetailScreen({Key? key, this.placeModel, this.favModel}) : super(key: key);
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -27,7 +32,6 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   int indexPage = 0;
-  bool isFavorite = false;
   int person = 0;
   int price = 1500000;
   int totalPrice = 0;
@@ -36,12 +40,29 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
     super.initState();
-    totalPrice = totalPrice + widget.placeModel!.price;
+
+    final fav = Provider.of<FavoritePlaceClass>(context, listen: false);
+    ReadCache.getString(key: "cache").then(
+      (value) => fav.getUserData(idUser: value),
+    );
+    if (widget.placeModel?.price == null) {
+      totalPrice = totalPrice + widget.favModel!.price!;
+    } else if (widget.placeModel?.price == null) {
+      totalPrice = totalPrice + widget.placeModel!.price;
+    } else {
+      totalPrice = 0;
+    }
+    //totalPrice = totalPrice + widget.placeModel!.price;
   }
 
   @override
   Widget build(BuildContext context) {
-    final fav = Provider.of<FavoriteNotifier>(context);
+    ReadCache.getString(key: "cache").then((value) {
+      setState(() {
+        widget.idUser = value;
+      });
+    });
+    final fav = Provider.of<FavoritePlaceClass>(context);
     return Scaffold(
       backgroundColor: blackBackgroundColor,
       body: SafeArea(
@@ -55,19 +76,19 @@ class _DetailScreenState extends State<DetailScreen> {
                     clipBehavior: Clip.none,
                     children: [
                       Container(
-                        height: 300,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: widget.placeModel?.gallery == null
-                            ? const Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            : Image.network(
-                                widget.placeModel!.gallery[0],
-                                fit: BoxFit.cover,
-                              ),
-                      ),
+                          height: 300,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: widget.placeModel?.gallery[0] == null
+                              ? Image.network(
+                                  widget.favModel!.gallery![0],
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.network(
+                                  widget.placeModel!.gallery[0],
+                                  fit: BoxFit.cover,
+                                )),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -81,21 +102,40 @@ class _DetailScreenState extends State<DetailScreen> {
                             ),
                           ),
                           CustomNavButton(
-                            bgColor: isFavorite
-                                ? Colors.pink.withOpacity(0.5)
-                                : Colors.black.withOpacity(0.5),
+                            bgColor: Colors.black.withOpacity(0.5),
                             child: IconButton(
-                                onPressed: () {
-                                  // setState(() => isFavorite = !isFavorite);
-                                  fav.toggleFavorite(widget.placeModel!);
+                                onPressed: () async {
+                                  if (widget.favModel == null) {
+                                    FavoriteModel favoriteModel =
+                                          FavoriteModel(
+                                              idPlace: widget.placeModel!.id,
+                                              idUser: widget.idUser!);
+                                      var provider = Provider.of<FavPostDataClass>(context,listen: false);
+                                      await provider.postData(favoriteModel);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                "Place Added to Favorite")));
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content:
+                                            Text("Place Deleted from Favorite"),
+                                      ),
+                                    );
+                                    await fav.deleteUserData(
+                                        id: widget.favModel!.id!);
+                                    Navigator.pushNamed(
+                                        context, AppRoutes.bodyScreen);
+                                  }
                                 },
-                                icon: fav.isExist(widget.placeModel!)
-                                    ? const Icon(
+                                icon: widget.favModel == null
+                                    ? Icon(
                                         Icons.favorite,
-                                        color: Colors.pink,
+                                        color: whiteColor,
                                       )
                                     : Icon(
-                                        Icons.favorite_border_rounded,
+                                        Icons.delete,
                                         color: whiteColor,
                                       )),
                           )
@@ -120,7 +160,9 @@ class _DetailScreenState extends State<DetailScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(widget.placeModel?.name ?? 'Loading...',
+                                  Text(
+                                      widget.placeModel?.name ??
+                                          widget.favModel!.name!,
                                       style: titleText.copyWith(fontSize: 18)),
                                   MarginHeight(height: 5),
                                   Row(
@@ -131,20 +173,31 @@ class _DetailScreenState extends State<DetailScreen> {
                                         size: 17,
                                       ),
                                       MarginWidth(width: 5),
-                                      Expanded(
-                                        child: Text(
-                                            '${widget.placeModel?.district}, ${widget.placeModel?.province}',
-                                            style: subTitleText.copyWith(
-                                                fontSize: 14)),
-                                      ),
+                                      widget.favModel?.district == null
+                                          ? Expanded(
+                                              child: Text(
+                                                  '${widget.placeModel?.district}, ${widget.placeModel?.province}',
+                                                  style: subTitleText.copyWith(
+                                                      fontSize: 14)),
+                                            )
+                                          : Expanded(
+                                              child: Text(
+                                                  '${widget.favModel?.district}, ${widget.favModel?.province}',
+                                                  style: subTitleText.copyWith(
+                                                      fontSize: 14)),
+                                            )
                                     ],
                                   ),
                                   MarginHeight(height: 5),
                                   Row(
                                     children: [
                                       RatingBarIndicator(
-                                        rating: double.parse(
-                                            widget.placeModel!.rating),
+                                        rating:
+                                            widget.placeModel?.rating == null
+                                                ? double.parse(
+                                                    widget.favModel!.rating!)
+                                                : double.parse(
+                                                    widget.placeModel!.rating),
                                         itemBuilder: (context, index) =>
                                             const Icon(
                                           Icons.star,
@@ -155,7 +208,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                         direction: Axis.horizontal,
                                       ),
                                       MarginWidth(width: 5),
-                                      Text(widget.placeModel?.rating ?? '4.0',
+                                      Text(
+                                          widget.placeModel?.rating ??
+                                              widget.favModel!.rating!,
                                           style: subTitleText.copyWith(
                                               fontSize: 14)),
                                     ],
@@ -187,9 +242,12 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   indexPage == 0
                       ? OverviewPage(
+                          favModel: widget.favModel,
                           placeModel: widget.placeModel,
                         )
-                      : ReviewPage(placeModel: widget.placeModel),
+                      : ReviewPage(
+                          placeModel: widget.placeModel,
+                          favModel: widget.favModel),
                 ],
               ),
             ),
@@ -214,7 +272,9 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Column(
                         children: [
                           Text(
-                            rupiah(widget.placeModel!.price),
+                            widget.placeModel?.price == null
+                                ? rupiah(widget.favModel!.price)
+                                : rupiah(widget.placeModel!.price),
                             style: regularText,
                           ),
                           Text(
@@ -281,8 +341,11 @@ class _DetailScreenState extends State<DetailScreen> {
                                                             BorderRadius
                                                                 .circular(15),
                                                         child: Image.network(
-                                                          widget.placeModel!
-                                                              .gallery[0],
+                                                          widget.placeModel
+                                                                      ?.gallery[
+                                                                  0] ??
+                                                              widget.favModel!
+                                                                  .gallery![0],
                                                           fit: BoxFit.fill,
                                                         ),
                                                       ),
@@ -296,11 +359,12 @@ class _DetailScreenState extends State<DetailScreen> {
                                                         Text(
                                                           widget.placeModel
                                                                   ?.name ??
-                                                              'Loading...',
+                                                              widget.favModel!
+                                                                  .name!,
                                                           style: regularText,
                                                         ),
                                                         Text(
-                                                          '${rupiah(widget.placeModel?.price ?? 0)}/person',
+                                                          '${rupiah(widget.placeModel?.price ?? widget.favModel!.price)}/person',
                                                           style: subTitleText,
                                                         )
                                                       ],
@@ -311,7 +375,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                             ),
                                             MarginHeight(height: 15),
                                             Text(
-                                              'You will book a vacation to ${widget.placeModel!.name}. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
+                                              'You will book a vacation to ${widget.placeModel?.name ?? widget.favModel!.name}. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
                                               style: regularText.copyWith(
                                                   color: greyColor,
                                                   fontSize: 16),
@@ -368,7 +432,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  'Total Price : ${totalPrice == 0 ? rupiah(widget.placeModel!.price) : rupiah(totalPrice)}',
+                                                  'Total Price : ${totalPrice == 0 ? rupiah(widget.placeModel?.price ?? widget.favModel!.price) : rupiah(totalPrice)}',
                                                   style: regularText,
                                                 ),
                                                 CountStepper(
@@ -383,10 +447,18 @@ class _DetailScreenState extends State<DetailScreen> {
                                                       greenLightColor,
                                                   splashRadius: 50,
                                                   onPressed: (value) {
-                                                    setState(() => totalPrice =
-                                                        widget.placeModel!
-                                                                .price *
-                                                            value);
+                                                    setState(() {
+                                                      widget.favModel?.price ==
+                                                              null
+                                                          ? totalPrice = widget
+                                                                  .placeModel!
+                                                                  .price *
+                                                              value
+                                                          : totalPrice = widget
+                                                                  .favModel!
+                                                                  .price! *
+                                                              value;
+                                                    });
                                                   },
                                                 ),
                                               ],
@@ -397,7 +469,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                               width: double.infinity,
                                               child: ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
-                                                    primary: greenDarkerColor),
+                                                    backgroundColor:
+                                                        greenDarkerColor),
                                                 onPressed: () {
                                                   Navigator
                                                       .pushNamedAndRemoveUntil(
@@ -420,8 +493,8 @@ class _DetailScreenState extends State<DetailScreen> {
                             },
                           );
                         },
-                        style:
-                            ElevatedButton.styleFrom(primary: greenDarkerColor),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: greenDarkerColor),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

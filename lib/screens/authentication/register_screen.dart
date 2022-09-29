@@ -2,21 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
+import 'package:travel_kuy_app/screens/authentication/biodata_screen.dart';
 
 import '../../core/auth_notifier/auth_notifier.dart';
 import '../../shared/theme.dart';
 import '../../widgets/my_textfield.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
+  RegisterScreen({Key? key}) : super(key: key);
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
-  RegisterScreen({Key? key}) : super(key: key);
+
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
     final AuthenticationNotifier authenticationNotifier =
-    Provider.of<AuthenticationNotifier>(context, listen: false);
+        Provider.of<AuthenticationNotifier>(context, listen: false);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -54,7 +63,18 @@ class RegisterScreen extends StatelessWidget {
                   titleText: 'Password',
                   hintText: 'Enter your password....',
                   controller: passwordController,
-                  obsecureText: true,
+                  obscureText: _isObscure,
+                  isObscure: _isObscure,
+                  suffixIcon: IconButton(
+                      icon: Icon(
+                        _isObscure ? Icons.visibility : Icons.visibility_off,
+                        color: greyColor,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      }),
                 ),
                 const SizedBox(
                   height: 10,
@@ -91,11 +111,15 @@ class RegisterScreen extends StatelessWidget {
                             email: email, password: password, context: context);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                           const SnackBar(content: Text('Fill the TextField!')));
+                            const SnackBar(
+                                content: Text('Fill the TextField!')));
                       }
                     },
                     style: ElevatedButton.styleFrom(primary: greenDarkerColor),
-                    child: Text('Register', style: regularText,),
+                    child: Text(
+                      'Register',
+                      style: regularText,
+                    ),
                   ),
                 ),
               ],
