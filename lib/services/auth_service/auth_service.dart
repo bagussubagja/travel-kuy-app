@@ -39,8 +39,6 @@ class AuthenticationService {
     return null;
   }
 
-
-
   Future<String?> login(
       {required String email,
       required String password,
@@ -72,14 +70,16 @@ class AuthenticationService {
   }
 }
 
-  Future<http.Response?> register(UserModel data) async {
-    http.Response? respone;
-    try {
-      respone = await http.post(Uri.parse('http://10.0.2.2:3000/api/v1/users/'),
-          headers: {HttpHeaders.contentTypeHeader: "application/json"},
-          body: jsonEncode(data.toJson()));
-    } catch (e) {
-      print(e);
-    }
-    return respone;
+Future<http.Response?> register(UserModel data) async {
+  http.Response? respone;
+  try {
+    respone = await http.post(Uri.parse('http://10.0.2.2:3000/api/v1/users/'),
+        headers: {HttpHeaders.contentTypeHeader: "application/json"},
+        body: jsonEncode(data.toJson()));
+    print(data);
+  } catch (e) {
+    print(e);
   }
+  print(respone);
+  return respone;
+}

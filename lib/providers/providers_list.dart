@@ -1,5 +1,6 @@
 import 'package:provider/single_child_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_kuy_app/core/fav_notifier/fav_notifier.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
 import 'package:travel_kuy_app/core/place_notifier/category_notifier.dart';
 import 'package:travel_kuy_app/core/place_notifier/mostviewed_notifier.dart';
@@ -53,6 +54,12 @@ class ProvidersList {
     ),
     ChangeNotifierProvider(
       create: (_) => UserClass(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => FavoritePlaceClass(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => FavPostDataClass(),
     ),
   ];
 }
