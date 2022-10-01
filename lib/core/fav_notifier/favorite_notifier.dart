@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:travel_kuy_app/models/place_model.dart';
+import 'package:travel_kuy_app/models/favorite_model.dart';
+import 'package:travel_kuy_app/services/favorite_service/add_favorite_place.dart';
+import 'package:travel_kuy_app/services/favorite_service/delete_favorite_place.dart';
+import 'package:travel_kuy_app/services/favorite_service/favorite_service.dart';
+import 'package:http/http.dart' as http;
 
-class FavoriteNotifier extends ChangeNotifier {
-  List<PlaceModel> _placeModel = [];
-
-  List<PlaceModel> get placeModel => _placeModel;
-
-  void toggleFavorite(PlaceModel placeModel) {
-    final isExist = _placeModel.contains(placeModel);
-    if (isExist) {
-      _placeModel.remove(placeModel);
-    } else {
-      _placeModel.add(placeModel);
-    }
+class FavoritePlaceClass extends ChangeNotifier {
+  List<FavoriteModel>? fav;
+  bool loading = false;
+  getUserData({required String idUser}) async {
+    loading = true;
+    fav = (await getFavoritePlacebyid(idUser: idUser));
+    loading = false;
     notifyListeners();
   }
 
-  bool isExist(PlaceModel placeModel) {
-    final isExist = _placeModel.contains(placeModel);
-    return isExist;
+  deleteUserData({required int id}) async {
+    loading = true;
+    fav = (await deleteFavoritePlace(id: id));
+    loading = false;
+    notifyListeners();
   }
+}
 
-  void clearFavorite() {
-    _placeModel = [];
+class FavPostDataClass extends ChangeNotifier {
+  bool loading = false;
+  bool isBack = false;
+  Future<void> postData(FavoriteModel body) async {
+    loading = true;
+    notifyListeners();
+    http.Response response = (await register(body))!;
+    if (response.statusCode == 200) {
+      isBack = true;
+    }
+    loading = false;
     notifyListeners();
   }
 }

@@ -50,6 +50,7 @@ dependencies:
   cache_manager: ^1.0.0+4
   cached_network_image: ^3.2.1
   animated_image_list: ^1.0.0
+  calendar_date_picker2: ^0.2.5
 
 dev_dependencies:
   flutter_test:

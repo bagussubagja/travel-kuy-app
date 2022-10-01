@@ -1,15 +1,18 @@
 import 'dart:ui';
 import 'package:cache_manager/cache_manager.dart';
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:count_stepper/count_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:provider/provider.dart';
 import 'package:switch_tab/switch_tab.dart';
-import 'package:travel_kuy_app/core/fav_notifier/fav_notifier.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
+import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
+import 'package:travel_kuy_app/core/schedule_notifier/schedule_notifier.dart';
 import 'package:travel_kuy_app/models/favorite_model.dart';
 import 'package:travel_kuy_app/models/place_model.dart';
+import 'package:travel_kuy_app/models/schedule_model.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/details/overview_page.dart';
 import 'package:travel_kuy_app/screens/details/review_page.dart';
@@ -31,11 +34,11 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  List<String>? date;
   int indexPage = 0;
-  int person = 0;
-  int price = 1500000;
   int totalPrice = 0;
-  DateTime _selectedDate = DateTime(2022, 08, 17);
+  String idUser = "";
+  int? numOfPerson;
 
   @override
   void initState() {
@@ -43,11 +46,16 @@ class _DetailScreenState extends State<DetailScreen> {
 
     final fav = Provider.of<FavoritePlaceClass>(context, listen: false);
     ReadCache.getString(key: "cache").then(
-      (value) => fav.getUserData(idUser: value),
+      (value) {
+        setState(() {
+          idUser = value;
+        });
+      },
     );
+    fav.getUserData(idUser: idUser);
     if (widget.placeModel?.price == null) {
       totalPrice = totalPrice + widget.favModel!.price!;
-    } else if (widget.placeModel?.price == null) {
+    } else if (widget.favModel?.price == null) {
       totalPrice = totalPrice + widget.placeModel!.price;
     } else {
       totalPrice = 0;
@@ -106,12 +114,13 @@ class _DetailScreenState extends State<DetailScreen> {
                             child: IconButton(
                                 onPressed: () async {
                                   if (widget.favModel == null) {
-                                    FavoriteModel favoriteModel =
-                                          FavoriteModel(
-                                              idPlace: widget.placeModel!.id,
-                                              idUser: widget.idUser!);
-                                      var provider = Provider.of<FavPostDataClass>(context,listen: false);
-                                      await provider.postData(favoriteModel);
+                                    FavoriteModel favoriteModel = FavoriteModel(
+                                        idPlace: widget.placeModel!.id,
+                                        idUser: widget.idUser!);
+                                    var provider =
+                                        Provider.of<FavPostDataClass>(context,
+                                            listen: false);
+                                    await provider.postData(favoriteModel);
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(
                                             content: Text(
@@ -380,51 +389,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                   color: greyColor,
                                                   fontSize: 16),
                                             ),
-                                            // MarginHeight(height: 10),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Flexible(
-                                                  flex: 1,
-                                                  child: MyTextField(
-                                                    readOnly: true,
-                                                    prefixIcon: Icon(
-                                                      Icons
-                                                          .calendar_month_rounded,
-                                                      color: greyColor,
-                                                    ),
-                                                    onTap: () async {
-                                                      DateTime? pickedDate =
-                                                          await showDatePicker(
-                                                              context: context,
-                                                              initialDate:
-                                                                  _selectedDate,
-                                                              firstDate:
-                                                                  DateTime(
-                                                                      2022),
-                                                              lastDate:
-                                                                  DateTime(
-                                                                      2100));
-                                                      // if user cancel the date picker
-                                                      if (pickedDate == null) {
-                                                        return null;
-                                                      }
-                                                      // if user select new date
-                                                      setState(() =>
-                                                          _selectedDate =
-                                                              pickedDate);
-                                                    },
-                                                    hintText: _selectedDate
-                                                        .toString()
-                                                        .substring(0, 10),
-                                                  ),
-                                                ),
-                                                MarginWidth(width: 15),
-                                              ],
-                                            ),
+                                            _buildCalendarDialogButton(),
                                             MarginHeight(height: 15),
                                             Row(
                                               mainAxisAlignment:
@@ -448,6 +413,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                   splashRadius: 50,
                                                   onPressed: (value) {
                                                     setState(() {
+                                                      numOfPerson = value;
                                                       widget.favModel?.price ==
                                                               null
                                                           ? totalPrice = widget
@@ -471,7 +437,27 @@ class _DetailScreenState extends State<DetailScreen> {
                                                 style: ElevatedButton.styleFrom(
                                                     backgroundColor:
                                                         greenDarkerColor),
-                                                onPressed: () {
+                                                onPressed: () async {
+                                                  ScheduleModel scheduleModel =
+                                                      ScheduleModel(
+                                                          name: widget
+                                                              .placeModel!.name,
+                                                          startDate: date![0],
+                                                          endDate: date![2],
+                                                          thumbnail: widget
+                                                              .placeModel!
+                                                              .gallery[0],
+                                                          numOfPerson:
+                                                              numOfPerson ?? 1,
+                                                          totalPrice:
+                                                              totalPrice,
+                                                          idUser: idUser);
+                                                  var provider = Provider.of<
+                                                          SchedulePostClass>(
+                                                      context,
+                                                      listen: false);
+                                                  await provider
+                                                      .postData(scheduleModel);
                                                   Navigator
                                                       .pushNamedAndRemoveUntil(
                                                           context,
@@ -517,6 +503,92 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  List<String> _getValueText(
+    CalendarDatePicker2Type datePickerType,
+    List<DateTime?> values,
+  ) {
+    var valueText = (values.isNotEmpty ? values[0] : null)
+        .toString()
+        .replaceAll('00:00:00.000', '');
+
+    if (datePickerType == CalendarDatePicker2Type.multi) {
+      valueText = values.isNotEmpty
+          ? values
+              .map((v) => v.toString().replaceAll('00:00:00.000', ''))
+              .join(', ')
+          : 'null';
+    } else if (datePickerType == CalendarDatePicker2Type.range) {
+      if (values.isNotEmpty) {
+        final startDate = values[0].toString().replaceAll('00:00:00.000', '');
+        final endDate = values.length > 1
+            ? values[1].toString().replaceAll('00:00:00.000', '')
+            : 'null';
+        valueText = '${startDate.trim()} ${endDate.trim()}';
+      } else {
+        return [];
+      }
+    }
+    date = valueText.split(' ');
+    return date ?? [];
+  }
+
+  List<DateTime?> _dialogCalendarPickerValue = [
+    DateTime.now(),
+    DateTime.now().add(const Duration(days: 7)),
+  ];
+  _buildCalendarDialogButton() {
+    final config = CalendarDatePicker2WithActionButtonsConfig(
+      calendarType: CalendarDatePicker2Type.range,
+      dayTextStyle: TextStyle(color: whiteColor),
+      yearTextStyle: TextStyle(color: whiteColor),
+      disabledDayTextStyle: TextStyle(color: greyColor),
+      todayTextStyle: TextStyle(color: whiteColor),
+      weekdayLabelTextStyle: TextStyle(color: whiteColor),
+      selectedDayHighlightColor: greenDarkerColor,
+      controlsTextStyle: TextStyle(color: whiteColor),
+      selectedDayTextStyle: TextStyle(color: whiteColor),
+      shouldCloseDialogAfterCancelTapped: true,
+    );
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: Icon(
+              Icons.calendar_month_rounded,
+              color: whiteColor,
+            ),
+            onPressed: () async {
+              final values = await showCalendarDatePicker2Dialog(
+                context: context,
+                config: config,
+                dialogSize: const Size(325, 400),
+                borderRadius: BorderRadius.circular(15),
+                initialValue: _dialogCalendarPickerValue,
+                dialogBackgroundColor: blackBackgroundColor,
+                selectableDayPredicate: (day) => !day
+                    .difference(_dialogCalendarPickerValue[0]!
+                        .subtract(const Duration(days: 5)))
+                    .isNegative,
+              );
+              if (values != null) {
+                // ignore: avoid_print
+                print(_getValueText(
+                  config.calendarType,
+                  values,
+                ));
+                setState(() {
+                  _dialogCalendarPickerValue = values;
+                });
+              }
+            },
+          ),
+        ],
       ),
     );
   }

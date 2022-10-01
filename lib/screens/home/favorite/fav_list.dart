@@ -1,7 +1,7 @@
 import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_kuy_app/core/fav_notifier/fav_notifier.dart';
+import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
@@ -16,30 +16,11 @@ class FavList extends StatefulWidget {
 }
 
 class _FavListState extends State<FavList> {
-  List<String> imgUrl = [
-    'assets/images/beach.jpg',
-    'assets/images/island.jpg',
-    'assets/images/mountain.jpg',
-    'assets/images/lake.png',
-    'assets/images/waterfall.jpg',
-    'assets/images/beach.jpg',
-    'assets/images/island.jpg',
-    'assets/images/mountain.jpg',
-    'assets/images/lake.png',
-    'assets/images/waterfall.jpg',
-  ];
 
-  bool isFavorite = false;
-
-  void _myFavorite() {
-    setState(() {
-      isFavorite = !isFavorite;
-    });
-  }
 
   @override
   void initState() {
-    // TODO: implement initState
+    // TODO: implement initStata
     super.initState();
     final favorite = Provider.of<FavoritePlaceClass>(context, listen: false);
     ReadCache.getString(key: "cache")

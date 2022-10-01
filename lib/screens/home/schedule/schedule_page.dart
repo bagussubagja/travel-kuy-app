@@ -27,8 +27,11 @@ class _SchedulePageState extends State<SchedulePage> {
                 'Schedule',
                 style: titleText,
               ),
-             MarginHeight(height: 5),
-              Text("Lorem Ipsum Dolor Sit Amet 🗓️", style: subTitleText,),
+              MarginHeight(height: 5),
+              Text(
+                "Lorem Ipsum Dolor Sit Amet 🗓️",
+                style: subTitleText,
+              ),
               MarginHeight(height: 20),
               ScheduleTileList()
             ],
