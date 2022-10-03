@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_kuy_app/core/place_notifier/popular_notifier.dart';
+import 'package:travel_kuy_app/core/place_notifier/statues_place_notifier.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';

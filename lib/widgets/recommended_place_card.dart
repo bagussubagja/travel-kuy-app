@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_kuy_app/core/place_notifier/recommended_notifier.dart';
+import 'package:travel_kuy_app/core/place_notifier/statues_place_notifier.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
