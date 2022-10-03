@@ -134,8 +134,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                     );
                                     await fav.deleteUserData(
                                         id: widget.favModel!.id!);
-                                    Navigator.pushNamed(
-                                        context, AppRoutes.bodyScreen);
+                                    Navigator.pop(context);
+                                    // Navigator.pushNamed(
+                                    //     context, AppRoutes.bodyScreen);
                                   }
                                 },
                                 icon: widget.favModel == null
@@ -443,7 +444,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                                           name: widget
                                                               .placeModel!.name,
                                                           startDate: date![0],
-                                                          endDate: date![2],
+                                                          endDate: date![1],
                                                           thumbnail: widget
                                                               .placeModel!
                                                               .gallery[0],

@@ -9,6 +9,7 @@ import 'package:travel_kuy_app/core/schedule_notifier/schedule_notifier.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 
 class ScheduleTileList extends StatefulWidget {
+  String? value;
   ScheduleTileList({Key? key}) : super(key: key);
 
   @override
@@ -18,16 +19,20 @@ class ScheduleTileList extends StatefulWidget {
 class _ScheduleTileListState extends State<ScheduleTileList> {
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    final schedule = Provider.of<ScheduleClass>(context, listen: false);
-    ReadCache.getString(key: "cache").then((value) {
-      schedule.getUserData(idUser: value);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final schedule = Provider.of<ScheduleClass>(context);
+    final schedule = Provider.of<ScheduleClass>(context, listen: false);
+    ReadCache.getString(key: "cache").then((value) {
+      setState(() {
+        widget.value = value;
+      });
+    });
+    schedule.getUserData(idUser: widget.value ?? "");
+
     return SizedBox(
       height: MediaQuery.of(context).size.height - 100,
       child: ListView.builder(
