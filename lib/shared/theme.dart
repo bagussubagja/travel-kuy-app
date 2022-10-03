@@ -5,6 +5,7 @@ Color greenDarkerColor = const Color(0xff31A55E);
 Color greenLightColor = const Color(0xff54D085);
 Color whiteColor = const Color(0xffF7F7F7);
 Color greyColor = const Color(0xffAAAAAA);
+Color redColor = const Color(0xffD0342C);
 
 TextStyle titleText =
     TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: whiteColor);

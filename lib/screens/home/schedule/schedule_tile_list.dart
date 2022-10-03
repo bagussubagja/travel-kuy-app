@@ -1,50 +1,57 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_kuy_app/core/schedule_notifier/schedule_notifier.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 
-class ScheduleTileList extends StatelessWidget {
+class ScheduleTileList extends StatefulWidget {
+  String? value;
   ScheduleTileList({Key? key}) : super(key: key);
 
-  List<String> imgUrl = [
-    'assets/images/beach.jpg',
-    'assets/images/island.jpg',
-    'assets/images/mountain.jpg',
-    'assets/images/lake.png',
-    'assets/images/waterfall.jpg',
-    'assets/images/beach.jpg',
-    'assets/images/island.jpg',
-    'assets/images/mountain.jpg',
-    'assets/images/lake.png',
-    'assets/images/waterfall.jpg',
-  ];
+  @override
+  State<ScheduleTileList> createState() => _ScheduleTileListState();
+}
 
-  String _date = DateFormat('dd MMM yyyy').format(DateTime.now());
+class _ScheduleTileListState extends State<ScheduleTileList> {
 
   @override
   Widget build(BuildContext context) {
+    final schedule = Provider.of<ScheduleClass>(context, listen: false);
+    ReadCache.getString(key: "cache").then((value) {
+      setState(() {
+        widget.value = value;
+      });
+    });
+    schedule.getUserData(idUser: widget.value ?? "");
+
     return SizedBox(
       height: MediaQuery.of(context).size.height - 100,
       child: ListView.builder(
           primary: false,
-          itemCount: imgUrl.length,
+          shrinkWrap: true,
+          itemCount: schedule.schedule?.length ?? 0,
           itemBuilder: (context, index) {
+            final item = schedule.schedule?[index];
             return Card(
               color: Colors.black45,
               elevation: 4,
               child: ExpansionTile(
-                leading: Container(
-                  height: 50,
-                  width: 50,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Image.asset(
-                      imgUrl[index],
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                leading: SizedBox(
+                  height: 75,
+                  width: 75,
+                  child: item?.thumbnail == null
+                      ? const CircularProgressIndicator()
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.network(
+                            item!.thumbnail,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                 ),
                 iconColor: greyColor,
                 expandedCrossAxisAlignment: CrossAxisAlignment.center,
@@ -52,18 +59,31 @@ class ScheduleTileList extends StatelessWidget {
                 collapsedIconColor: greyColor,
                 textColor: greyColor,
                 title: Text(
-                  'Gunung Rinjani',
+                  item?.name ?? "",
                   style: regularText,
                 ),
-                subtitle: Text('Date : ${_date}', style: subTitleText,),
+                subtitle: Text(
+                  '📅 ${item?.startDate.replaceAll("-", "/")} - ${item?.endDate.replaceAll("-", "/")}',
+                  style: subTitleText,
+                ),
                 children: [
                   Text(
-                    'Price : ${rupiah(1500000)}',
+                    'Price : ${rupiah(item?.totalPrice)}',
                     style: subTitleText,
                   ),
                   Text(
-                    'Ticket : 2pcs',
+                    'Ticket : ${item?.numOfPerson}',
                     style: subTitleText,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await schedule.deleteScheduleUser(id: item?.id ?? 0);
+                    },
+                    style: ElevatedButton.styleFrom(backgroundColor: redColor),
+                    child: Text(
+                      'Delete',
+                      style: regularText,
+                    ),
                   )
                 ],
               ),

@@ -24,7 +24,7 @@ class AppRoutes {
     registerScreen: (context) => RegisterScreen(),
     bodyScreen: (context) => BodyScreen(),
     detailScreen: (context) => DetailScreen(),
-    bookingProcess: (context) => const BookingProcess(),
+    // bookingProcess: (context) => const BookingProcess(),
     stateUI: (context) => const StateUI(),
     biodataPage: (context) => BiodataUser()
   };
