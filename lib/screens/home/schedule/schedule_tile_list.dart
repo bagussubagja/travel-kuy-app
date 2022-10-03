@@ -17,11 +17,6 @@ class ScheduleTileList extends StatefulWidget {
 }
 
 class _ScheduleTileListState extends State<ScheduleTileList> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

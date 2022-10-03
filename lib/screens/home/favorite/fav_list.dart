@@ -9,6 +9,7 @@ import 'package:travel_kuy_app/widgets/content_not_found.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 
 class FavList extends StatefulWidget {
+  String? idUser;
   FavList({Key? key}) : super(key: key);
 
   @override
@@ -16,22 +17,23 @@ class FavList extends StatefulWidget {
 }
 
 class _FavListState extends State<FavList> {
-
-
   @override
   void initState() {
     // TODO: implement initStata
     super.initState();
-    final favorite = Provider.of<FavoritePlaceClass>(context, listen: false);
-    ReadCache.getString(key: "cache")
-        .then((value) => favorite.getUserData(idUser: value));
   }
 
   @override
   Widget build(BuildContext context) {
     // final fav = Provider.of<FavoriteNotifier>(context);
     // final favList = fav.placeModel;
-    final favorite = Provider.of<FavoritePlaceClass>(context);
+    final favorite = Provider.of<FavoritePlaceClass>(context, listen: false);
+    ReadCache.getString(key: "cache").then((value) {
+      setState(() {
+        widget.idUser = value;
+      });
+    });
+    favorite.getUserData(idUser: widget.idUser ?? "");
 
     return GridView.builder(
         itemCount: favorite.fav?.length ?? 0,
