@@ -16,6 +16,7 @@ import 'package:travel_kuy_app/models/schedule_model.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/details/overview_page.dart';
 import 'package:travel_kuy_app/screens/details/review_page.dart';
+import 'package:travel_kuy_app/screens/details/widgets/booking_process.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/custom_nav_button.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
@@ -439,32 +440,50 @@ class _DetailScreenState extends State<DetailScreen> {
                                                     backgroundColor:
                                                         greenDarkerColor),
                                                 onPressed: () async {
-                                                  ScheduleModel scheduleModel =
-                                                      ScheduleModel(
-                                                          name: widget
-                                                              .placeModel!.name,
-                                                          startDate: date![0],
-                                                          endDate: date![1],
-                                                          thumbnail: widget
-                                                              .placeModel!
-                                                              .gallery[0],
-                                                          numOfPerson:
-                                                              numOfPerson ?? 1,
-                                                          totalPrice:
-                                                              totalPrice,
-                                                          idUser: idUser);
+                                                  ScheduleModel scheduleModel = ScheduleModel(
+                                                      name: widget.placeModel
+                                                              ?.name ??
+                                                          widget
+                                                              .favModel!.name!,
+                                                      startDate: date?[0] ??
+                                                          DateTime(2022, 10, 01)
+                                                              .toString()
+                                                              .substring(0, 10),
+                                                      endDate: date?[1] ??
+                                                          DateTime(2022, 10, 07)
+                                                              .toString()
+                                                              .substring(0, 10),
+                                                      thumbnail: widget
+                                                              .placeModel
+                                                              ?.gallery[0] ??
+                                                          widget.favModel!
+                                                              .gallery![0],
+                                                      numOfPerson:
+                                                          numOfPerson ?? 1,
+                                                      totalPrice: totalPrice,
+                                                      idUser: idUser);
                                                   var provider = Provider.of<
                                                           SchedulePostClass>(
                                                       context,
                                                       listen: false);
                                                   await provider
                                                       .postData(scheduleModel);
-                                                  Navigator
-                                                      .pushNamedAndRemoveUntil(
-                                                          context,
-                                                          AppRoutes
-                                                              .bookingProcess,
-                                                          (route) => false);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) {
+                                                    return BookingProcess(
+                                                        placeName: widget
+                                                                .placeModel
+                                                                ?.name ??
+                                                            widget.favModel!
+                                                                .name!);
+                                                  }));
+                                                  // Navigator
+                                                  //     .pushNamedAndRemoveUntil(
+                                                  //         context,
+                                                  //         AppRoutes
+                                                  //             .bookingProcess,
+                                                  //         (route) => false);
                                                 },
                                                 child: Text(
                                                   'Confirm',
@@ -538,8 +557,8 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   List<DateTime?> _dialogCalendarPickerValue = [
-    DateTime.now(),
-    DateTime.now().add(const Duration(days: 7)),
+    DateTime(2022, 10, 01),
+    DateTime(2022, 10, 07),
   ];
   _buildCalendarDialogButton() {
     final config = CalendarDatePicker2WithActionButtonsConfig(

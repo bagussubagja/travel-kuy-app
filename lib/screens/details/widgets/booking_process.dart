@@ -6,7 +6,8 @@ import 'package:travel_kuy_app/screens/details/widgets/booking_success.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 
 class BookingProcess extends StatefulWidget {
-  const BookingProcess({Key? key}) : super(key: key);
+  String placeName;
+  BookingProcess({Key? key, required this.placeName}) : super(key: key);
 
   @override
   State<BookingProcess> createState() => _BookingProcessState();
@@ -22,7 +23,7 @@ class _BookingProcessState extends State<BookingProcess> {
   void initState() {
     Timer(const Duration(seconds: 6), () {
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const BookingSuccess()));
+          MaterialPageRoute(builder: (context) => BookingSuccess(placeName: widget.placeName,)));
     });
     super.initState();
   }

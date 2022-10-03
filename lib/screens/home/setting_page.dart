@@ -6,6 +6,7 @@ import 'package:travel_kuy_app/core/auth_notifier/auth_notifier.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
+import 'package:travel_kuy_app/screens/details/widgets/booking_failed.dart';
 import 'package:travel_kuy_app/screens/details/widgets/booking_success.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
@@ -46,7 +47,7 @@ class _SettingPageState extends State<SettingPage> {
     LoginScreen(),
     RegisterScreen(),
     DetailScreen(),
-    BookingSuccess()
+    BookingFailed()
   ];
 
   void initState() {
