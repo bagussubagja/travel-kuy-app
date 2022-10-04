@@ -19,7 +19,7 @@ class _StateUIState extends State<StateUI> {
         key: "cache",
         valueType: ValueType.StringValue,
         actionIfNull: () {
-          Navigator.of(context).pushNamed(AppRoutes.loginScreen);
+          Navigator.of(context).pushNamed(AppRoutes.onboardingScreen);
         },
         actionIfNotNull: () {
           Navigator.of(context).pushNamed(AppRoutes.bodyScreen);
@@ -31,11 +31,14 @@ class _StateUIState extends State<StateUI> {
     Timer(const Duration(seconds: 3), initiateCache);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: blackBackgroundColor,
-      body: const Center(child: CircularProgressIndicator(),),
+      body: const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }

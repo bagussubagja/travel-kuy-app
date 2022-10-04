@@ -9,11 +9,14 @@ import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
 import 'package:travel_kuy_app/screens/details/widgets/booking_failed.dart';
 import 'package:travel_kuy_app/screens/details/widgets/booking_success.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
+import 'package:travel_kuy_app/screens/home/settings/about_me.dart';
+import 'package:travel_kuy_app/screens/home/settings/edit_account.dart';
+import 'package:travel_kuy_app/screens/home/settings/help_center.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 
-import '../../core/user_notifier/user_notifier.dart';
+import '../../../core/user_notifier/user_notifier.dart';
 
 class SettingPage extends StatefulWidget {
   SettingPage({Key? key}) : super(key: key);
@@ -44,10 +47,9 @@ class _SettingPageState extends State<SettingPage> {
   ];
 
   final List _widgetList = [
-    LoginScreen(),
-    RegisterScreen(),
-    DetailScreen(),
-    BookingFailed()
+    EditAccount(),
+    HelpCenter(),
+    AboutMe()
   ];
 
   void initState() {

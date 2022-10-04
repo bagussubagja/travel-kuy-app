@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:travel_kuy_app/models/place_model.dart';
-import 'package:travel_kuy_app/services/tourism_place_service/recommended_service.dart';
 import 'package:travel_kuy_app/services/tourism_place_service/statues_place_services.dart';
 
 class RecommendedClass extends ChangeNotifier {
