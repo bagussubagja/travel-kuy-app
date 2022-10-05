@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_is_empty
 
 import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,10 @@ import 'package:indonesia/indonesia.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/core/schedule_notifier/schedule_notifier.dart';
+import 'package:travel_kuy_app/screens/categories/by_status/popular_place_page.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
+
+import '../../../widgets/margin_widget_height.dart';
 
 class ScheduleTileList extends StatefulWidget {
   String? value;
@@ -17,7 +20,6 @@ class ScheduleTileList extends StatefulWidget {
 }
 
 class _ScheduleTileListState extends State<ScheduleTileList> {
-
   @override
   Widget build(BuildContext context) {
     final schedule = Provider.of<ScheduleClass>(context, listen: false);
@@ -27,6 +29,10 @@ class _ScheduleTileListState extends State<ScheduleTileList> {
       });
     });
     schedule.getUserData(idUser: widget.value ?? "");
+
+    if (schedule.schedule?.length == 0) {
+      return contentNotFound();
+    }
 
     return SizedBox(
       height: MediaQuery.of(context).size.height - 100,
@@ -75,20 +81,86 @@ class _ScheduleTileListState extends State<ScheduleTileList> {
                     'Ticket : ${item?.numOfPerson}',
                     style: subTitleText,
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await schedule.deleteScheduleUser(id: item?.id ?? 0);
-                    },
-                    style: ElevatedButton.styleFrom(backgroundColor: redColor),
-                    child: Text(
-                      'Delete',
-                      style: regularText,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          openDialog(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: greenDarkerColor),
+                        child: Text(
+                          'Change Schedule',
+                          style: regularText,
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await schedule.deleteScheduleUser(id: item?.id ?? 0);
+                        },
+                        style:
+                            ElevatedButton.styleFrom(backgroundColor: redColor),
+                        child: Text(
+                          'Delete',
+                          style: regularText,
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
             );
           }),
     );
+  }
+
+  Widget contentNotFound() {
+    return Center(
+      child: Column(
+        children: [
+          MarginHeight(height: 175),
+          Text(
+            'No Vacation Schedule found!',
+            style: regularText,
+          ),
+          MarginHeight(height: 10),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                "Try to explore the beauty place",
+                style: subTitleText,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return PopularPlacePage();
+                  }));
+                },
+                child: Text(
+                  ' Here!',
+                  style: subTitleText.copyWith(color: whiteColor),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Future openDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: blackBackgroundColor,
+            title: Text(
+              'Update Schedule',
+              style: regularText,
+            ),
+          );
+        });
   }
 }

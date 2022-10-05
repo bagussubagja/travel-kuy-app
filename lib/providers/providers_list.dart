@@ -61,5 +61,8 @@ class ProvidersList {
     ChangeNotifierProvider(
       create: (_) => SchedulePostClass(),
     ),
+    ChangeNotifierProvider(
+      create: (_) => UserPostDataClass(),
+    ),
   ];
 }

@@ -4,6 +4,7 @@ import 'package:travel_kuy_app/models/user_model.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/authentication/biodata_screen.dart';
 import 'package:travel_kuy_app/screens/home/home_page.dart';
+import 'package:travel_kuy_app/services/user_service/user_services.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import '../../services/auth_service/auth_service.dart';
 import 'package:http/http.dart' as http;
@@ -22,6 +23,22 @@ class RegisterDataClass extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+class UserPostDataClass extends ChangeNotifier {
+  bool loading = false;
+  bool isBack = false;
+  Future<void> postData(UserModel body, String idUser) async {
+    loading = true;
+    notifyListeners();
+    http.Response response = (await updateUserData(body, idUser))!;
+    if (response.statusCode == 200) {
+      isBack = true;
+    }
+    loading = false;
+    notifyListeners();
+  }
+}
+
 
 class AuthenticationNotifier extends ChangeNotifier {
   final AuthenticationService _authenticationService = AuthenticationService();

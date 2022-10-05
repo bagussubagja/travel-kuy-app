@@ -32,15 +32,6 @@ class FavoritesPage extends StatelessWidget {
                 MarginHeight(height: 5),
                 Text('Here are your favorite destinations ❤️',
                     style: subTitleText),
-                MarginHeight(height: 10),
-                MyTextField(
-                  hintText: 'Search for a destination',
-                  onTap: () {},
-                  prefixIcon: Icon(
-                    Icons.search_rounded,
-                    color: whiteColor,
-                  ),
-                ),
                 MarginHeight(height: 20),
                 FavList()
               ],

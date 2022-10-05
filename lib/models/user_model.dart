@@ -12,18 +12,18 @@ String userModelToJson(List<UserModel> data) =>
 
 class UserModel {
   UserModel({
-    required this.idUser,
-    required this.email,
-    required this.password,
-    required this.name,
-    required this.gender,
+    this.idUser,
+    this.email,
+    this.password,
+    this.name,
+    this.gender,
   });
 
-  String idUser;
-  String email;
-  String password;
-  String name;
-  String gender;
+  String? idUser;
+  String? email;
+  String? password;
+  String? name;
+  String? gender;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         idUser: json["id_user"],
@@ -39,5 +39,9 @@ class UserModel {
         "password": password,
         "name": name,
         "gender": gender,
+      };
+
+      Map<String, dynamic> updateName() => {
+        "name": name,
       };
 }

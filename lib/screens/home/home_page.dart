@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: whiteColor, fontSize: 18),
                         ),
                         Text(
-                          '${user.user?[0].name ?? '...'} 👋',
+                          '${user.user?[0].name ?? 'Loading...'} 👋',
                           style: regularText.copyWith(
                               fontWeight: FontWeight.w500,
                               color: whiteColor,

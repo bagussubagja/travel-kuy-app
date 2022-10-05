@@ -15,7 +15,6 @@ class MyTextField extends StatelessWidget {
   bool? obscureText;
   bool? readOnly;
   bool? isObscure;
-  int? minLines, maxLines;
   double? height;
   TextInputType? textInputType;
   MyTextField(
@@ -31,8 +30,6 @@ class MyTextField extends StatelessWidget {
       this.readOnly,
       this.isObscure,
       this.textInputType,
-      this.minLines,
-      this.maxLines,
       this.height})
       : super(key: key);
 
@@ -62,8 +59,6 @@ class MyTextField extends StatelessWidget {
                       : regularText,
                   cursorColor: greenDarkerColor,
                   keyboardType: textInputType,
-                  minLines: minLines,
-                  maxLines: maxLines,
                   obscureText: obscureText ?? false,
                   onTap: onTap,
                   readOnly: readOnly ?? false,

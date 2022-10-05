@@ -1,8 +1,11 @@
+// ignore_for_file: prefer_is_empty
+
 import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
+import 'package:travel_kuy_app/screens/categories/by_status/recommended_place_page.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/content_not_found.dart';
@@ -25,8 +28,6 @@ class _FavListState extends State<FavList> {
 
   @override
   Widget build(BuildContext context) {
-    // final fav = Provider.of<FavoriteNotifier>(context);
-    // final favList = fav.placeModel;
     final favorite = Provider.of<FavoritePlaceClass>(context, listen: false);
     ReadCache.getString(key: "cache").then((value) {
       setState(() {
@@ -35,6 +36,9 @@ class _FavListState extends State<FavList> {
     });
     favorite.getUserData(idUser: widget.idUser ?? "");
 
+    if (favorite.fav?.length == 0) {
+      return contentNotFound();
+    }
     return GridView.builder(
         itemCount: favorite.fav?.length ?? 0,
         shrinkWrap: true,
@@ -93,5 +97,40 @@ class _FavListState extends State<FavList> {
             ),
           );
         });
+  }
+
+  Widget contentNotFound() {
+    return Center(
+      child: Column(
+        children: [
+          MarginHeight(height: 175),
+          Text(
+            'No Favorite Place found!',
+            style: regularText,
+          ),
+          MarginHeight(height: 10),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                'Try to explore the beauty place',
+                style: subTitleText,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return RecommendedPlacePage();
+                  }));
+                },
+                child: Text(
+                  ' Here!',
+                  style: subTitleText.copyWith(color: whiteColor),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
