@@ -29,7 +29,7 @@ class _SchedulePageState extends State<SchedulePage> {
               ),
               MarginHeight(height: 5),
               Text(
-                "All your schedule is here ✈️",
+                "All your schedules is here ✈️",
                 style: subTitleText,
               ),
               MarginHeight(height: 20),
