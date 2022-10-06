@@ -29,7 +29,7 @@ class AboutMe extends StatelessWidget {
               ),
               MarginHeight(height: 20),
               Text(
-                "Hello! I’m Bagus Subagja a student from Indonesia University of Education (UPI) at Software Engineering majority. I'm a passionate learner who's always willing to learn and work across technologies and domains.",
+                "Hello! I’m Bagus Subagja a student from Indonesia University of Education (UPI) at Software Engineering majority. I created Travel-Kuy App Mobile to introduce so many beatiful Indonesia place to visit!.",
                 style: regularText,
                 textAlign: TextAlign.center,
               ),

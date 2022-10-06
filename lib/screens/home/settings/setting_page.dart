@@ -73,17 +73,29 @@ class _SettingPageState extends State<SettingPage> {
                 style: titleText,
               ),
               MarginHeight(height: 25),
-              Center(
-                child: CircleAvatar(
-                  backgroundColor: greyColor,
-                  radius: 115,
-                  child: Image.asset(
-                    'assets/images/avatar.png',
-                    fit: BoxFit.fill,
-                    scale: 10,
-                  ),
-                ),
-              ),
+              user.user?[0].gender == "Male"
+                  ? Center(
+                      child: CircleAvatar(
+                        backgroundColor: greyColor,
+                        radius: 115,
+                        child: Image.asset(
+                          'assets/images/avatar.png',
+                          fit: BoxFit.fill,
+                          scale: 10,
+                        ),
+                      ),
+                    )
+                  : Center(
+                      child: CircleAvatar(
+                        backgroundColor: greyColor,
+                        radius: 115,
+                        child: Image.asset(
+                          'assets/images/avatar1.png',
+                          fit: BoxFit.fill,
+                          scale: 10,
+                        ),
+                      ),
+                    ),
               MarginHeight(height: 10),
               Center(
                 child: Text(
