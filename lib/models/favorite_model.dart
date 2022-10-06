@@ -4,51 +4,50 @@
 
 import 'dart:convert';
 
-List<FavoriteModel> favoriteModelFromJson(String str) =>
-    List<FavoriteModel>.from(
-        json.decode(str).map((x) => FavoriteModel.fromJson(x)));
+List<FavoriteModel> favoriteModelFromJson(String str) => List<FavoriteModel>.from(json.decode(str).map((x) => FavoriteModel.fromJson(x)));
 
-String favoriteModelToJson(List<FavoriteModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String favoriteModelToJson(List<FavoriteModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class FavoriteModel {
-  FavoriteModel({
-    this.id,
-    this.name,
-    this.description,
-    this.address,
-    this.district,
-    this.province,
-    this.price,
-    this.review,
-    this.rating,
-    this.category,
-    this.gallery,
-    this.operationalHour,
-    this.status,
-    this.reviewerName,
-    required this.idPlace,
-    required this.idUser,
-  });
+    FavoriteModel({
+        this.id,
+        this.name,
+        this.description,
+        this.address,
+        this.district,
+        this.province,
+        this.price,
+        this.review,
+        this.rating,
+        this.category,
+        this.gallery,
+        this.operationalHour,
+        this.status,
+        this.reviewerName,
+        required this.idPlace,
+        required this.idUser,
+        required this.favUnique,
+    });
 
-  int? id;
-  String? name;
-  String? description;
-  String? address;
-  String? district;
-  String? province;
-  int? price;
-  List<String>? review;
-  String? rating;
-  String? category;
-  List<String>? gallery;
-  String? operationalHour;
-  String? status;
-  List<String>? reviewerName;
-  int idPlace;
-  String idUser;
+    int? id;
+    String? name;
+    String? description;
+    String? address;
+    String? district;
+    String? province;
+    int? price;
+    List<String>? review;
+    String? rating;
+    String? category;
+    List<String>? gallery;
+    String? operationalHour;
+    String? status;
+    List<String>? reviewerName;
+    int idPlace;
+    String idUser;
+    String favUnique;
 
-  factory FavoriteModel.fromJson(Map<String, dynamic> json) => FavoriteModel(
+    factory FavoriteModel.fromJson(Map<String, dynamic> json) => FavoriteModel(
         id: json["id"],
         name: json["name"],
         description: json["description"],
@@ -65,10 +64,12 @@ class FavoriteModel {
         reviewerName: List<String>.from(json["reviewerName"].map((x) => x)),
         idPlace: json["id_place"],
         idUser: json["id_user"],
-      );
+        favUnique: json["fav_unique"],
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "id_place": idPlace,
         "id_user": idUser,
-      };
+        "fav_unique": favUnique,
+    };
 }

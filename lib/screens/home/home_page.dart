@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: whiteColor, fontSize: 18),
                         ),
                         Text(
-                          '${user.user?[0].name ?? '...'} 👋',
+                          '${user.user?[0].name ?? 'Loading...'} 👋',
                           style: regularText.copyWith(
                               fontWeight: FontWeight.w500,
                               color: whiteColor,
@@ -67,17 +67,29 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    CircleAvatar(
-                      backgroundColor: greenDarkerColor,
-                      radius: 25,
-                      child: CircleAvatar(
-                        backgroundColor: whiteColor,
-                        radius: 20,
-                        child: Image.asset(
-                          'assets/images/avatar.png',
-                        ),
-                      ),
-                    )
+                    user.user?[0].gender == "Male"
+                        ? CircleAvatar(
+                            backgroundColor: greyColor,
+                            radius: 25,
+                            child: CircleAvatar(
+                              backgroundColor: whiteColor,
+                              radius: 20,
+                              child: Image.asset(
+                                'assets/images/avatar.png',
+                              ),
+                            ),
+                          )
+                        : CircleAvatar(
+                            backgroundColor: greyColor,
+                            radius: 25,
+                            child: CircleAvatar(
+                              backgroundColor: whiteColor,
+                              radius: 20,
+                              child: Image.asset(
+                                'assets/images/avatar1.png',
+                              ),
+                            ),
+                          )
                   ],
                 ),
                 MarginHeight(height: 15),

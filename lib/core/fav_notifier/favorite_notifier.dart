@@ -26,10 +26,10 @@ class FavoritePlaceClass extends ChangeNotifier {
 class FavPostDataClass extends ChangeNotifier {
   bool loading = false;
   bool isBack = false;
-  Future<void> postData(FavoriteModel body) async {
+  Future<void> postData(FavoriteModel body, BuildContext context) async {
     loading = true;
     notifyListeners();
-    http.Response response = (await register(body))!;
+    http.Response response = (await register(body, context))!;
     if (response.statusCode == 200) {
       isBack = true;
     }

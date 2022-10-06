@@ -1,11 +1,8 @@
 import 'package:provider/single_child_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
-import 'package:travel_kuy_app/core/place_notifier/category_notifier.dart';
-import 'package:travel_kuy_app/core/place_notifier/mostviewed_notifier.dart';
-import 'package:travel_kuy_app/core/place_notifier/newlyadded_notifier.dart';
-import 'package:travel_kuy_app/core/place_notifier/popular_notifier.dart';
-import 'package:travel_kuy_app/core/place_notifier/recommended_notifier.dart';
+import 'package:travel_kuy_app/core/place_notifier/categories_place_notifier.dart';
+import 'package:travel_kuy_app/core/place_notifier/statues_place_notifier.dart';
 import 'package:travel_kuy_app/core/schedule_notifier/schedule_notifier.dart';
 import 'package:travel_kuy_app/core/user_notifier/user_notifier.dart';
 
@@ -63,6 +60,9 @@ class ProvidersList {
     ),
     ChangeNotifierProvider(
       create: (_) => SchedulePostClass(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => UserPostDataClass(),
     ),
   ];
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:travel_kuy_app/models/user_model.dart';
-import 'package:travel_kuy_app/services/user_service/user_service.dart';
+import 'package:travel_kuy_app/services/user_service/user_services.dart';
 
 class UserClass extends ChangeNotifier {
  List<UserModel>? user;

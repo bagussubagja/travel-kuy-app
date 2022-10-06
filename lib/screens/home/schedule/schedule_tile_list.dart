@@ -1,12 +1,18 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_is_empty
 
 import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/core/schedule_notifier/schedule_notifier.dart';
+import 'package:travel_kuy_app/screens/categories/by_status/popular_place_page.dart';
+import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
+import 'package:travel_kuy_app/widgets/my_textfield.dart';
+
+import '../../../widgets/margin_widget_height.dart';
 
 class ScheduleTileList extends StatefulWidget {
   String? value;
@@ -17,16 +23,20 @@ class ScheduleTileList extends StatefulWidget {
 }
 
 class _ScheduleTileListState extends State<ScheduleTileList> {
-
   @override
   Widget build(BuildContext context) {
     final schedule = Provider.of<ScheduleClass>(context, listen: false);
+
     ReadCache.getString(key: "cache").then((value) {
       setState(() {
         widget.value = value;
       });
     });
     schedule.getUserData(idUser: widget.value ?? "");
+
+    if (schedule.schedule?.length == 0) {
+      return contentNotFound();
+    }
 
     return SizedBox(
       height: MediaQuery.of(context).size.height - 100,
@@ -77,11 +87,56 @@ class _ScheduleTileListState extends State<ScheduleTileList> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      await schedule.deleteScheduleUser(id: item?.id ?? 0);
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              backgroundColor: blackBackgroundColor,
+                              title: Text(
+                                'Are you sure?',
+                                style: titleText,
+                              ),
+                              content: Text(
+                                'This action will cancel your vacation plan. But you always make another vacation booking schedule!',
+                                style: regularText,
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'Abort',
+                                    style: regularText,
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    try {
+                                      Navigator.pop(context);
+                                      await schedule.deleteScheduleUser(
+                                          id: item?.id ?? 0);
+                                    } catch (e) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(e.toString())));
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: redColor),
+                                  child: Text(
+                                    'OK',
+                                    style: regularText,
+                                  ),
+                                ),
+                              ],
+                            );
+                          });
+                      // await schedule.deleteScheduleUser(id: item?.id ?? 0);
                     },
                     style: ElevatedButton.styleFrom(backgroundColor: redColor),
                     child: Text(
-                      'Delete',
+                      'Cancel',
                       style: regularText,
                     ),
                   )
@@ -89,6 +144,42 @@ class _ScheduleTileListState extends State<ScheduleTileList> {
               ),
             );
           }),
+    );
+  }
+
+  Widget contentNotFound() {
+    return Center(
+      child: Column(
+        children: [
+          MarginHeight(height: 75),
+          LottieBuilder.asset('assets/lottie/not-found.json'),
+          Text(
+            'No Vacation Schedule found!',
+            style: regularText,
+          ),
+          MarginHeight(height: 10),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Text(
+                "Try to explore the beauty place",
+                style: subTitleText,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return PopularPlacePage();
+                  }));
+                },
+                child: Text(
+                  ' Here!',
+                  style: subTitleText.copyWith(color: whiteColor),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

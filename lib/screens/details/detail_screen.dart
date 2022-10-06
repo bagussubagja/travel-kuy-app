@@ -14,6 +14,7 @@ import 'package:travel_kuy_app/models/favorite_model.dart';
 import 'package:travel_kuy_app/models/place_model.dart';
 import 'package:travel_kuy_app/models/schedule_model.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
+import 'package:travel_kuy_app/screens/details/confirmation_stepper_screen.dart';
 import 'package:travel_kuy_app/screens/details/overview_page.dart';
 import 'package:travel_kuy_app/screens/details/review_page.dart';
 import 'package:travel_kuy_app/screens/details/widgets/booking_process.dart';
@@ -115,17 +116,22 @@ class _DetailScreenState extends State<DetailScreen> {
                             child: IconButton(
                                 onPressed: () async {
                                   if (widget.favModel == null) {
+                                    // FavoriteModel favoriteModel = FavoriteModel(
+                                    //   idPlace: widget.placeModel!.id,
+                                    //   idUser: widget.idUser!,
+                                    //   favUnique: '${widget.idUser!}_${widget.placeModel!.id}',
+                                    // );
                                     FavoriteModel favoriteModel = FavoriteModel(
                                         idPlace: widget.placeModel!.id,
-                                        idUser: widget.idUser!);
+                                        idUser: widget.idUser!,
+                                        favUnique:
+                                            '${widget.idUser!}_${widget.placeModel!.id}');
                                     var provider =
                                         Provider.of<FavPostDataClass>(context,
                                             listen: false);
-                                    await provider.postData(favoriteModel);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            content: Text(
-                                                "Place Added to Favorite")));
+                                    print(favoriteModel);
+                                    await provider.postData(
+                                        favoriteModel, context);
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
@@ -301,203 +307,13 @@ class _DetailScreenState extends State<DetailScreen> {
                       height: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          showModalBottomSheet(
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (BuildContext context) {
-                              return StatefulBuilder(
-                                builder: (BuildContext context,
-                                    StateSetter setState) {
-                                  return Container(
-                                      height:
-                                          MediaQuery.of(context).size.height,
-                                      decoration: BoxDecoration(
-                                        color: blackBackgroundColor,
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(30),
-                                          topRight: Radius.circular(30),
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: defaultPadding,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            MarginHeight(height: 10),
-                                            Center(
-                                              child: Container(
-                                                height: 5,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                  color: greyColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                            ),
-                                            MarginHeight(height: 10),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 65,
-                                                      width: 65,
-                                                      child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        child: Image.network(
-                                                          widget.placeModel
-                                                                      ?.gallery[
-                                                                  0] ??
-                                                              widget.favModel!
-                                                                  .gallery![0],
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    MarginWidth(width: 15),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          widget.placeModel
-                                                                  ?.name ??
-                                                              widget.favModel!
-                                                                  .name!,
-                                                          style: regularText,
-                                                        ),
-                                                        Text(
-                                                          '${rupiah(widget.placeModel?.price ?? widget.favModel!.price)}/person',
-                                                          style: subTitleText,
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            MarginHeight(height: 15),
-                                            Text(
-                                              'You will book a vacation to ${widget.placeModel?.name ?? widget.favModel!.name}. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
-                                              style: regularText.copyWith(
-                                                  color: greyColor,
-                                                  fontSize: 16),
-                                            ),
-                                            _buildCalendarDialogButton(),
-                                            MarginHeight(height: 15),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Total Price : ${totalPrice == 0 ? rupiah(widget.placeModel?.price ?? widget.favModel!.price) : rupiah(totalPrice)}',
-                                                  style: regularText,
-                                                ),
-                                                CountStepper(
-                                                  iconColor: greenLightColor,
-                                                  textStyle: regularText,
-                                                  iconIncrementColor:
-                                                      greenLightColor,
-                                                  defaultValue: 1,
-                                                  max: 100,
-                                                  min: 1,
-                                                  iconDecrementColor:
-                                                      greenLightColor,
-                                                  splashRadius: 50,
-                                                  onPressed: (value) {
-                                                    setState(() {
-                                                      numOfPerson = value;
-                                                      widget.favModel?.price ==
-                                                              null
-                                                          ? totalPrice = widget
-                                                                  .placeModel!
-                                                                  .price *
-                                                              value
-                                                          : totalPrice = widget
-                                                                  .favModel!
-                                                                  .price! *
-                                                              value;
-                                                    });
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                            MarginHeight(height: 15),
-                                            SizedBox(
-                                              height: 50,
-                                              width: double.infinity,
-                                              child: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        greenDarkerColor),
-                                                onPressed: () async {
-                                                  ScheduleModel scheduleModel = ScheduleModel(
-                                                      name: widget.placeModel
-                                                              ?.name ??
-                                                          widget
-                                                              .favModel!.name!,
-                                                      startDate: date?[0] ??
-                                                          DateTime(2022, 10, 01)
-                                                              .toString()
-                                                              .substring(0, 10),
-                                                      endDate: date?[1] ??
-                                                          DateTime(2022, 10, 07)
-                                                              .toString()
-                                                              .substring(0, 10),
-                                                      thumbnail: widget
-                                                              .placeModel
-                                                              ?.gallery[0] ??
-                                                          widget.favModel!
-                                                              .gallery![0],
-                                                      numOfPerson:
-                                                          numOfPerson ?? 1,
-                                                      totalPrice: totalPrice,
-                                                      idUser: idUser);
-                                                  var provider = Provider.of<
-                                                          SchedulePostClass>(
-                                                      context,
-                                                      listen: false);
-                                                  await provider
-                                                      .postData(scheduleModel);
-                                                  Navigator.push(context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) {
-                                                    return BookingProcess(
-                                                        placeName: widget
-                                                                .placeModel
-                                                                ?.name ??
-                                                            widget.favModel!
-                                                                .name!);
-                                                  }));
-                                                  // Navigator
-                                                  //     .pushNamedAndRemoveUntil(
-                                                  //         context,
-                                                  //         AppRoutes
-                                                  //             .bookingProcess,
-                                                  //         (route) => false);
-                                                },
-                                                child: Text(
-                                                  'Confirm',
-                                                  style: regularText,
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ));
-                                },
-                              );
-                            },
-                          );
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ConfirmationStepperScreen(
+                              favModel: widget.favModel,
+                              placeModel: widget.placeModel,
+                            );
+                          }));
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: greenDarkerColor),
@@ -524,6 +340,169 @@ class _DetailScreenState extends State<DetailScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Future showModal() {
+    return showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  color: blackBackgroundColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                ),
+                child: Padding(
+                  padding: defaultPadding,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MarginHeight(height: 10),
+                      Center(
+                        child: Container(
+                          height: 5,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: greyColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      MarginHeight(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                height: 65,
+                                width: 65,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.network(
+                                    widget.placeModel?.gallery[0] ??
+                                        widget.favModel!.gallery![0],
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                              MarginWidth(width: 15),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.placeModel?.name ??
+                                        widget.favModel!.name!,
+                                    style: regularText,
+                                  ),
+                                  Text(
+                                    '${rupiah(widget.placeModel?.price ?? widget.favModel!.price)}/person',
+                                    style: subTitleText,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      MarginHeight(height: 15),
+                      Text(
+                        'You will book a vacation to ${widget.placeModel?.name ?? widget.favModel!.name}. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
+                        style: regularText.copyWith(
+                            color: greyColor, fontSize: 16),
+                      ),
+                      _buildCalendarDialogButton(),
+                      MarginHeight(height: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Total Price : ${totalPrice == 0 ? rupiah(widget.placeModel?.price ?? widget.favModel!.price) : rupiah(totalPrice)}',
+                            style: regularText,
+                          ),
+                          CountStepper(
+                            iconColor: greenLightColor,
+                            textStyle: regularText,
+                            iconIncrementColor: greenLightColor,
+                            defaultValue: 1,
+                            max: 100,
+                            min: 1,
+                            iconDecrementColor: greenLightColor,
+                            splashRadius: 50,
+                            onPressed: (value) {
+                              setState(() {
+                                numOfPerson = value;
+                                widget.favModel?.price == null
+                                    ? totalPrice =
+                                        widget.placeModel!.price * value
+                                    : totalPrice =
+                                        widget.favModel!.price! * value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      MarginHeight(height: 15),
+                      SizedBox(
+                        height: 50,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: greenDarkerColor),
+                          onPressed: () async {
+                            ScheduleModel scheduleModel = ScheduleModel(
+                                name: widget.placeModel?.name ??
+                                    widget.favModel!.name!,
+                                startDate: date?[0] ??
+                                    DateTime(2022, 10, 01)
+                                        .toString()
+                                        .substring(0, 10),
+                                endDate: date?[1] ??
+                                    DateTime(2022, 10, 07)
+                                        .toString()
+                                        .substring(0, 10),
+                                thumbnail: widget.placeModel?.gallery[0] ??
+                                    widget.favModel!.gallery![0],
+                                numOfPerson: numOfPerson ?? 1,
+                                totalPrice: totalPrice,
+                                idUser: idUser,
+                                idPlace: widget.placeModel!.id);
+                            var provider = Provider.of<SchedulePostClass>(
+                                context,
+                                listen: false);
+                            await provider.postData(scheduleModel);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return BookingProcess(
+                                  placeName: widget.placeModel?.name ??
+                                      widget.favModel!.name!);
+                            }));
+                            // Navigator
+                            //     .pushNamedAndRemoveUntil(
+                            //         context,
+                            //         AppRoutes
+                            //             .bookingProcess,
+                            //         (route) => false);
+                          },
+                          child: Text(
+                            'Confirm',
+                            style: regularText,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ));
+          },
+        );
+      },
     );
   }
 

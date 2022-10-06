@@ -1,10 +1,11 @@
 import 'package:travel_kuy_app/screens/authentication/biodata_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
+import 'package:travel_kuy_app/screens/details/confirmation_stepper_screen.dart';
 import 'package:travel_kuy_app/screens/details/widgets/booking_process.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/screens/home/body_screen.dart';
-import 'package:travel_kuy_app/screens/onboarding/onboarding.dart';
+import 'package:travel_kuy_app/screens/onboarding/onboarding_screen.dart';
 import 'package:travel_kuy_app/screens/state_ui.dart';
 
 class AppRoutes {
@@ -17,15 +18,16 @@ class AppRoutes {
   static const String bookingProcess = '/bprocess';
   static const String categoryPage = '/category';
   static const String biodataPage = '/biodata';
+  static const String confirmPage = '/confirm';
 
   static final routes = {
-    onboardingScreen: (context) => const OnboardingScreen(),
+    onboardingScreen: (context) => const OnboardingPage(),
     loginScreen: (context) => const LoginScreen(),
     registerScreen: (context) => RegisterScreen(),
     bodyScreen: (context) => BodyScreen(),
     detailScreen: (context) => DetailScreen(),
-    // bookingProcess: (context) => const BookingProcess(),
     stateUI: (context) => const StateUI(),
-    biodataPage: (context) => BiodataUser()
+    biodataPage: (context) => BiodataUser(),
+    confirmPage: (context) => ConfirmationStepperScreen()
   };
 }

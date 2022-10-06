@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_kuy_app/core/place_notifier/category_notifier.dart';
+import 'package:travel_kuy_app/core/place_notifier/categories_place_notifier.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 

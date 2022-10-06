@@ -19,12 +19,12 @@ class CategoryCard extends StatefulWidget {
 
 class _CategoryCardState extends State<CategoryCard> {
   final List<String> imgCategory = [
-    'assets/images/beach.jpg',
-    'assets/images/island.jpg',
+    'assets/images/beach.png',
+    'assets/images/island.png',
     'assets/images/lake.png',
-    'assets/images/mountain.jpg',
+    'assets/images/mountain.png',
     'assets/images/park.png',
-    'assets/images/waterfall.jpg',
+    'assets/images/waterfall.png',
   ];
 
   final List<String> titleCategory = [

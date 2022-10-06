@@ -4,35 +4,34 @@
 
 import 'dart:convert';
 
-List<ScheduleModel> scheduleModelFromJson(String str) =>
-    List<ScheduleModel>.from(
-        json.decode(str).map((x) => ScheduleModel.fromJson(x)));
+List<ScheduleModel> scheduleModelFromJson(String str) => List<ScheduleModel>.from(json.decode(str).map((x) => ScheduleModel.fromJson(x)));
 
-String scheduleModelToJson(List<ScheduleModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String scheduleModelToJson(List<ScheduleModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ScheduleModel {
-  ScheduleModel({
-    this.id,
-    required this.name,
-    required this.startDate,
-    required this.endDate,
-    required this.thumbnail,
-    required this.numOfPerson,
-    required this.totalPrice,
-    required this.idUser,
-  });
+    ScheduleModel({
+        this.id,
+        required this.name,
+        required this.startDate,
+        required this.endDate,
+        required this.thumbnail,
+        required this.numOfPerson,
+        required this.totalPrice,
+        required this.idUser,
+        required this.idPlace,
+    });
 
-  int? id;
-  String name;
-  String startDate;
-  String endDate;
-  String thumbnail;
-  int numOfPerson;
-  int totalPrice;
-  String idUser;
+    int? id;
+    String name;
+    String startDate;
+    String endDate;
+    String thumbnail;
+    int numOfPerson;
+    int totalPrice;
+    String idUser;
+    int idPlace;
 
-  factory ScheduleModel.fromJson(Map<String, dynamic> json) => ScheduleModel(
+    factory ScheduleModel.fromJson(Map<String, dynamic> json) => ScheduleModel(
         id: json["id"],
         name: json["name"],
         startDate: json["start_date"],
@@ -41,9 +40,11 @@ class ScheduleModel {
         numOfPerson: json["num_of_person"],
         totalPrice: json["total_price"],
         idUser: json["id_user"],
-      );
+        idPlace: json["id_place"],
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
+        "id": id,
         "name": name,
         "start_date": startDate,
         "end_date": endDate,
@@ -51,5 +52,6 @@ class ScheduleModel {
         "num_of_person": numOfPerson,
         "total_price": totalPrice,
         "id_user": idUser,
-      };
+        "id_place": idPlace,
+    };
 }
