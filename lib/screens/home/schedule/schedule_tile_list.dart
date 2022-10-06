@@ -4,6 +4,7 @@ import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/core/schedule_notifier/schedule_notifier.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/popular_place_page.dart';
@@ -150,7 +151,8 @@ class _ScheduleTileListState extends State<ScheduleTileList> {
     return Center(
       child: Column(
         children: [
-          MarginHeight(height: 175),
+          MarginHeight(height: 75),
+          LottieBuilder.asset('assets/lottie/not-found.json'),
           Text(
             'No Vacation Schedule found!',
             style: regularText,

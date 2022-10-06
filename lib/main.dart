@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/providers/providers_list.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
+import 'package:travel_kuy_app/shared/theme.dart';
 
 void main() {
   runApp(const TravelKuy());
@@ -23,7 +24,10 @@ class TravelKuyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Travel Kuy App',
-      theme: ThemeData(primarySwatch: Colors.green, fontFamily: 'Poppins'),
+      theme: ThemeData(
+          primarySwatch: Colors.green,
+          fontFamily: 'Poppins',
+          textTheme: TextTheme(headline6: TextStyle(color: whiteColor))),
       initialRoute: AppRoutes.stateUI,
       routes: AppRoutes.routes,
     );

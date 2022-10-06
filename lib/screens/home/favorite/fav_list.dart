@@ -2,13 +2,14 @@
 
 import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/recommended_place_page.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
-import 'package:travel_kuy_app/widgets/content_not_found.dart';
+
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 
 class FavList extends StatefulWidget {
@@ -103,7 +104,8 @@ class _FavListState extends State<FavList> {
     return Center(
       child: Column(
         children: [
-          MarginHeight(height: 175),
+          MarginHeight(height: 75),
+          LottieBuilder.asset('assets/lottie/not-found.json'),
           Text(
             'No Favorite Place found!',
             style: regularText,
