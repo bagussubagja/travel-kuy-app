@@ -116,17 +116,22 @@ class _DetailScreenState extends State<DetailScreen> {
                             child: IconButton(
                                 onPressed: () async {
                                   if (widget.favModel == null) {
+                                    // FavoriteModel favoriteModel = FavoriteModel(
+                                    //   idPlace: widget.placeModel!.id,
+                                    //   idUser: widget.idUser!,
+                                    //   favUnique: '${widget.idUser!}_${widget.placeModel!.id}',
+                                    // );
                                     FavoriteModel favoriteModel = FavoriteModel(
                                         idPlace: widget.placeModel!.id,
-                                        idUser: widget.idUser!);
+                                        idUser: widget.idUser!,
+                                        favUnique:
+                                            '${widget.idUser!}_${widget.placeModel!.id}');
                                     var provider =
                                         Provider.of<FavPostDataClass>(context,
                                             listen: false);
-                                    await provider.postData(favoriteModel);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            content: Text(
-                                                "Place Added to Favorite")));
+                                    print(favoriteModel);
+                                    await provider.postData(
+                                        favoriteModel, context);
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(

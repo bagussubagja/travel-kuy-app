@@ -1,11 +1,18 @@
+import 'package:cache_manager/cache_manager.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:cool_stepper/cool_stepper.dart';
 import 'package:count_stepper/count_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:indonesia/indonesia.dart';
+import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/models/favorite_model.dart';
 import 'package:travel_kuy_app/models/place_model.dart';
+import 'package:travel_kuy_app/screens/details/widgets/booking_process.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
+import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
+
+import '../../core/schedule_notifier/schedule_notifier.dart';
+import '../../models/schedule_model.dart';
 
 class ConfirmationStepperScreen extends StatefulWidget {
   PlaceModel? placeModel;
@@ -20,83 +27,95 @@ class ConfirmationStepperScreen extends StatefulWidget {
 class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
   List<String>? date;
   int indexPage = 0;
-  int totalPrice = 0;
+  int? totalPrice;
   String idUser = "";
-  int? numOfPerson;
+  int? numOfPerson = 1;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      totalPrice = widget.placeModel?.price ?? widget.favModel!.price!;
+    });
+    ReadCache.getString(key: "cache").then((value) {
+      setState(() {
+        idUser = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final steps = [
       CoolStep(
-        title: 'Select a date',
+        title: 'Fill the Information',
         subtitle: 'Please fill some of the basic information to get started',
-        content: _buildCalendarDialogButton(),
-        validation: () {},
-      ),
-      CoolStep(
-        title: 'Buy Ticket',
-        subtitle: 'How much person will join your vacation this time?',
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              widget.placeModel?.name ?? widget.favModel!.name!,
-              style: regularText,
-            ),
-            Text(
-              'Price : ${rupiah(widget.placeModel?.price ?? widget.favModel!.price!)}/night',
-              style: regularText,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: CountStepper(
-                iconColor: greenLightColor,
-                textStyle: regularText,
-                iconIncrementColor: greenLightColor,
-                defaultValue: 1,
-                max: 100,
-                min: 1,
-                iconDecrementColor: greenLightColor,
-                splashRadius: 50,
-                onPressed: (value) {
-                  setState(() {
-                    numOfPerson = value;
-                    widget.favModel?.price == null
-                        ? totalPrice = widget.placeModel!.price * value
-                        : totalPrice = widget.favModel!.price! * value;
-                  });
-                },
-              ),
-            ),
-          ],
-        ),
+        content: _chooseADate(),
         validation: () {
+          if (date?[1] == null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Choose a date to continue!')));
+            return "null";
+          }
           return null;
         },
       ),
       CoolStep(
-        title: 'Confirm',
-        subtitle: 'How much person will join your vacation this time?',
+        title: 'Confirm your book',
+        subtitle: 'One more step to get your best vacation!',
         content: Column(
-          children: [
-            CountStepper(
-              iconColor: greenLightColor,
-              textStyle: regularText,
-              iconIncrementColor: greenLightColor,
-              defaultValue: 1,
-              max: 100,
-              min: 1,
-              iconDecrementColor: greenLightColor,
-              splashRadius: 50,
-              onPressed: (value) {
-                setState(() {
-                  numOfPerson = value;
-                  widget.favModel?.price == null
-                      ? totalPrice = widget.placeModel!.price * value
-                      : totalPrice = widget.favModel!.price! * value;
-                });
-              },
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Name : ",
+              style: regularText,
             ),
+            Text(
+              widget.placeModel?.name ?? widget.favModel!.name!,
+              style: regularText,
+            ),
+            MarginHeight(height: 10),
+            Text(
+              'Price : ',
+              style: regularText,
+            ),
+            Text(
+              '${rupiah(totalPrice)}/person',
+              style: regularText,
+            ),
+            MarginHeight(height: 10),
+            Text(
+              'Address : ',
+              style: regularText,
+            ),
+            Text(
+              widget.placeModel?.address ?? widget.favModel!.address!,
+              style: regularText,
+            ),
+            MarginHeight(height: 10),
+            Text(
+              'Start Date\t\t: ${date?[0] ?? "-"}',
+              style: regularText,
+            ),
+            Text(
+              'End Date\t\t\t\t: ${date?[1] ?? "-"}',
+              style: regularText,
+            ),
+            MarginHeight(height: 10),
+            Row(
+              children: [
+                Text(
+                  'Guests : ',
+                  style: regularText,
+                ),
+                Text(
+                  '$numOfPerson person',
+                  style: regularText,
+                ),
+              ],
+            ),
+            MarginHeight(height: 10),
           ],
         ),
         validation: () {
@@ -107,15 +126,35 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
 
     final stepper = CoolStepper(
       showErrorSnackbar: false,
-      onCompleted: () {
-        print('Steps completed!');
+      onCompleted: () async {
+        try {
+          ScheduleModel scheduleModel = ScheduleModel(
+              name: widget.placeModel?.name ?? widget.favModel!.name!,
+              startDate: date![0],
+              endDate: date![1],
+              thumbnail:
+                  widget.placeModel?.gallery[0] ?? widget.favModel!.gallery![0],
+              numOfPerson: numOfPerson ?? 1,
+              totalPrice: totalPrice!,
+              idUser: idUser);
+          var provider = Provider.of<SchedulePostClass>(context, listen: false);
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return BookingProcess(
+                placeName: widget.placeModel?.name ?? widget.favModel!.name!);
+          }));
+          await provider.postData(scheduleModel);
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("There's Something Wrong!")));
+        }
       },
       steps: steps,
       config: CoolStepperConfig(
           backText: 'PREV',
-          finalText: "Let's Pay!",
+          finalText: "CONFIRM",
           iconColor: greenDarkerColor,
-          stepText: "Step",
+          stepText: "STEP",
+          nextText: 'NEXT',
           titleTextStyle: titleText,
           subtitleTextStyle: subTitleText),
     );
@@ -124,7 +163,7 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
       backgroundColor: blackBackgroundColor,
       appBar: AppBar(
         title: Text(
-          "Confirm your schedule",
+          "Book your vacation",
           style: regularText,
         ),
         backgroundColor: blackBackgroundColor,
@@ -168,7 +207,7 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
     DateTime(2022, 10, 01),
     DateTime(2022, 10, 07),
   ];
-  _buildCalendarDialogButton() {
+  _chooseADate() {
     final config = CalendarDatePicker2WithActionButtonsConfig(
       calendarType: CalendarDatePicker2Type.range,
       dayTextStyle: TextStyle(color: whiteColor),
@@ -184,50 +223,108 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            "Name : ",
+            style: regularText,
+          ),
+          Text(
+            widget.placeModel?.name ?? widget.favModel!.name!,
+            style: regularText,
+          ),
+          MarginHeight(height: 10),
+          Text(
+            'Price : ',
+            style: regularText,
+          ),
+          Text(
+            '${rupiah(widget.placeModel?.price ?? widget.favModel!.price!)}/person',
+            style: regularText,
+          ),
+          MarginHeight(height: 10),
+          Text(
+            'Address : ',
+            style: regularText,
+          ),
+          Text(
+            widget.placeModel?.address ?? widget.favModel!.address!,
+            style: regularText,
+          ),
+          MarginHeight(height: 10),
+          Text(
+            'Start Date\t\t: ${date?[0] ?? "-"}',
+            style: regularText,
+          ),
+          Text(
+            'End Date\t\t\t\t: ${date?[1] ?? "-"}',
+            style: regularText,
+          ),
+          MarginHeight(height: 10),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextButton(
-                child: Text(
-                  'Click me to Start 🗓️',
-                  style: regularText,
-                ),
-                onPressed: () async {
-                  final values = await showCalendarDatePicker2Dialog(
-                    context: context,
-                    config: config,
-                    dialogSize: const Size(325, 400),
-                    borderRadius: BorderRadius.circular(15),
-                    initialValue: _dialogCalendarPickerValue,
-                    dialogBackgroundColor: blackBackgroundColor,
-                    selectableDayPredicate: (day) => !day
-                        .difference(_dialogCalendarPickerValue[0]!
-                            .subtract(const Duration(days: 5)))
-                        .isNegative,
-                  );
-                  if (values != null) {
-                    // ignore: avoid_print
-                    print(_getValueText(
-                      config.calendarType,
-                      values,
-                    ));
+              Text(
+                'Guests : ',
+                style: regularText,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: CountStepper(
+                  iconColor: greenLightColor,
+                  textStyle: regularText,
+                  iconIncrementColor: greenLightColor,
+                  defaultValue: 1,
+                  max: 100,
+                  min: 1,
+                  iconDecrementColor: greenLightColor,
+                  splashRadius: 50,
+                  onPressed: (value) {
                     setState(() {
-                      _dialogCalendarPickerValue = values;
+                      numOfPerson = value;
+                      widget.favModel?.price == null
+                          ? totalPrice = widget.placeModel!.price * value
+                          : totalPrice = widget.favModel!.price! * value;
                     });
-                  }
-                },
+                  },
+                ),
               ),
             ],
           ),
-          Text(
-            'Start Date : ${date?[0] ?? "-"}',
-            style: regularText,
+          MarginHeight(height: 10),
+          Center(
+            child: ElevatedButton(
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: greenDarkerColor),
+              child: Text(
+                'Choose dates',
+                style: regularText,
+              ),
+              onPressed: () async {
+                final values = await showCalendarDatePicker2Dialog(
+                  context: context,
+                  config: config,
+                  dialogSize: const Size(325, 400),
+                  borderRadius: BorderRadius.circular(15),
+                  initialValue: _dialogCalendarPickerValue,
+                  dialogBackgroundColor: blackBackgroundColor,
+                  selectableDayPredicate: (day) => !day
+                      .difference(_dialogCalendarPickerValue[0]!
+                          .subtract(const Duration(days: 5)))
+                      .isNegative,
+                );
+                if (values != null) {
+                  // ignore: avoid_print
+                  print(_getValueText(
+                    config.calendarType,
+                    values,
+                  ));
+                  setState(() {
+                    _dialogCalendarPickerValue = values;
+                  });
+                }
+              },
+            ),
           ),
-          Text(
-            'End Date : ${date?[1] ?? "-"}',
-            style: regularText,
-          )
         ],
       ),
     );
