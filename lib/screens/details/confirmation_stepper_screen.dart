@@ -136,7 +136,8 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
                   widget.placeModel?.gallery[0] ?? widget.favModel!.gallery![0],
               numOfPerson: numOfPerson ?? 1,
               totalPrice: totalPrice!,
-              idUser: idUser);
+              idUser: idUser,
+              idPlace: widget.placeModel?.id ?? widget.favModel!.idPlace);
           var provider = Provider.of<SchedulePostClass>(context, listen: false);
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return BookingProcess(

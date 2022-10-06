@@ -7,7 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/core/schedule_notifier/schedule_notifier.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/popular_place_page.dart';
+import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
+import 'package:travel_kuy_app/widgets/my_textfield.dart';
 
 import '../../../widgets/margin_widget_height.dart';
 
@@ -23,6 +25,7 @@ class _ScheduleTileListState extends State<ScheduleTileList> {
   @override
   Widget build(BuildContext context) {
     final schedule = Provider.of<ScheduleClass>(context, listen: false);
+
     ReadCache.getString(key: "cache").then((value) {
       setState(() {
         widget.value = value;
@@ -81,32 +84,60 @@ class _ScheduleTileListState extends State<ScheduleTileList> {
                     'Ticket : ${item?.numOfPerson}',
                     style: subTitleText,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          openDialog(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: greenDarkerColor),
-                        child: Text(
-                          'Change Schedule',
-                          style: regularText,
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          await schedule.deleteScheduleUser(id: item?.id ?? 0);
-                        },
-                        style:
-                            ElevatedButton.styleFrom(backgroundColor: redColor),
-                        child: Text(
-                          'Delete',
-                          style: regularText,
-                        ),
-                      ),
-                    ],
+                  ElevatedButton(
+                    onPressed: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              backgroundColor: blackBackgroundColor,
+                              title: Text(
+                                'Are you sure?',
+                                style: titleText,
+                              ),
+                              content: Text(
+                                'This action will cancel your vacation plan. But you always make another vacation booking schedule!',
+                                style: regularText,
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'Abort',
+                                    style: regularText,
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    try {
+                                      Navigator.pop(context);
+                                      await schedule.deleteScheduleUser(
+                                          id: item?.id ?? 0);
+                                    } catch (e) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(e.toString())));
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: redColor),
+                                  child: Text(
+                                    'OK',
+                                    style: regularText,
+                                  ),
+                                ),
+                              ],
+                            );
+                          });
+                      // await schedule.deleteScheduleUser(id: item?.id ?? 0);
+                    },
+                    style: ElevatedButton.styleFrom(backgroundColor: redColor),
+                    child: Text(
+                      'Cancel',
+                      style: regularText,
+                    ),
                   )
                 ],
               ),
@@ -148,19 +179,5 @@ class _ScheduleTileListState extends State<ScheduleTileList> {
         ],
       ),
     );
-  }
-
-  Future openDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            backgroundColor: blackBackgroundColor,
-            title: Text(
-              'Update Schedule',
-              style: regularText,
-            ),
-          );
-        });
   }
 }

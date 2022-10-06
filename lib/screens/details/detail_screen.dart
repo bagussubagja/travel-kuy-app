@@ -472,7 +472,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                     widget.favModel!.gallery![0],
                                 numOfPerson: numOfPerson ?? 1,
                                 totalPrice: totalPrice,
-                                idUser: idUser);
+                                idUser: idUser,
+                                idPlace: widget.placeModel!.id);
                             var provider = Provider.of<SchedulePostClass>(
                                 context,
                                 listen: false);
