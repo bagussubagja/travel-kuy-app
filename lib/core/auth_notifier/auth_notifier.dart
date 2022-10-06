@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/models/user_model.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/authentication/biodata_screen.dart';
-import 'package:travel_kuy_app/screens/home/home_page.dart';
 import 'package:travel_kuy_app/services/user_service/user_services.dart';
-import 'package:travel_kuy_app/shared/theme.dart';
 import '../../services/auth_service/auth_service.dart';
 import 'package:http/http.dart' as http;
 
