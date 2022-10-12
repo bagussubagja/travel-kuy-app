@@ -19,14 +19,16 @@ class OverviewPage extends StatefulWidget {
 }
 
 class _OverviewPageState extends State<OverviewPage> {
-  List<String>? coordinateSplitted;
+  List<String>? coordinateSplittedPlaceModel;
+  List<String>? coordinateSplittedFavoriteModel;
   String? lang, longitude;
   @override
   void initState() {
     // TODO: implement initState
-    coordinateSplitted = widget.placeModel!.coordinate.split(' ');
-    lang = coordinateSplitted?[0].replaceAll(",", "");
-    longitude = coordinateSplitted?[1].replaceAll(",", "");
+    coordinateSplittedPlaceModel = widget.placeModel?.coordinate.split(' ');
+    coordinateSplittedFavoriteModel = widget.favModel?.coordinate!.split(' ');
+    lang = coordinateSplittedPlaceModel?[0].replaceAll(",", "") ?? coordinateSplittedFavoriteModel?[0].replaceAll(",", "");
+    longitude = coordinateSplittedPlaceModel?[1].replaceAll(",", "") ?? coordinateSplittedFavoriteModel?[1].replaceAll(",", "");
   }
 
   @override

@@ -27,6 +27,7 @@ class FavoriteModel {
         required this.idPlace,
         required this.idUser,
         required this.favUnique,
+        this.coordinate
     });
 
     int? id;
@@ -46,6 +47,7 @@ class FavoriteModel {
     int idPlace;
     String idUser;
     String favUnique;
+    String? coordinate;
 
     factory FavoriteModel.fromJson(Map<String, dynamic> json) => FavoriteModel(
         id: json["id"],
@@ -65,6 +67,7 @@ class FavoriteModel {
         idPlace: json["id_place"],
         idUser: json["id_user"],
         favUnique: json["fav_unique"],
+        coordinate: json["coordinate"]
     );
 
     Map<String, dynamic> toJson() => {

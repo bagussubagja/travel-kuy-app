@@ -115,7 +115,7 @@ class _ScheduleTileListState extends State<ScheduleTileList> {
                                     try {
                                       Navigator.pop(context);
                                       await schedule.deleteScheduleUser(
-                                          id: item?.id ?? 0);
+                                          id: item?.id ?? 0, context: context);
                                     } catch (e) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(

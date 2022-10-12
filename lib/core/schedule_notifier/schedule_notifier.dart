@@ -15,9 +15,9 @@ class ScheduleClass extends ChangeNotifier {
     notifyListeners();
   }
 
-    deleteScheduleUser({required int id}) async {
+    deleteScheduleUser({required int id, required BuildContext context}) async {
     loading = true;
-    schedule = (await deleteSchedule(id: id));
+    schedule = (await deleteSchedule(id: id, context: context));
     loading = false;
     notifyListeners();
   }
