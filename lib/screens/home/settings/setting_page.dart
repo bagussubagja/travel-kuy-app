@@ -65,8 +65,7 @@ class _SettingPageState extends State<SettingPage> {
       body: SafeArea(
         child: Padding(
           padding: defaultPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
             children: [
               Text(
                 'Settings',

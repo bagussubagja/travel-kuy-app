@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final dataModel = dataModelFromJson(jsonString);
+//     final placeModel = placeModelFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -26,6 +26,7 @@ class PlaceModel {
     required this.operationalHour,
     required this.status,
     required this.reviewerName,
+    required this.coordinate,
   });
 
   int id;
@@ -42,6 +43,7 @@ class PlaceModel {
   String operationalHour;
   String status;
   List<String> reviewerName;
+  String coordinate;
 
   factory PlaceModel.fromJson(Map<String, dynamic> json) => PlaceModel(
         id: json["id"],
@@ -58,6 +60,7 @@ class PlaceModel {
         operationalHour: json["operationalHour"],
         status: json["status"],
         reviewerName: List<String>.from(json["reviewerName"].map((x) => x)),
+        coordinate: json["coordinate"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,5 +78,6 @@ class PlaceModel {
         "operationalHour": operationalHour,
         "status": status,
         "reviewerName": List<dynamic>.from(reviewerName.map((x) => x)),
+        "coordinate": coordinate,
       };
 }
