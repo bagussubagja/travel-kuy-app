@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
+
 import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,11 +20,11 @@ class BiodataUser extends StatefulWidget {
 }
 
 class _BiodataUserState extends State<BiodataUser> {
-  var _emailController = TextEditingController();
-  var _passwordController = TextEditingController();
-  var _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
   bool _isObscure = false;
-  List<String> _gender = ["Male", "Female"];
+  final List<String> _gender = ["Male", "Female"];
   String? _selectedGender = "Male";
   String? _idUser;
 
@@ -152,7 +154,7 @@ class _BiodataUserState extends State<BiodataUser> {
                           .showSnackBar(SnackBar(content: Text(e.toString())));
                     }
                   },
-                  style: ElevatedButton.styleFrom(primary: greenDarkerColor),
+                  style: ElevatedButton.styleFrom(backgroundColor: greenDarkerColor),
                   child: Text(
                     'Done',
                     style: regularText,

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
@@ -17,7 +19,6 @@ class _BookingSuccessState extends State<BookingSuccess> {
   late final LocalNotificationService service;
   @override
   void initState() {
-    // TODO: implement initState
     service = LocalNotificationService();
     service.initialize();
     super.initState();
@@ -51,7 +52,7 @@ class _BookingSuccessState extends State<BookingSuccess> {
                   textAlign: TextAlign.center,
                 ),
                 MarginHeight(height: 15),
-                Container(
+                SizedBox(
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -38,7 +40,7 @@ class _BookingProcessState extends State<BookingProcess> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Center(
-                    child: Container(
+                    child: SizedBox(
                         height: 100,
                         width: 100,
                         child: LottieBuilder.asset(

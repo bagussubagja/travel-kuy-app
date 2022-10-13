@@ -60,7 +60,7 @@ class _MostViewCardState extends State<MostViewCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   height: 100,
                   width: 180,
                   child: ClipRRect(

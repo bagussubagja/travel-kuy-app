@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cache_manager/cache_manager.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:cool_stepper/cool_stepper.dart';
@@ -32,10 +34,9 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
   int? numOfPerson = 1;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
-      totalPrice = widget.placeModel?.price ?? widget.favModel!.price!;
+      totalPrice = widget.placeModel?.price ?? widget.favModel!.tourismPlace!.price!;
     });
     ReadCache.getString(key: "cache").then((value) {
       setState(() {
@@ -72,7 +73,7 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
               style: regularText,
             ),
             Text(
-              widget.placeModel?.name ?? widget.favModel!.name!,
+              widget.placeModel?.name ?? widget.favModel!.tourismPlace!.name!,
               style: regularText,
             ),
             MarginHeight(height: 10),
@@ -90,7 +91,7 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
               style: regularText,
             ),
             Text(
-              widget.placeModel?.address ?? widget.favModel!.address!,
+              widget.placeModel?.address ?? widget.favModel!.tourismPlace!.address!,
               style: regularText,
             ),
             MarginHeight(height: 10),
@@ -129,21 +130,21 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
       onCompleted: () async {
         try {
           ScheduleModel scheduleModel = ScheduleModel(
-              name: widget.placeModel?.name ?? widget.favModel!.name!,
+              name: widget.placeModel?.name ?? widget.favModel!.tourismPlace!.name!,
               startDate: date![0],
               endDate: date![1],
               thumbnail:
-                  widget.placeModel?.gallery[0] ?? widget.favModel!.gallery![0],
+                  widget.placeModel?.gallery[0] ?? widget.favModel!.tourismPlace!.gallery![0],
               numOfPerson: numOfPerson ?? 1,
               totalPrice: totalPrice!,
               idUser: idUser,
-              idPlace: widget.placeModel?.id ?? widget.favModel!.idPlace);
+              idPlace: widget.placeModel?.id ?? widget.favModel!.idPlace!);
           var provider = Provider.of<SchedulePostClass>(context, listen: false);
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return BookingProcess(
-                placeName: widget.placeModel?.name ?? widget.favModel!.name!);
+                placeName: widget.placeModel?.name ?? widget.favModel!.tourismPlace!.name!);
           }));
-          await provider.postData(scheduleModel);
+          await provider.postData(context: context, body: scheduleModel);
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("There's Something Wrong!")));
@@ -231,7 +232,7 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
             style: regularText,
           ),
           Text(
-            widget.placeModel?.name ?? widget.favModel!.name!,
+            widget.placeModel?.name ?? widget.favModel!.tourismPlace!.name!,
             style: regularText,
           ),
           MarginHeight(height: 10),
@@ -240,7 +241,7 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
             style: regularText,
           ),
           Text(
-            '${rupiah(widget.placeModel?.price ?? widget.favModel!.price!)}/person',
+            '${rupiah(widget.placeModel?.price ?? widget.favModel!.tourismPlace!.price!)}/person',
             style: regularText,
           ),
           MarginHeight(height: 10),
@@ -249,7 +250,7 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
             style: regularText,
           ),
           Text(
-            widget.placeModel?.address ?? widget.favModel!.address!,
+            widget.placeModel?.address ?? widget.favModel!.tourismPlace!.address!,
             style: regularText,
           ),
           MarginHeight(height: 10),
@@ -282,9 +283,9 @@ class _ConfirmationStepperScreenState extends State<ConfirmationStepperScreen> {
                   onPressed: (value) {
                     setState(() {
                       numOfPerson = value;
-                      widget.favModel?.price == null
+                      widget.favModel?.tourismPlace?.price == null
                           ? totalPrice = widget.placeModel!.price * value
-                          : totalPrice = widget.favModel!.price! * value;
+                          : totalPrice = widget.favModel!.tourismPlace!.price! * value;
                     });
                   },
                 ),

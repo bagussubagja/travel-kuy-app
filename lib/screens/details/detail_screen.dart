@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
+
 import 'dart:ui';
 import 'package:cache_manager/cache_manager.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
@@ -8,12 +10,10 @@ import 'package:indonesia/indonesia.dart';
 import 'package:provider/provider.dart';
 import 'package:switch_tab/switch_tab.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
-import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
 import 'package:travel_kuy_app/core/schedule_notifier/schedule_notifier.dart';
 import 'package:travel_kuy_app/models/favorite_model.dart';
 import 'package:travel_kuy_app/models/place_model.dart';
 import 'package:travel_kuy_app/models/schedule_model.dart';
-import 'package:travel_kuy_app/routes/routes.dart';
 import 'package:travel_kuy_app/screens/details/confirmation_stepper_screen.dart';
 import 'package:travel_kuy_app/screens/details/overview_page.dart';
 import 'package:travel_kuy_app/screens/details/review_page.dart';
@@ -22,8 +22,6 @@ import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/custom_nav_button.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
-
-import '../../widgets/my_textfield.dart';
 
 class DetailScreen extends StatefulWidget {
   PlaceModel? placeModel;
@@ -54,15 +52,14 @@ class _DetailScreenState extends State<DetailScreen> {
         });
       },
     );
-    fav.getUserData(idUser: idUser);
+    fav.getUserData(idUser: idUser, context: context);
     if (widget.placeModel?.price == null) {
-      totalPrice = totalPrice + widget.favModel!.price!;
-    } else if (widget.favModel?.price == null) {
+      totalPrice = totalPrice + widget.favModel!.tourismPlace!.price!;
+    } else if (widget.favModel?.tourismPlace?.price == null) {
       totalPrice = totalPrice + widget.placeModel!.price;
     } else {
       totalPrice = 0;
     }
-    //totalPrice = totalPrice + widget.placeModel!.price;
   }
 
   @override
@@ -92,7 +89,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               borderRadius: BorderRadius.circular(10)),
                           child: widget.placeModel?.gallery[0] == null
                               ? Image.network(
-                                  widget.favModel!.gallery![0],
+                                  widget.favModel!.tourismPlace!.gallery![0],
                                   fit: BoxFit.cover,
                                 )
                               : Image.network(
@@ -116,11 +113,6 @@ class _DetailScreenState extends State<DetailScreen> {
                             child: IconButton(
                                 onPressed: () async {
                                   if (widget.favModel == null) {
-                                    // FavoriteModel favoriteModel = FavoriteModel(
-                                    //   idPlace: widget.placeModel!.id,
-                                    //   idUser: widget.idUser!,
-                                    //   favUnique: '${widget.idUser!}_${widget.placeModel!.id}',
-                                    // );
                                     FavoriteModel favoriteModel = FavoriteModel(
                                         idPlace: widget.placeModel!.id,
                                         idUser: widget.idUser!,
@@ -129,7 +121,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     var provider =
                                         Provider.of<FavPostDataClass>(context,
                                             listen: false);
-                                    print(favoriteModel);
+
                                     await provider.postData(
                                         favoriteModel, context);
                                   } else {
@@ -140,10 +132,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                       ),
                                     );
                                     await fav.deleteUserData(
-                                        id: widget.favModel!.id!);
+                                        id: widget.favModel!.id!,
+                                        context: context);
                                     Navigator.pop(context);
-                                    // Navigator.pushNamed(
-                                    //     context, AppRoutes.bodyScreen);
                                   }
                                 },
                                 icon: widget.favModel == null
@@ -179,7 +170,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 children: [
                                   Text(
                                       widget.placeModel?.name ??
-                                          widget.favModel!.name!,
+                                          widget.favModel!.tourismPlace!.name!,
                                       style: titleText.copyWith(fontSize: 18)),
                                   MarginHeight(height: 5),
                                   Row(
@@ -190,7 +181,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                         size: 17,
                                       ),
                                       MarginWidth(width: 5),
-                                      widget.favModel?.district == null
+                                      widget.favModel?.tourismPlace?.district ==
+                                              null
                                           ? Expanded(
                                               child: Text(
                                                   '${widget.placeModel?.district}, ${widget.placeModel?.province}',
@@ -199,7 +191,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                             )
                                           : Expanded(
                                               child: Text(
-                                                  '${widget.favModel?.district}, ${widget.favModel?.province}',
+                                                  '${widget.placeModel?.district}, ${widget.favModel?.tourismPlace?.district}',
                                                   style: subTitleText.copyWith(
                                                       fontSize: 14)),
                                             )
@@ -211,10 +203,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                       RatingBarIndicator(
                                         rating:
                                             widget.placeModel?.rating == null
-                                                ? double.parse(
-                                                    widget.favModel!.rating!)
-                                                : double.parse(
-                                                    widget.placeModel!.rating),
+                                                ? widget.favModel!.tourismPlace!
+                                                    .rating!
+                                                : widget.placeModel!.rating,
                                         itemBuilder: (context, index) =>
                                             const Icon(
                                           Icons.star,
@@ -226,8 +217,11 @@ class _DetailScreenState extends State<DetailScreen> {
                                       ),
                                       MarginWidth(width: 5),
                                       Text(
-                                          widget.placeModel?.rating ??
-                                              widget.favModel!.rating!,
+                                          widget.placeModel?.rating
+                                                  .toString() ??
+                                              widget.favModel!.tourismPlace!
+                                                  .rating!
+                                                  .toString(),
                                           style: subTitleText.copyWith(
                                               fontSize: 14)),
                                     ],
@@ -290,7 +284,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         children: [
                           Text(
                             widget.placeModel?.price == null
-                                ? rupiah(widget.favModel!.price)
+                                ? rupiah(widget.favModel!.tourismPlace!.price)
                                 : rupiah(widget.placeModel!.price),
                             style: regularText,
                           ),
@@ -388,7 +382,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                   borderRadius: BorderRadius.circular(15),
                                   child: Image.network(
                                     widget.placeModel?.gallery[0] ??
-                                        widget.favModel!.gallery![0],
+                                        widget.favModel!.tourismPlace!
+                                            .gallery![0],
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -399,11 +394,11 @@ class _DetailScreenState extends State<DetailScreen> {
                                 children: [
                                   Text(
                                     widget.placeModel?.name ??
-                                        widget.favModel!.name!,
+                                        widget.favModel!.tourismPlace!.name!,
                                     style: regularText,
                                   ),
                                   Text(
-                                    '${rupiah(widget.placeModel?.price ?? widget.favModel!.price)}/person',
+                                    '${rupiah(widget.placeModel?.price ?? widget.favModel!.tourismPlace!.price)}/person',
                                     style: subTitleText,
                                   )
                                 ],
@@ -414,7 +409,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                       MarginHeight(height: 15),
                       Text(
-                        'You will book a vacation to ${widget.placeModel?.name ?? widget.favModel!.name}. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
+                        'You will book a vacation to ${widget.placeModel?.name ?? widget.favModel!.tourismPlace!.name}. Before you set your plans, let us know when you will be leaving and how many people will be traveling with you!',
                         style: regularText.copyWith(
                             color: greyColor, fontSize: 16),
                       ),
@@ -424,7 +419,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Total Price : ${totalPrice == 0 ? rupiah(widget.placeModel?.price ?? widget.favModel!.price) : rupiah(totalPrice)}',
+                            'Total Price : ${totalPrice == 0 ? rupiah(widget.placeModel?.price ?? widget.favModel!.tourismPlace!.price) : rupiah(totalPrice)}',
                             style: regularText,
                           ),
                           CountStepper(
@@ -439,11 +434,12 @@ class _DetailScreenState extends State<DetailScreen> {
                             onPressed: (value) {
                               setState(() {
                                 numOfPerson = value;
-                                widget.favModel?.price == null
+                                widget.favModel?.tourismPlace?.price == null
                                     ? totalPrice =
                                         widget.placeModel!.price * value
                                     : totalPrice =
-                                        widget.favModel!.price! * value;
+                                        widget.favModel!.tourismPlace!.price! *
+                                            value;
                               });
                             },
                           ),
@@ -459,7 +455,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           onPressed: () async {
                             ScheduleModel scheduleModel = ScheduleModel(
                                 name: widget.placeModel?.name ??
-                                    widget.favModel!.name!,
+                                    widget.favModel!.tourismPlace!.name!,
                                 startDate: date?[0] ??
                                     DateTime(2022, 10, 01)
                                         .toString()
@@ -469,7 +465,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         .toString()
                                         .substring(0, 10),
                                 thumbnail: widget.placeModel?.gallery[0] ??
-                                    widget.favModel!.gallery![0],
+                                    widget.favModel!.tourismPlace!.gallery![0],
                                 numOfPerson: numOfPerson ?? 1,
                                 totalPrice: totalPrice,
                                 idUser: idUser,
@@ -477,19 +473,14 @@ class _DetailScreenState extends State<DetailScreen> {
                             var provider = Provider.of<SchedulePostClass>(
                                 context,
                                 listen: false);
-                            await provider.postData(scheduleModel);
+                            await provider.postData(
+                                body: scheduleModel, context: context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return BookingProcess(
                                   placeName: widget.placeModel?.name ??
-                                      widget.favModel!.name!);
+                                      widget.favModel!.tourismPlace!.name!);
                             }));
-                            // Navigator
-                            //     .pushNamedAndRemoveUntil(
-                            //         context,
-                            //         AppRoutes
-                            //             .bookingProcess,
-                            //         (route) => false);
                           },
                           child: Text(
                             'Confirm',

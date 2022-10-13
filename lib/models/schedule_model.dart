@@ -44,7 +44,6 @@ class ScheduleModel {
     );
 
     Map<String, dynamic> toJson() => {
-        "id": id,
         "name": name,
         "start_date": startDate,
         "end_date": endDate,

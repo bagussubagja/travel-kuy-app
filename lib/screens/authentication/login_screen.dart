@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 content: Text('Fill the TextField!')));
                       }
                     },
-                    style: ElevatedButton.styleFrom(primary: greenDarkerColor),
+                    style: ElevatedButton.styleFrom(backgroundColor: greenDarkerColor),
                     child: Text(
                       'Login',
                       style: regularText,

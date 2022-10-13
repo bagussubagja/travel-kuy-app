@@ -8,19 +8,19 @@ import 'package:travel_kuy_app/screens/home/settings/setting_page.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 
 class BodyScreen extends StatefulWidget {
-  BodyScreen({Key? key}) : super(key: key);
+  const BodyScreen({Key? key}) : super(key: key);
 
   @override
   State<BodyScreen> createState() => _BodyScreenState();
 }
 
 class _BodyScreenState extends State<BodyScreen> {
-  List<Widget> _bodyScreen = [
-    HomeScreen(),
-    SearchPage(),
+  final List<Widget> _bodyScreen = [
+    const HomeScreen(),
+    const SearchPage(),
     FavoritesPage(),
-    SchedulePage(),
-    SettingPage()
+    const SchedulePage(),
+    const SettingPage()
   ];
   int _currentIndex = 0;
   @override

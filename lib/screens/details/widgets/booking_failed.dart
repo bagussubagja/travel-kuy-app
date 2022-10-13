@@ -40,7 +40,7 @@ class BookingFailed extends StatelessWidget {
                     onPressed: (){
                       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.bodyScreen, (route) => false);
                     },
-                    style: ElevatedButton.styleFrom(primary: greenDarkerColor),
+                    style: ElevatedButton.styleFrom(backgroundColor: greenDarkerColor),
                     child: Text('Back to Main Menu', style: regularText,),
                   ),
                 )

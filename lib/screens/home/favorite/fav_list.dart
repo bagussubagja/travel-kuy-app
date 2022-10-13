@@ -1,10 +1,9 @@
-// ignore_for_file: prefer_is_empty
+// ignore_for_file: prefer_is_empty, must_be_immutable
 
 import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/recommended_place_page.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
@@ -21,11 +20,6 @@ class FavList extends StatefulWidget {
 }
 
 class _FavListState extends State<FavList> {
-  @override
-  void initState() {
-    // TODO: implement initStata
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +29,7 @@ class _FavListState extends State<FavList> {
         widget.idUser = value;
       });
     });
-    favorite.getUserData(idUser: widget.idUser ?? "");
+    favorite.getUserData(idUser: widget.idUser ?? "", context: context);
 
     if (favorite.fav?.length == 0) {
       return contentNotFound();
@@ -78,10 +72,10 @@ class _FavListState extends State<FavList> {
                         child: SizedBox(
                           height: 100,
                           width: double.infinity,
-                          child: favorite.fav?[0].gallery![0] == null
-                              ? CircularProgressIndicator()
+                          child: favorite.fav?[0].tourismPlace?.gallery == null
+                              ? const CircularProgressIndicator()
                               : Image.network(
-                                  favorite.fav![index].gallery![0],
+                                  favorite.fav![index].tourismPlace!.gallery![0],
                                   fit: BoxFit.fill,
                                 ),
                         ),
@@ -90,7 +84,7 @@ class _FavListState extends State<FavList> {
                   ),
                   MarginHeight(height: 8),
                   Text(
-                    favorite.fav?[index].name ?? "Loading...",
+                    favorite.fav?[index].tourismPlace?.name ?? "Loading...",
                     style: regularText.copyWith(fontSize: 14),
                   ),
                 ],

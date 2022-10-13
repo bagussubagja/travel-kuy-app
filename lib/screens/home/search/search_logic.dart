@@ -6,7 +6,7 @@ import '../../../models/place_model.dart';
 import '../../../services/tourism_place_service/get_all_place_service.dart';
 
 class SearchPlace extends SearchDelegate {
-  GetPlaces _getPlaces = GetPlaces();
+  final GetPlaces _getPlaces = GetPlaces();
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -27,7 +27,7 @@ class SearchPlace extends SearchDelegate {
         onPressed: () {
           query = "";
         },
-        icon: Icon(Icons.close),
+        icon: const Icon(Icons.close),
       ),
     ];
   }
@@ -38,7 +38,7 @@ class SearchPlace extends SearchDelegate {
       onPressed: () {
         Navigator.pop(context);
       },
-      icon: Icon(Icons.arrow_back_ios),
+      icon: const Icon(Icons.arrow_back_ios),
     );
   }
 
@@ -53,7 +53,7 @@ class SearchPlace extends SearchDelegate {
             builder: (context, snapshot) {
               var data = snapshot.data;
               if (!snapshot.hasData) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
               return ListView.builder(
                   itemCount: data?.length,

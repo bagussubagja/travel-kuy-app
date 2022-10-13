@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:animated_image_list/AnimatedImageList.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +33,7 @@ class _PopularPlacePageState extends State<PopularPlacePage> {
       backgroundColor: blackBackgroundColor,
       appBar: AppBar(
         backgroundColor: blackBackgroundColor,
-        title: Text('Popular Places'),
+        title: const Text('Popular Places'),
       ),
       body: Center(
         child: AnimatedImageList(

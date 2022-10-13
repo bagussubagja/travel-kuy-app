@@ -1,7 +1,7 @@
+// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
@@ -76,10 +76,8 @@ Future<http.Response?> register(UserModel data) async {
     respone = await http.post(Uri.parse('http://10.0.2.2:3000/api/v1/users/'),
         headers: {HttpHeaders.contentTypeHeader: "application/json"},
         body: jsonEncode(data.toJson()));
-    print(data);
   } catch (e) {
-    print(e);
+    debugPrint(e.toString());
   }
-  print(respone);
   return respone;
 }

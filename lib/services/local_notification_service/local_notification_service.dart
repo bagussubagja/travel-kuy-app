@@ -26,7 +26,7 @@ class LocalNotificationService {
             playSound: true);
     const IOSNotificationDetails iosNotificationDetails =
         IOSNotificationDetails();
-    return NotificationDetails(
+    return const NotificationDetails(
         android: androidNotificationDetails, iOS: iosNotificationDetails);
   }
 
@@ -38,10 +38,8 @@ class LocalNotificationService {
 
   void onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload) {
-    print(id);
   }
 
   void onSelectNotification(String? payload) {
-    print('payload $payload');
   }
 }

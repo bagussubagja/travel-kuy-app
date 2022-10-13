@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:animated_image_list/AnimatedImageList.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +38,7 @@ class _RecommendedPlacePageState extends State<RecommendedPlacePage> {
       backgroundColor: blackBackgroundColor,
       appBar: AppBar(
         backgroundColor: blackBackgroundColor,
-        title: Text('Recommended Places'),
+        title: const Text('Recommended Places'),
       ),
       body: Center(
         child: AnimatedImageList(

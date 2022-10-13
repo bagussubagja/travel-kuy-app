@@ -2,8 +2,6 @@ import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/core/user_notifier/user_notifier.dart';
-import 'package:travel_kuy_app/models/user_model.dart';
-import 'package:travel_kuy_app/screens/authentication/biodata_screen.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/mostview_place_page.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/newlyadded_place_page.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/popular_place_page.dart';
@@ -18,7 +16,7 @@ import 'package:travel_kuy_app/widgets/popular_place_card.dart';
 import '../categories/category_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -146,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         )),
                   ],
                 ),
-                PopularPlaceCard(),
+                const PopularPlaceCard(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -167,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         )),
                   ],
                 ),
-                MostViewCard(),
+                const MostViewCard(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
