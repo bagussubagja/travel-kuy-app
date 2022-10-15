@@ -44,16 +44,16 @@ class ReviewPage extends StatelessWidget {
               itemBuilder: (context, index) => ListTile(
                 title: Text(
                   placeModel?.reviewerName[index] ??
-                      favModel!.reviewerName![index],
+                      favModel!.tourismPlace!.reviewerName![index],
                   style: regularText,
                 ),
                 subtitle: Text(
-                  placeModel?.review[index] ?? favModel!.review![index],
+                  placeModel?.review[index] ?? favModel!.tourismPlace!.review![index],
                   style: subTitleText,
                 ),
                 leading: Image.asset('assets/images/avatar.png'),
               ),
-              itemCount: placeModel?.review.length ?? favModel?.review!.length,
+              itemCount: placeModel?.review.length ?? favModel?.tourismPlace?.review?.length,
             ),
           ),
         ),

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:animated_image_list/AnimatedImageList.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,12 +29,11 @@ class _MostViewPlacePageState extends State<MostViewPlacePage> {
   @override
   Widget build(BuildContext context) {
     final mostViewModel = Provider.of<MostViewedClass>(context);
-    // List<String> list = [recommendedModel.recommended![index!].gallery[index!]];
     return Scaffold(
       backgroundColor: blackBackgroundColor,
       appBar: AppBar(
         backgroundColor: blackBackgroundColor,
-        title: Text('Most Viewed Places'),
+        title: const Text('Most Viewed Places'),
       ),
       body: Center(
         child: AnimatedImageList(

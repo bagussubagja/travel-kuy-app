@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/models/favorite_model.dart';
 import 'package:travel_kuy_app/models/place_model.dart';
@@ -7,13 +9,6 @@ class GalleryPhoto extends StatelessWidget {
   GalleryPhoto({Key? key, this.placeModel, this.favModel}) : super(key: key);
   PlaceModel? placeModel;
   FavoriteModel? favModel;
-  List<String> imgUrl = [
-    'assets/images/beach.jpg',
-    'assets/images/island.jpg',
-    'assets/images/mountain.jpg',
-    'assets/images/lake.png',
-    'assets/images/waterfall.jpg',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +26,7 @@ class GalleryPhoto extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
-                // image: AssetImage(imgUrl[index]),
-                image: NetworkImage(placeModel?.gallery[index] ?? favModel!.gallery![index]),
+                image: NetworkImage(placeModel?.gallery[index] ?? favModel!.tourismPlace!.gallery![index]),
                 fit: BoxFit.cover,
               ),
             ),

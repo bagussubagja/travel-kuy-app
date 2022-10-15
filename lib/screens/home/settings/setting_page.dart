@@ -1,14 +1,8 @@
 import 'package:cache_manager/cache_manager.dart';
-import 'package:cache_manager/core/delete_cache_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/core/auth_notifier/auth_notifier.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
-import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
-import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
-import 'package:travel_kuy_app/screens/details/widgets/booking_failed.dart';
-import 'package:travel_kuy_app/screens/details/widgets/booking_success.dart';
-import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/screens/home/settings/about_me.dart';
 import 'package:travel_kuy_app/screens/home/settings/edit_account.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
@@ -18,7 +12,7 @@ import 'package:travel_kuy_app/widgets/margin_widget_width.dart';
 import '../../../core/user_notifier/user_notifier.dart';
 
 class SettingPage extends StatefulWidget {
-  SettingPage({Key? key}) : super(key: key);
+  const SettingPage({Key? key}) : super(key: key);
 
   @override
   State<SettingPage> createState() => _SettingPageState();
@@ -39,8 +33,9 @@ class _SettingPageState extends State<SettingPage> {
     )
   ];
 
-  final List _widgetList = [EditAccount(), AboutMe()];
+  final List _widgetList = [EditAccount(), const AboutMe()];
 
+  @override
   void initState() {
     super.initState();
     final user = Provider.of<UserClass>(context, listen: false);

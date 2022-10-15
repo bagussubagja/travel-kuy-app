@@ -16,7 +16,6 @@ class PopularPlaceCard extends StatefulWidget {
 class _PopularPlaceCardState extends State<PopularPlaceCard> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     final popularModel = Provider.of<PopularClass>(context, listen: false);
     popularModel.getPopularPlace();
@@ -111,7 +110,7 @@ class _PopularPlaceCardState extends State<PopularPlaceCard> {
                           }));
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.black.withOpacity(0.25),
+                          backgroundColor: Colors.black.withOpacity(0.25),
                         ),
                         child: Text(
                           'View Detail',

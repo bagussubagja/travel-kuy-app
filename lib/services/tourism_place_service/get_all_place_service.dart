@@ -1,15 +1,23 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:travel_kuy_app/models/place_model.dart';
+
+import '../../shared/key.dart';
 
 class GetPlaces {
   var data = [];
   List<PlaceModel> results = [];
-  String fetchUrl = "http://10.0.2.2:3000/api/v1/tourism_place/";
+  String fetchUrl =
+      "https://zkyiyylcyurpymivrwnz.supabase.co/rest/v1/tourism_place?select=*&apikey=$apiKey";
   Future<List<PlaceModel>> getPlacesList({String? query}) async {
     var url = Uri.parse(fetchUrl);
-    var response = await http.get(url);
+    var response = await http.get(url, headers: {
+      'Authorization' : 'Bearier $bearier'
+    });
     try {
       if (response.statusCode == 200) {
         data = json.decode(response.body);
@@ -22,7 +30,7 @@ class GetPlaces {
         }
       }
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
     return results;
   }

@@ -1,6 +1,7 @@
+// ignore_for_file: prefer_final_fields, unused_field
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:travel_kuy_app/models/place_model.dart';
 import 'package:travel_kuy_app/screens/home/search/search_logic.dart';
 import 'package:travel_kuy_app/services/tourism_place_service/get_all_place_service.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
@@ -16,13 +17,6 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   GetPlaces _getPlaces = GetPlaces();
-  // @override
-  // void initState() {
-  //   GetPlaces().getPlacesList();
-  //   // TODO: implement initState
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +50,7 @@ class _SearchPageState extends State<SearchPage> {
                     textAlign: TextAlign.center,
                   ),
                   MarginHeight(height: 20),
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(

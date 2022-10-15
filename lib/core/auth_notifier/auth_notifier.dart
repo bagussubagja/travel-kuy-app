@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
+
 import 'package:cache_manager/core/write_cache_service.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/models/user_model.dart';
@@ -25,10 +27,10 @@ class RegisterDataClass extends ChangeNotifier {
 class UserPostDataClass extends ChangeNotifier {
   bool loading = false;
   bool isBack = false;
-  Future<void> postData(UserModel body, String idUser) async {
+  Future<void> postData(UserModel body, String idUser, BuildContext context) async {
     loading = true;
     notifyListeners();
-    http.Response response = (await updateUserData(body, idUser))!;
+    http.Response response = (await updateUserData(body, idUser, context))!;
     if (response.statusCode == 200) {
       isBack = true;
     }
@@ -55,10 +57,8 @@ class AuthenticationNotifier extends ChangeNotifier {
           password: password,
         );
       }));
-      // Navigator.pushNamedAndRemoveUntil(
-      //     context, AppRoutes.bodyScreen, (route) => false);
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
     return null;
   }
@@ -74,7 +74,7 @@ class AuthenticationNotifier extends ChangeNotifier {
       Navigator.pushNamedAndRemoveUntil(
           context, AppRoutes.bodyScreen, (route) => false);
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
     return null;
   }

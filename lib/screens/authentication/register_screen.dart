@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
-import 'package:travel_kuy_app/screens/authentication/biodata_screen.dart';
 
 import '../../core/auth_notifier/auth_notifier.dart';
 import '../../shared/theme.dart';
 import '../../widgets/my_textfield.dart';
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -115,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 content: Text('Fill the TextField!')));
                       }
                     },
-                    style: ElevatedButton.styleFrom(primary: greenDarkerColor),
+                    style: ElevatedButton.styleFrom(backgroundColor: greenDarkerColor),
                     child: Text(
                       'Register',
                       style: regularText,

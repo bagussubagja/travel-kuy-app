@@ -5,7 +5,7 @@ import 'package:travel_kuy_app/shared/theme.dart';
 import '../../../widgets/margin_widget_height.dart';
 
 class SchedulePage extends StatefulWidget {
-  SchedulePage({Key? key}) : super(key: key);
+  const SchedulePage({Key? key}) : super(key: key);
 
   @override
   State<SchedulePage> createState() => _SchedulePageState();

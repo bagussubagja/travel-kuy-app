@@ -37,7 +37,7 @@ class PlaceModel {
   String province;
   int price;
   List<String> review;
-  String rating;
+  double rating;
   String category;
   List<String> gallery;
   String operationalHour;
@@ -54,7 +54,7 @@ class PlaceModel {
         province: json["province"],
         price: json["price"],
         review: List<String>.from(json["review"].map((x) => x)),
-        rating: json["rating"],
+        rating: json["rating"].toDouble(),
         category: json["category"],
         gallery: List<String>.from(json["gallery"].map((x) => x)),
         operationalHour: json["operationalHour"],

@@ -3,14 +3,11 @@
 import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:indonesia/indonesia.dart';
-import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/core/schedule_notifier/schedule_notifier.dart';
 import 'package:travel_kuy_app/screens/categories/by_status/popular_place_page.dart';
-import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
-import 'package:travel_kuy_app/widgets/my_textfield.dart';
 
 import '../../../widgets/margin_widget_height.dart';
 
@@ -32,7 +29,7 @@ class _ScheduleTileListState extends State<ScheduleTileList> {
         widget.value = value;
       });
     });
-    schedule.getUserData(idUser: widget.value ?? "");
+    schedule.getUserData(idUser: widget.value ?? "", context: context);
 
     if (schedule.schedule?.length == 0) {
       return contentNotFound();
@@ -115,7 +112,7 @@ class _ScheduleTileListState extends State<ScheduleTileList> {
                                     try {
                                       Navigator.pop(context);
                                       await schedule.deleteScheduleUser(
-                                          id: item?.id ?? 0);
+                                          id: item?.id ?? 0, context: context);
                                     } catch (e) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(

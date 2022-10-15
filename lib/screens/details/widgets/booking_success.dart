@@ -1,12 +1,28 @@
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
+import 'package:travel_kuy_app/services/local_notification_service/local_notification_service.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 
-class BookingSuccess extends StatelessWidget {
+class BookingSuccess extends StatefulWidget {
   String placeName;
   BookingSuccess({Key? key, required this.placeName}) : super(key: key);
+
+  @override
+  State<BookingSuccess> createState() => _BookingSuccessState();
+}
+
+class _BookingSuccessState extends State<BookingSuccess> {
+  late final LocalNotificationService service;
+  @override
+  void initState() {
+    service = LocalNotificationService();
+    service.initialize();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,20 +47,25 @@ class BookingSuccess extends StatelessWidget {
                 ),
                 MarginHeight(height: 10),
                 Text(
-                  'You have successfully booked "$placeName" as your next vacation destination, have fun!',
+                  'You have successfully booked "${widget.placeName}" as your next vacation destination, have fun!',
                   style: regularText,
                   textAlign: TextAlign.center,
                 ),
                 MarginHeight(height: 15),
-                Container(
+                SizedBox(
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      await service.showNotification(
+                          id: 0,
+                          title: "Enjoy your vacation in Indonesia!",
+                          body: "You have choose ${widget.placeName} as your destination 😉");
                       Navigator.pushNamedAndRemoveUntil(
                           context, AppRoutes.bodyScreen, (route) => false);
                     },
-                    style: ElevatedButton.styleFrom(primary: greenDarkerColor),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: greenDarkerColor),
                     child: Text(
                       'Back to Main Menu',
                       style: regularText,

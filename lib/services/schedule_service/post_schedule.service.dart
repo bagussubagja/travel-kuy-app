@@ -1,24 +1,28 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:travel_kuy_app/models/favorite_model.dart';
 import 'package:travel_kuy_app/models/schedule_model.dart';
+import 'package:travel_kuy_app/shared/key.dart';
 
-Future<http.Response?> AddSchedule(
-    ScheduleModel data) async {
+Future<http.Response?> addSchedule(
+    ScheduleModel data, BuildContext context) async {
   http.Response? respone;
   try {
     respone = await http.post(
-        Uri.parse('http://10.0.2.2:3000/api/v1/schedule/'),
-        headers: {HttpHeaders.contentTypeHeader: "application/json"},
+        Uri.parse(
+            'https://zkyiyylcyurpymivrwnz.supabase.co/rest/v1/schedule?apikey=$apiKey'),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          'Authorization': 'Bearier $bearier'
+        },
         body: jsonEncode(data.toJson()));
+    print(data.name);
   } catch (e) {
-    print(e);
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(e.toString())));
   }
-  print(respone);
   return respone;
 }

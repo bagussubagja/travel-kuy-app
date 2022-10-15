@@ -2,7 +2,6 @@ import 'package:travel_kuy_app/screens/authentication/biodata_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/login_screen.dart';
 import 'package:travel_kuy_app/screens/authentication/register_screen.dart';
 import 'package:travel_kuy_app/screens/details/confirmation_stepper_screen.dart';
-import 'package:travel_kuy_app/screens/details/widgets/booking_process.dart';
 import 'package:travel_kuy_app/screens/details/detail_screen.dart';
 import 'package:travel_kuy_app/screens/home/body_screen.dart';
 import 'package:travel_kuy_app/screens/onboarding/onboarding_screen.dart';
@@ -23,8 +22,8 @@ class AppRoutes {
   static final routes = {
     onboardingScreen: (context) => const OnboardingPage(),
     loginScreen: (context) => const LoginScreen(),
-    registerScreen: (context) => RegisterScreen(),
-    bodyScreen: (context) => BodyScreen(),
+    registerScreen: (context) => const RegisterScreen(),
+    bodyScreen: (context) => const BodyScreen(),
     detailScreen: (context) => DetailScreen(),
     stateUI: (context) => const StateUI(),
     biodataPage: (context) => BiodataUser(),

@@ -7,7 +7,7 @@ class RecommendedClass extends ChangeNotifier {
   bool loading = false;
   getRecommendedPlace() async {
     loading = true;
-    recommended = (await getStatusPlaceData(status: "recommended"))!;
+    recommended = (await getStatusPlaceData(status: "Recommended"))!;
     loading = false;
     notifyListeners();
   }
@@ -18,7 +18,7 @@ class PopularClass extends ChangeNotifier {
   bool loading = false;
   getPopularPlace() async {
     loading = true;
-    popular = (await getStatusPlaceData(status: "popular"))!;
+    popular = (await getStatusPlaceData(status: "Popular"))!;
     loading = false;
     notifyListeners();
   }
@@ -29,7 +29,7 @@ class NewlyAddedClass extends ChangeNotifier {
   bool loading = false;
   getNewlyAddedPlace() async {
     loading = true;
-    newly = (await getStatusPlaceData(status: "newlyadded"))!;
+    newly = (await getStatusPlaceData(status: "Newly Added"))!;
     loading = false;
     notifyListeners();
   }
@@ -40,7 +40,7 @@ class MostViewedClass extends ChangeNotifier {
   bool loading = false;
   getMostViewedPlace() async {
     loading = true;
-    mostView = (await getStatusPlaceData(status: "mostviewed"))!;
+    mostView = (await getStatusPlaceData(status: "Most Viewed"))!;
     loading = false;
     notifyListeners();
   }

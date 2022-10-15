@@ -7,7 +7,7 @@ class BeachClass extends ChangeNotifier {
   bool loading = false;
   getCatagoryPlaces() async {
     loading = true;
-    beach = (await geDataPlacesByCatagoryData(category: "beach"))!;
+    beach = (await getDataPlacesByCatagoryData(category: "beach"))!;
     loading = false;
     notifyListeners();
   }
@@ -18,7 +18,7 @@ class IslandClass extends ChangeNotifier {
   bool loading = false;
   getCatagoryPlaces() async {
     loading = true;
-    island = (await geDataPlacesByCatagoryData(category: "island"))!;
+    island = (await getDataPlacesByCatagoryData(category: "island"))!;
     loading = false;
     notifyListeners();
   }
@@ -29,7 +29,7 @@ class LakeClass extends ChangeNotifier {
   bool loading = false;
   getCatagoryPlaces() async {
     loading = true;
-    lake = (await geDataPlacesByCatagoryData(category: "lake"))!;
+    lake = (await getDataPlacesByCatagoryData(category: "lake"))!;
     loading = false;
     notifyListeners();
   }
@@ -40,7 +40,7 @@ class MountainClass extends ChangeNotifier {
   bool loading = false;
   getCatagoryPlaces() async {
     loading = true;
-    mountain = (await geDataPlacesByCatagoryData(category: "mountain"))!;
+    mountain = (await getDataPlacesByCatagoryData(category: "mountain"))!;
     loading = false;
     notifyListeners();
   }
@@ -51,7 +51,7 @@ class ParkClass extends ChangeNotifier {
   bool loading = false;
   getCatagoryPlaces() async {
     loading = true;
-    park = (await geDataPlacesByCatagoryData(category: "park"))!;
+    park = (await getDataPlacesByCatagoryData(category: "park"))!;
     loading = false;
     notifyListeners();
   }
@@ -62,7 +62,7 @@ class WaterfallClass extends ChangeNotifier {
   bool loading = false;
   getCatagoryPlaces() async {
     loading = true;
-    waterfall = (await geDataPlacesByCatagoryData(category: "waterfall"))!;
+    waterfall = (await getDataPlacesByCatagoryData(category: "waterfall"))!;
     loading = false;
     notifyListeners();
   }

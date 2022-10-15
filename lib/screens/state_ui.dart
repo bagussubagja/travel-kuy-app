@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cache_manager/cache_manager.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
+import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
 
 import '../routes/routes.dart';
 
@@ -19,16 +20,18 @@ class _StateUIState extends State<StateUI> {
         key: "cache",
         valueType: ValueType.StringValue,
         actionIfNull: () {
-          Navigator.of(context).pushNamed(AppRoutes.onboardingScreen);
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              AppRoutes.onboardingScreen, (route) => false);
         },
         actionIfNotNull: () {
-          Navigator.of(context).pushNamed(AppRoutes.bodyScreen);
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(AppRoutes.bodyScreen, (route) => false);
         });
   }
 
   @override
   void initState() {
-    Timer(const Duration(seconds: 3), initiateCache);
+    Timer(const Duration(seconds: 4), initiateCache);
     super.initState();
   }
 
@@ -36,8 +39,20 @@ class _StateUIState extends State<StateUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: blackBackgroundColor,
-      body: const Center(
-        child: CircularProgressIndicator(),
+      body: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: 200,
+              child: Image.asset('assets/images/app-logo.png'),
+            ),
+            MarginHeight(height: 20),
+            const CircularProgressIndicator(),
+          ],
+        ),
       ),
     );
   }

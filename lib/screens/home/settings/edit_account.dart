@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
+
 import 'package:cache_manager/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,12 +20,6 @@ class EditAccount extends StatefulWidget {
 class _EditAccountState extends State<EditAccount> {
   String? idUser;
   final nameController = TextEditingController();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +55,7 @@ class _EditAccountState extends State<EditAccount> {
                   UserModel userUpdate = UserModel(name: nameController.text);
                   final update =
                       Provider.of<UserPostDataClass>(context, listen: false);
-                  await update.postData(userUpdate, idUser!);
+                  await update.postData(userUpdate, idUser!, context);
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(

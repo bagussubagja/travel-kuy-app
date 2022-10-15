@@ -1,5 +1,6 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:readmore/readmore.dart';
 import 'package:travel_kuy_app/models/favorite_model.dart';
 import 'package:travel_kuy_app/models/place_model.dart';
@@ -19,14 +20,17 @@ class OverviewPage extends StatefulWidget {
 }
 
 class _OverviewPageState extends State<OverviewPage> {
-  List<String>? coordinateSplitted;
+  List<String>? coordinateSplittedPlaceModel;
+  List<String>? coordinateSplittedFavoriteModel;
   String? lang, longitude;
+  
   @override
   void initState() {
-    // TODO: implement initState
-    coordinateSplitted = widget.placeModel!.coordinate.split(' ');
-    lang = coordinateSplitted?[0].replaceAll(",", "");
-    longitude = coordinateSplitted?[1].replaceAll(",", "");
+    super.initState();
+    coordinateSplittedPlaceModel = widget.placeModel?.coordinate.split(' ');
+    coordinateSplittedFavoriteModel = widget.favModel?.tourismPlace?.coordinate?.split(' ');
+    lang = coordinateSplittedPlaceModel?[0].replaceAll(",", "") ?? coordinateSplittedFavoriteModel?[0].replaceAll(",", "");
+    longitude = coordinateSplittedPlaceModel?[1].replaceAll(",", "") ?? coordinateSplittedFavoriteModel?[1].replaceAll(",", "");
   }
 
   @override
@@ -43,7 +47,7 @@ class _OverviewPageState extends State<OverviewPage> {
           MarginHeight(height: 5),
           ReadMoreText(
             widget.placeModel?.description == null
-                ? widget.favModel!.description!
+                ? widget.favModel!.tourismPlace!.description!
                 : widget.placeModel!.description,
             trimLines: 3,
             style: regularText.copyWith(color: greyColor),
@@ -75,7 +79,7 @@ class _OverviewPageState extends State<OverviewPage> {
               MarginWidth(width: 5),
               Flexible(
                 child: Text(
-                  widget.placeModel?.address ?? widget.favModel!.address!,
+                  widget.placeModel?.address ?? widget.favModel!.tourismPlace!.address!,
                   style: regularText.copyWith(color: greyColor),
                 ),
               ),
@@ -90,10 +94,10 @@ class _OverviewPageState extends State<OverviewPage> {
                   final availableMaps = await MapLauncher.installedMaps;
                   await availableMaps.first.showMarker(
                     description: widget.placeModel?.description ??
-                        widget.favModel!.description!,
+                        widget.favModel?.tourismPlace?.description!,
                     coords:
                         Coords(double.parse(lang!), double.parse(longitude!)),
-                    title: widget.placeModel?.name ?? widget.favModel!.name!,
+                    title: widget.placeModel?.name ?? widget.favModel!.tourismPlace!.name!,
                   );
                 },
                 child: Text(
