@@ -141,7 +141,7 @@ class _BiodataUserState extends State<BiodataUser> {
                       UserModel userModel = UserModel(
                           idUser: _idUser ?? "",
                           email: widget.email ?? "",
-                          password: widget.password ?? "",
+                         
                           name: name,
                           gender: _selectedGender ?? "");
                       var provider = Provider.of<RegisterDataClass>(context,

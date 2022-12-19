@@ -14,21 +14,18 @@ class UserModel {
   UserModel({
     this.idUser,
     this.email,
-    this.password,
     this.name,
     this.gender,
   });
 
   String? idUser;
   String? email;
-  String? password;
   String? name;
   String? gender;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         idUser: json["id_user"],
         email: json["email"],
-        password: json["password"],
         name: json["name"],
         gender: json["gender"],
       );
@@ -36,7 +33,6 @@ class UserModel {
   Map<String, dynamic> toJson() => {
         "id_user": idUser,
         "email": email,
-        "password": password,
         "name": name,
         "gender": gender,
       };

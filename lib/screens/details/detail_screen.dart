@@ -191,7 +191,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                             )
                                           : Expanded(
                                               child: Text(
-                                                  '${widget.placeModel?.district}, ${widget.favModel?.tourismPlace?.district}',
+                                                  '${widget.favModel?.tourismPlace?.district}, ${widget.favModel?.tourismPlace?.province}',
                                                   style: subTitleText.copyWith(
                                                       fontSize: 14)),
                                             )
