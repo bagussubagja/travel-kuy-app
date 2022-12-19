@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/models/favorite_model.dart';
 
@@ -31,33 +32,165 @@ class ReviewPage extends StatelessWidget {
     return Padding(
       padding: detailPagePadding,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('Review', style: titleText),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Comment', style: titleText),
+            IconButton(
+              onPressed: () {
+                showDialogWithFields(context);
+              },
+              icon: const Icon(
+                color: Colors.white,
+                Icons.add,
+              ),
+            ),
+          ],
+        ),
         MarginHeight(height: 10),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 2.5,
+          height: MediaQuery.of(context).size.height / 1.7,
           child: Scrollbar(
             controller: _scrollController,
             thumbVisibility: true,
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              controller: _scrollController,
-              itemBuilder: (context, index) => ListTile(
-                title: Text(
-                  placeModel?.reviewerName[index] ??
-                      favModel!.tourismPlace!.reviewerName![index],
-                  style: regularText,
-                ),
-                subtitle: Text(
-                  placeModel?.review[index] ?? favModel!.tourismPlace!.review![index],
-                  style: subTitleText,
-                ),
-                leading: Image.asset('assets/images/avatar.png'),
-              ),
-              itemCount: placeModel?.review.length ?? favModel?.tourismPlace?.review?.length,
+            child: ListView.separated(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    ListTile(
+                      iconColor: whiteColor,
+                      textColor: whiteColor,
+                      leading: const CircleAvatar(
+                        backgroundImage: AssetImage('assets/images/avatar.png'),
+                      ),
+                      title: RichText(
+                        text: const TextSpan(
+                          text: 'Rusty ',
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Your App Font Family',
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '[Timestamp]',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      subtitle: const Text(
+                          'LoremipsumdolorsitametLoremipsumdolorsitametLoremipsumdolorsitametLoremipsumdolorsitametLoremipsumdolorsitamet'),
+                      trailing: PopupMenuButton(
+                          icon: Icon(Icons.more_vert),
+                          itemBuilder: (context) {
+                            return [
+                              const PopupMenuItem<int>(
+                                value: 0,
+                                child: Text("Change"),
+                              ),
+                              const PopupMenuItem<int>(
+                                value: 1,
+                                child: Text("Delete"),
+                              ),
+                            ];
+                          },
+                          onSelected: (value) {
+                            if (value == 0) {
+                              print("Change selected.");
+                            } else if (value == 1) {
+                              print("Delete selected.");
+                            }
+                          }),
+                    ),
+                    ButtonTheme(
+                      child: ButtonBar(
+                        alignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.thumb_up_outlined,
+                              size: 24.0,
+                            ),
+                            label: const Text('Like'),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              },
+              separatorBuilder: (context, index) {
+                return Divider(
+                  color: whiteColor,
+                );
+              },
             ),
           ),
         ),
       ]),
     );
   }
+
+  void showDialogWithFields(context) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        var commentController = TextEditingController();
+        return AlertDialog(
+          scrollable: true,
+          content: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  controller: commentController,
+                  decoration: InputDecoration(hintText: 'Komentar'),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                var comment = commentController.text;
+                print(comment);
+              },
+              child: const Text('Send'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
+
+// ListView.builder(
+//               scrollDirection: Axis.vertical,
+//               controller: _scrollController,
+//               itemBuilder: (context, index) => ListTile(
+//                 title: Text(
+//                   placeModel?.reviewerName[index] ??
+//                       favModel!.tourismPlace!.reviewerName![index],
+//                   style: regularText,
+//                 ),
+//                 subtitle: Text(
+//                   placeModel?.review[index] ??
+//                       favModel!.tourismPlace!.review![index],
+//                   style: subTitleText,
+//                 ),
+//                 leading: Image.asset('assets/images/avatar.png'),
+//               ),
+//               itemCount: placeModel?.review.length ??
+//                   favModel?.tourismPlace?.review?.length,
+//             ),
