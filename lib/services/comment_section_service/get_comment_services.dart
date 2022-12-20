@@ -16,8 +16,7 @@ Future<List<CommentModel>?> getCommentServiceByIdPlace(
       return commentModelFromJson(json);
     }
   } catch (e) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(e.toString())));
+    debugPrint(e.toString());
   }
   return [];
 }
