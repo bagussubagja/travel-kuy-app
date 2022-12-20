@@ -47,7 +47,7 @@ class _EditAccountState extends State<EditAccount> {
             children: [
               MyTextField(
                 titleText: "Name",
-                hintText: user.user?[0].name,
+                hintText: user.user?.name,
                 controller: nameController,
               ),
               ElevatedButton(

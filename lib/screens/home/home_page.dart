@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: whiteColor, fontSize: 18),
                         ),
                         Text(
-                          '${user.user?[0].name ?? 'Loading...'} 👋',
+                          '${user.user?.name ?? 'Loading...'} 👋',
                           style: regularText.copyWith(
                               fontWeight: FontWeight.w500,
                               color: whiteColor,
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    user.user?[0].gender == "Male"
+                    user.user?.gender == "Male"
                         ? CircleAvatar(
                             backgroundColor: greyColor,
                             radius: 25,

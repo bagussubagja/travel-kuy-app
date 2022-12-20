@@ -67,7 +67,7 @@ class _SettingPageState extends State<SettingPage> {
                 style: titleText,
               ),
               MarginHeight(height: 25),
-              user.user?[0].gender == "Male"
+              user.user?.gender == "Male"
                   ? Center(
                       child: CircleAvatar(
                         backgroundColor: greyColor,
@@ -93,7 +93,7 @@ class _SettingPageState extends State<SettingPage> {
               MarginHeight(height: 10),
               Center(
                 child: Text(
-                  'Hi there, ${user.user![0].name}!',
+                  'Hi there, ${user.user?.name}!',
                   style: regularText.copyWith(color: greyColor),
                 ),
               ),
