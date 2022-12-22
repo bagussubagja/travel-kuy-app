@@ -15,10 +15,8 @@ class RegisterDataClass extends ChangeNotifier {
   Future<void> postData(UserModel body) async {
     loading = true;
     notifyListeners();
-    http.Response response = (await register(body))!;
-    if (response.statusCode == 200) {
-      isBack = true;
-    }
+    http.Response? response = (await register(body));
+    print(response?.statusCode);
     loading = false;
     notifyListeners();
   }
@@ -27,7 +25,8 @@ class RegisterDataClass extends ChangeNotifier {
 class UserPostDataClass extends ChangeNotifier {
   bool loading = false;
   bool isBack = false;
-  Future<void> postData(UserModel body, String idUser, BuildContext context) async {
+  Future<void> postData(
+      UserModel body, String idUser, BuildContext context) async {
     loading = true;
     notifyListeners();
     http.Response response = (await updateUserData(body, idUser, context))!;
@@ -38,7 +37,6 @@ class UserPostDataClass extends ChangeNotifier {
     notifyListeners();
   }
 }
-
 
 class AuthenticationNotifier extends ChangeNotifier {
   final AuthenticationService _authenticationService = AuthenticationService();

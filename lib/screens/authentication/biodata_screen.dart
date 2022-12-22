@@ -121,7 +121,6 @@ class _BiodataUserState extends State<BiodataUser> {
                       UserModel userModel = UserModel(
                           idUser: _idUser ?? "",
                           email: widget.email ?? "",
-                         
                           name: name,
                           gender: _selectedGender ?? "");
                       var provider = Provider.of<RegisterDataClass>(context,
@@ -129,6 +128,7 @@ class _BiodataUserState extends State<BiodataUser> {
                       await provider.postData(userModel);
                       Navigator.pushNamedAndRemoveUntil(
                           context, AppRoutes.bodyScreen, (route) => false);
+                      print('object');
                     } catch (e) {
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.toString())));
