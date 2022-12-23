@@ -13,7 +13,7 @@ Future<List<PlaceModel>?> getDataPlacesByCatagoryData(
       await client.get(uri, headers: {'Authorization': 'Bearier $bearier'});
   if (respone.statusCode == 200) {
     var json = respone.body;
-    print(json);
+   
     return placeModelFromJson(json);
   }
   return [];

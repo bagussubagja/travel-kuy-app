@@ -10,13 +10,9 @@ Future<List<FavoriteModel>?> deleteFavoritePlace(
   var uri = Uri.parse(
       'https://zkyiyylcyurpymivrwnz.supabase.co/rest/v1/fav_place?id=eq.$id&apikey=$apiKey');
   try {
-    var respone = await client.delete(uri, headers: {
-      'Authorization': 'Bearier $bearier'
-    });
-    if (respone.statusCode == 200) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(respone.body)));
-    }
+    var respone = await client
+        .delete(uri, headers: {'Authorization': 'Bearier $bearier'});
+    debugPrint("Status Code Delete Favorite : ${respone.statusCode}");
   } catch (e) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(e.toString())));

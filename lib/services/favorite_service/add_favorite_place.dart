@@ -26,8 +26,7 @@ Future<http.Response?> addFavorite(
       style: regularText,
     )));
   } catch (e) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(e.toString())));
+    debugPrint(e.toString());
   }
   debugPrint(respone.toString());
   return respone;

@@ -19,10 +19,9 @@ Future<http.Response?> addSchedule(
           'Authorization': 'Bearier $bearier'
         },
         body: jsonEncode(data.toJson()));
-    print(data.name);
+    
   } catch (e) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(e.toString())));
+    debugPrint(e.toString());
   }
   return respone;
 }

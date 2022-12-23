@@ -8,9 +8,8 @@ Future<List<PlaceModel>?> getStatusPlaceData({required String status}) async {
   var client = http.Client();
   var uri = Uri.parse(
       'https://zkyiyylcyurpymivrwnz.supabase.co/rest/v1/tourism_place?select=*&status=eq.$status&apikey=$apiKey');
-  var respone = await client.get(uri, headers: {
-    'Authorization' : 'Bearier $bearier'
-  });
+  var respone =
+      await client.get(uri, headers: {'Authorization': 'Bearier $bearier'});
   if (respone.statusCode == 200) {
     var json = respone.body;
     return placeModelFromJson(json);

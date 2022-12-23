@@ -20,16 +20,21 @@ class FavList extends StatefulWidget {
 }
 
 class _FavListState extends State<FavList> {
+  @override
+  void initState() {
+    super.initState();
+    final favorite = Provider.of<FavoritePlaceClass>(context, listen: false);
+
+    ReadCache.getString(key: "cache").then((value) {
+      setState(() {
+        favorite.getUserData(idUser: value, context: context);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final favorite = Provider.of<FavoritePlaceClass>(context, listen: false);
-    ReadCache.getString(key: "cache").then((value) {
-      setState(() {
-        widget.idUser = value;
-      });
-    });
-    favorite.getUserData(idUser: widget.idUser ?? "", context: context);
+    final favorite = Provider.of<FavoritePlaceClass>(context);
 
     if (favorite.fav?.length == 0) {
       return contentNotFound();
@@ -45,7 +50,6 @@ class _FavListState extends State<FavList> {
             crossAxisSpacing: 20,
             mainAxisSpacing: 40),
         itemBuilder: (context, index) {
-          // final favItem = favList[index];
           final favItem = favorite.fav![index];
           return InkWell(
             onTap: () {
@@ -75,7 +79,8 @@ class _FavListState extends State<FavList> {
                           child: favorite.fav?[0].tourismPlace?.gallery == null
                               ? const CircularProgressIndicator()
                               : Image.network(
-                                  favorite.fav![index].tourismPlace!.gallery![0],
+                                  favorite
+                                      .fav![index].tourismPlace!.gallery![0],
                                   fit: BoxFit.fill,
                                 ),
                         ),

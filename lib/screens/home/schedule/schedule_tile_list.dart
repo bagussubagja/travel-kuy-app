@@ -21,16 +21,20 @@ class ScheduleTileList extends StatefulWidget {
 
 class _ScheduleTileListState extends State<ScheduleTileList> {
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     final schedule = Provider.of<ScheduleClass>(context, listen: false);
 
     ReadCache.getString(key: "cache").then((value) {
       setState(() {
-        widget.value = value;
+        schedule.getUserData(idUser: value, context: context);
       });
     });
-    schedule.getUserData(idUser: widget.value ?? "", context: context);
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    final schedule = Provider.of<ScheduleClass>(context);
     if (schedule.schedule?.length == 0) {
       return contentNotFound();
     }

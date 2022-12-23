@@ -18,8 +18,7 @@ Future<List<FavoriteModel>?> getFavoritePlacebyid(
       return favoriteModelFromJson(json);
     }
   } catch (e) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(e.toString())));
+   debugPrint(e.toString());
   }
   return [];
 }

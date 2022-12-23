@@ -23,7 +23,6 @@ class _BiodataUserState extends State<BiodataUser> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
-  bool _isObscure = false;
   final List<String> _gender = ["Male", "Female"];
   String? _selectedGender = "Male";
   String? _idUser;
@@ -128,7 +127,7 @@ class _BiodataUserState extends State<BiodataUser> {
                       await provider.postData(userModel);
                       Navigator.pushNamedAndRemoveUntil(
                           context, AppRoutes.bodyScreen, (route) => false);
-                      print('object');
+             
                     } catch (e) {
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.toString())));

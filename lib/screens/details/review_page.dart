@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable, prefer_is_empty
 
 import 'package:cache_manager/core/read_cache_service.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +27,6 @@ class _ReviewPageState extends State<ReviewPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     ReadCache.getString(key: 'cache').then((value) {

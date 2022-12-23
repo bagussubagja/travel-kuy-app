@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
+// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously, unused_local_variable
 
 import 'package:cache_manager/core/write_cache_service.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,6 @@ class RegisterDataClass extends ChangeNotifier {
     loading = true;
     notifyListeners();
     http.Response? response = (await register(body));
-    print(response?.statusCode);
     loading = false;
     notifyListeners();
   }
