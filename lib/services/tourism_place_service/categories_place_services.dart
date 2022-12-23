@@ -9,11 +9,11 @@ Future<List<PlaceModel>?> getDataPlacesByCatagoryData(
   var client = http.Client();
   var uri = Uri.parse(
       'https://zkyiyylcyurpymivrwnz.supabase.co/rest/v1/tourism_place?select=*&category=eq.$category&apikey=$apiKey');
-  var respone = await client.get(uri, headers: {
-    'Authorization' : 'Bearier $bearier'
-  });
+  var respone =
+      await client.get(uri, headers: {'Authorization': 'Bearier $bearier'});
   if (respone.statusCode == 200) {
     var json = respone.body;
+    print(json);
     return placeModelFromJson(json);
   }
   return [];

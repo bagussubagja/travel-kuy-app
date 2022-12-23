@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:travel_kuy_app/models/favorite_model.dart';
 import 'package:travel_kuy_app/shared/key.dart';
+import 'package:travel_kuy_app/shared/theme.dart';
 
 Future<http.Response?> addFavorite(
     FavoriteModel data, BuildContext context) async {
@@ -19,8 +20,11 @@ Future<http.Response?> addFavorite(
           'Authorization': 'Bearier $bearier'
         },
         body: jsonEncode(data.toJson()));
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(respone.body)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      "Item Successfully Added to Favorite!",
+      style: regularText,
+    )));
   } catch (e) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(e.toString())));
