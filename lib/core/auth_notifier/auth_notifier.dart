@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
+// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously, unused_local_variable
 
 import 'package:cache_manager/core/write_cache_service.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +15,7 @@ class RegisterDataClass extends ChangeNotifier {
   Future<void> postData(UserModel body) async {
     loading = true;
     notifyListeners();
-    http.Response response = (await register(body))!;
-    if (response.statusCode == 200) {
-      isBack = true;
-    }
+    http.Response? response = (await register(body));
     loading = false;
     notifyListeners();
   }
@@ -27,7 +24,8 @@ class RegisterDataClass extends ChangeNotifier {
 class UserPostDataClass extends ChangeNotifier {
   bool loading = false;
   bool isBack = false;
-  Future<void> postData(UserModel body, String idUser, BuildContext context) async {
+  Future<void> postData(
+      UserModel body, String idUser, BuildContext context) async {
     loading = true;
     notifyListeners();
     http.Response response = (await updateUserData(body, idUser, context))!;
@@ -38,7 +36,6 @@ class UserPostDataClass extends ChangeNotifier {
     notifyListeners();
   }
 }
-
 
 class AuthenticationNotifier extends ChangeNotifier {
   final AuthenticationService _authenticationService = AuthenticationService();

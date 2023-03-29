@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:travel_kuy_app/models/favorite_model.dart';
@@ -26,16 +26,9 @@ class FavoritePlaceClass extends ChangeNotifier {
 }
 
 class FavPostDataClass extends ChangeNotifier {
-  bool loading = false;
-  bool isBack = false;
   Future<void> postData(FavoriteModel body, BuildContext context) async {
-    loading = true;
     notifyListeners();
     http.Response response = (await addFavorite(body, context))!;
-    if (response.statusCode == 200) {
-      isBack = true;
-    }
-    loading = false;
     notifyListeners();
   }
 }

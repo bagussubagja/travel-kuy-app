@@ -1,5 +1,6 @@
 import 'package:provider/single_child_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_kuy_app/core/comment_notifier/comment_notifier.dart';
 import 'package:travel_kuy_app/core/fav_notifier/favorite_notifier.dart';
 import 'package:travel_kuy_app/core/place_notifier/categories_place_notifier.dart';
 import 'package:travel_kuy_app/core/place_notifier/statues_place_notifier.dart';
@@ -63,6 +64,12 @@ class ProvidersList {
     ),
     ChangeNotifierProvider(
       create: (_) => UserPostDataClass(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => CommentClass(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => AddCommentClass(),
     ),
   ];
 }

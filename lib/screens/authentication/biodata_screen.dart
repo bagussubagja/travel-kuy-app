@@ -23,7 +23,6 @@ class _BiodataUserState extends State<BiodataUser> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
-  bool _isObscure = false;
   final List<String> _gender = ["Male", "Female"];
   String? _selectedGender = "Male";
   String? _idUser;
@@ -84,24 +83,6 @@ class _BiodataUserState extends State<BiodataUser> {
               ),
               MarginHeight(height: 15),
               MyTextField(
-                titleText: 'Password',
-                readOnly: true,
-                obscureText: _isObscure,
-                  isObscure: _isObscure,
-                hintText: widget.password,
-                suffixIcon: IconButton(
-                    icon: Icon(
-                      _isObscure ? Icons.visibility : Icons.visibility_off,
-                      color: greyColor,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isObscure = !_isObscure;
-                      });
-                    }),
-              ),
-              MarginHeight(height: 15),
-              MyTextField(
                 titleText: 'Name',
                 controller: _nameController,
               ),
@@ -136,12 +117,9 @@ class _BiodataUserState extends State<BiodataUser> {
                   onPressed: () async {
                     try {
                       String name = _nameController.text.trim();
-                      // String email = widget.email!;
-                      // String password = widget.password!;
                       UserModel userModel = UserModel(
                           idUser: _idUser ?? "",
                           email: widget.email ?? "",
-                          password: widget.password ?? "",
                           name: name,
                           gender: _selectedGender ?? "");
                       var provider = Provider.of<RegisterDataClass>(context,
@@ -149,12 +127,14 @@ class _BiodataUserState extends State<BiodataUser> {
                       await provider.postData(userModel);
                       Navigator.pushNamedAndRemoveUntil(
                           context, AppRoutes.bodyScreen, (route) => false);
+             
                     } catch (e) {
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.toString())));
                     }
                   },
-                  style: ElevatedButton.styleFrom(backgroundColor: greenDarkerColor),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: greenDarkerColor),
                   child: Text(
                     'Done',
                     style: regularText,

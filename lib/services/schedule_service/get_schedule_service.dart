@@ -18,8 +18,7 @@ Future<List<ScheduleModel>?> getSchedules(
       return scheduleModelFromJson(json);
     }
   } catch (e) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(e.toString())));
+    debugPrint(e.toString());
   }
   return [];
 }

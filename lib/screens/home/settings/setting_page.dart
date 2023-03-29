@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_kuy_app/core/auth_notifier/auth_notifier.dart';
 import 'package:travel_kuy_app/routes/routes.dart';
-import 'package:travel_kuy_app/screens/home/settings/about_me.dart';
+import 'package:travel_kuy_app/screens/home/settings/about_us.dart';
 import 'package:travel_kuy_app/screens/home/settings/edit_account.dart';
 import 'package:travel_kuy_app/shared/theme.dart';
 import 'package:travel_kuy_app/widgets/margin_widget_height.dart';
@@ -19,7 +19,7 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  final List<String> _menuSettingName = ["Account", "About Me", "Log Out"];
+  final List<String> _menuSettingName = ["Account", "About Us", "Log Out"];
 
   final List<Widget> _iconList = const [
     Icon(
@@ -33,7 +33,7 @@ class _SettingPageState extends State<SettingPage> {
     )
   ];
 
-  final List _widgetList = [EditAccount(), const AboutMe()];
+  final List _widgetList = [EditAccount(), const AboutUsScreen()];
 
   @override
   void initState() {
@@ -67,7 +67,7 @@ class _SettingPageState extends State<SettingPage> {
                 style: titleText,
               ),
               MarginHeight(height: 25),
-              user.user?[0].gender == "Male"
+              user.user?.gender == "Male"
                   ? Center(
                       child: CircleAvatar(
                         backgroundColor: greyColor,
@@ -93,7 +93,7 @@ class _SettingPageState extends State<SettingPage> {
               MarginHeight(height: 10),
               Center(
                 child: Text(
-                  'Hi there, ${user.user![0].name}!',
+                  'Hi there, ${user.user?.name}!',
                   style: regularText.copyWith(color: greyColor),
                 ),
               ),

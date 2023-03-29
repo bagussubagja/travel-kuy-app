@@ -114,11 +114,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             email: email, password: password, context: context);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('Fill the TextField!')));
+                          const SnackBar(
+                            content: Text('Fill the TextField!'),
+                          ),
+                        );
                       }
                     },
-                    style: ElevatedButton.styleFrom(backgroundColor: greenDarkerColor),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: greenDarkerColor),
                     child: Text(
                       'Login',
                       style: regularText,

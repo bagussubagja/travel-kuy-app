@@ -239,7 +239,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: SwitchTab(
                       backgroundColour: Colors.black.withOpacity(0.25),
-                      text: const ["Overview", "Reviews"],
+                      text: const ["Overview", "Comments"],
                       selectedTextColor: whiteColor,
                       unselectedTextColor: greyColor,
                       shape: SwitchTabShape.rounded,

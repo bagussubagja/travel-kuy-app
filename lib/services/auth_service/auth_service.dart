@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
 import 'package:http/http.dart' as http;
 import 'package:travel_kuy_app/models/user_model.dart';
+import 'package:travel_kuy_app/shared/key.dart';
 import '../../credentials/supabase_credentials.dart';
 import '../../shared/theme.dart';
 
@@ -73,7 +74,9 @@ class AuthenticationService {
 Future<http.Response?> register(UserModel data) async {
   http.Response? respone;
   try {
-    respone = await http.post(Uri.parse('http://10.0.2.2:3000/api/v1/users/'),
+    respone = await http.post(
+        Uri.parse(
+            'https://zkyiyylcyurpymivrwnz.supabase.co/rest/v1/users?apikey=$apiKey'),
         headers: {HttpHeaders.contentTypeHeader: "application/json"},
         body: jsonEncode(data.toJson()));
   } catch (e) {
